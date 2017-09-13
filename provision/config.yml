@@ -1,0 +1,5 @@
+vm:
+  memory: 1024
+  name: personalworkouts-api
+database:
+  dbname: personalworkouts

@@ -1,0 +1,26 @@
+# IDE and editor specific files #
+#################################
+.idea
+.vagrant
+*.sublime-*
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+nohup.out
+npm-debug.log
+
+# User specific & automatically generated files #
+#################################################
+
+# Grunt and vagrant section
+/.dist
+/.tmp
+/.vscode

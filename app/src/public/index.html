@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+		<meta name="theme-color" content="#A0BA4A">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="#A0BA4A">
+
+		<link rel="stylesheet" href="css/sprite.css">
+		<link rel="stylesheet" href="css/bundle.css">
+
+		<title>Personal Workouts</title>
+	</head>
+	<body>
+		<!-- Status bar overlay for full screen mode (PhoneGap) -->
+		<div class="statusbar-overlay"></div>
+		<div class="panel-overlay"></div>
+
+		<!-- Views -->
+		<div class="views">
+			<div class="view view-main">
+				<div class="navbar"></div>
+				<div class="pages navbar-through toolbar-through"><div class="page"></div></div>
+
+				<!-- Bottom Toolbar-->
+				<div class="toolbar tabbar">
+					<div class="toolbar-inner">
+						<a href="pages/home.html" class="toolbar-inner-item -active">
+							<span class="icon icon-dashboard"></span>
+						</a>
+						<a href="pages/goals.html" class="toolbar-inner-item">
+							<span class="icon icon-goal"></span>
+						</a>
+						<a href="pages/activities.html" class="toolbar-inner-item">
+							<span class="icon icon-activities"></span>
+						</a>
+						<a href="pages/settings.html" class="toolbar-inner-item">
+							<span class="icon icon-settings"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Login -->
+		<div class="login-screen modal-in">
+			<div class="view">
+				<div data-page="login" class="page page-login no-navbar no-toolbar">
+					<div class="page-content">
+						<h1 class="kpi-logo">KPI</h1>
+						<div class="page-login__wrapper">
+							<h2 class="page-login__title">Análise de desempenho!</h2>
+							<p class="page-login__description">Crie, acompanhe e analise<br>a sua performance e de seu time.</p>
+						</div>
+						<div class="page-login__wrapper">
+							<span class="preloader login-preloader"></span>
+							<div class="btn btn-login google-login-button -vhidden">
+								<span class="btn__icon spr spr-logo-google"></span>
+								<span class="btn__text">entrar com google</span>
+							</div>
+							<h3 class="spr spr-logo">Idealiza</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- TEMPLATES -->
+		
+		<script id="template-goals-dashboard" type="text/template7">
+			{{#each goals}}
+			{{/each}}
+		</script>
+		<!-- // TEMPLATES -->
+
+		<script type="text/javascript" src="cordova.js"></script>
+		<script src="js/bundle.js" charset="utf-8"></script>
+	</body>
+</html>

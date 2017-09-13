@@ -24,3 +24,5 @@ npm-debug.log
 /.dist
 /.tmp
 /.vscode
+
+node_modules

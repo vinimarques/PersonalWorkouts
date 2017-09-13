@@ -1,13 +1,16 @@
 const express = require('express');
+const _ = require('lodash');
 const router = express.Router();
+
 const Auth = require('../services/auth');
 const Resolve = require('../services/resolve');
 const Validator = require('../services/validator');
-const _ = require('lodash');
 const ApiError = require('../services/error');
+
 const Users = require('../models/users');
 const Posts = require('../models/posts');
 const Likes = require('../models/likes');
+
 const Promise = require('bluebird');
 
 router.post('/login', Auth.middleware(false), Resolve.send(

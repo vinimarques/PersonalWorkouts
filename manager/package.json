@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack -p",
-    "dev": "webpack -w"
+	 "dev": "webpack -w",
+	 "server": "json-server --watch src/db.json --port 5555 "
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
+    "jquery": "^3.2.1",
     "json-server": "^0.12.0",
     "node-sass": "^3.13.0",
     "postcss-loader": "^1.1.1",

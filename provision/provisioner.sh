@@ -7,7 +7,7 @@ echo "+ configure profile"
 echo "CURRENT_IP=\$(ifconfig eth1 | grep 'inet addr' | awk '{print \$2}' | sed 's/addr://')" > /home/vagrant/.bash_profile
 echo 'echo -e "\nCurrent IP: ${CURRENT_IP}\n"' >> /home/vagrant/.bash_profile
 echo 'echo -e "Add to /etc/hosts:"' >> /home/vagrant/.bash_profile
-echo 'echo -e "${CURRENT_IP} api.kpi.vm"' >> /home/vagrant/.bash_profile
+echo 'echo -e "${CURRENT_IP} api.personalworkouts.vm"' >> /home/vagrant/.bash_profile
 echo 'echo -e "Start application by running: pm2 startOrRestart ecosystem.json\n"' >> /home/vagrant/.bash_profile
 echo "cd /srv/shared" >> /home/vagrant/.bash_profile
 

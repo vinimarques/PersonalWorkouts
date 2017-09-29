@@ -11,12 +11,13 @@
       "instances": 1,
       "env": {
         "APP_PORT": 3000,
-        "APP_DATABASE_HOST"     		   : "127.0.0.1",
-        "APP_DATABASE_USER"     		   : "root",
-        "APP_DATABASE_PASSWORD" 		   : "root",
-        "APP_DATABASE_DATABASE" 		   : "personalworkouts",
-        "APP_DATABASE_CHARSET" 		    	: "UTF8",
-        "APP_DATABASE_DEBUG"					:  ["ComQueryPacket"]
+        "APP_DATABASE_HOST" : "127.0.0.1",
+        "APP_DATABASE_USER": "root",
+        "APP_DATABASE_PASSWORD" : "root",
+        "APP_DATABASE_DATABASE" : "personalworkouts",
+        "APP_DATABASE_CHARSET" : "UTF8",
+		  "APP_DATABASE_DEBUG" :  ["ComQueryPacket"],
+		  "APP_SECURITY_SECRET": "4jZE8eJt3VJDDNyCVstT5buc"
       }
     }
   ]

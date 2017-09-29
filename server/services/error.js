@@ -18,7 +18,7 @@ class ApiError extends Error {
   }
 
   static userRequired(detail) {
-    return new ApiError('`email` e `password` são campos obrigatórios', 432, detail);
+    return new ApiError('É necessario estar logado para essa ação.', 432, detail);
   }
 
   static uniqueEmail(detail) {

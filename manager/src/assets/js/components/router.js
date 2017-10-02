@@ -18,16 +18,13 @@ class Router {
 	 *
 	 */
 	add(alias, init) {
-
 		Page('/' + alias, () => { init(alias) });
-
 	}
 
 	/**
 	 *
 	 */
 	start () {
-
 		Page({
 			hashbang: true
 		});

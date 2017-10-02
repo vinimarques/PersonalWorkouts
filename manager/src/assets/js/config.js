@@ -1,6 +1,6 @@
 var config = {};
 
-config.apiurl = 'localhost:5555';
+config.apiurl = 'api.personalworkouts.vm';
 config.key = 'p3R$0n@L';
 
 

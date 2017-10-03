@@ -18,21 +18,16 @@ class Router {
 		});
 	}
 
-	/**
-	 *
-	 */
 	add(alias, init, hasSecurity) {
-		if (hasSecurity)
-			Page('/' + alias, () => {
-				this.security.validate() ? init(alias) : () => {};
-			});
-		else
-			Page('/' + alias, () => { init(alias) });
+		let page = new init(hasSecurity);
+		let _that = this;
+
+		Page('/' + alias, function (ctx) {
+			if (hasSecurity) _that.security.validate().then(() => { page.init(alias, ctx) });
+			else page.init(alias, ctx);
+		});
 	}
 
-	/**
-	 *
-	 */
 	start () {
 		Page({
 			hashbang: true

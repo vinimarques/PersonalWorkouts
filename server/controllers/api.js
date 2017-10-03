@@ -50,7 +50,19 @@ router.post('/login', Resolve.send(
   }
 ));
 
-router.post('/users', Auth.middleware(false), Resolve.send(
+router.get('/users', Auth.middleware(), Resolve.send(
+	function (req) {
+		return Users.All()
+			.then(users => {
+				return {
+					success: true,
+					users
+				};
+			});
+	}
+));
+
+router.post('/users', Auth.middleware(), Resolve.send(
   function (req) {
     const validator = new Validator([
       {field: 'name', type: 'String', required: true},

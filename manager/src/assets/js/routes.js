@@ -18,15 +18,8 @@ export default {
 	init() {
 		let router = new Router();
 
-		let pageLogin = new Login();
-		let pageHome = new Home();
-
-		router.add('login', () => {
-			pageLogin.init('login');
-		});
-		router.add('home', () => {
-			pageHome.init('home');
-		}, true);
+		router.add('login', Login);
+		router.add('home', Home, true);
 
 		router.start();
 	}

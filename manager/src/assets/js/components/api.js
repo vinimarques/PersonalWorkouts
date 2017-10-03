@@ -1,29 +1,46 @@
-// Configurations
+'use strict';
+
 import config from '../config';
-var CryptoJS = require("crypto-js");
+import CryptoJS from 'crypto-js';
 
-var Api = {
-	url: 'http://' + config.apiurl
-};
+/**
+*
+*/
+class Api {
 
-Api.request = (method, path, data) => {
-	return new Promise((success, error) => {
-		let ajaxOptions = {
-			method,
-			data: data,
-			url: Api.url + path,
-			success: (response) => {
-				success(response);
-			},
-			error: error
-		};
-		$.ajax(ajaxOptions);
-	})
-};
+	constructor() {
+		this.url = 'http://' + config.apiurl;
+		this.headers = {};
+	}
 
-Api.login = (email, pass) => {
-	let password = CryptoJS.HmacSHA1(pass, config.key).toString();
-	return Api.request('POST', '/login', {email, password});
-};
+	setHeader(name, value) {
+		this.headers[name] = value;
+	}
 
-module.exports = Api;
+	request (method, path, data) {
+		return new Promise((success, error) => {
+			let ajaxOptions = {
+				method,
+				data: data,
+				url: this.url + path,
+				success: (response) => {
+					success(response);
+				},
+				error: error,
+				headers: this.headers
+			};
+			$.ajax(ajaxOptions);
+		})
+	}
+
+	login (email, pass) {
+		let password = CryptoJS.HmacSHA1(pass, config.key).toString();
+		return this.request('POST', '/login', { email, password });
+	}
+
+	users () {
+		return this.request('GET', '/users');
+	}
+}
+
+export { Api as default }

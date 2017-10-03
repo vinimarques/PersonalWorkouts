@@ -9,12 +9,15 @@ class Security {
 	}
 
 	validate () {
-		let token = App.database.get('token');
+		return new Promise((success, error) => {
+			let token = App.database.get('token');
 
-		if (!token) window.Page('/login');
-		else return true;
-
-		return false;
+			if (!token) window.Page('/login');
+			else {
+				App.api.setHeader('Authorization', 'Bearer ' + token);
+				success();
+			}
+		});
 	}
 }
 

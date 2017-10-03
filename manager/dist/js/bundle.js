@@ -91,6 +91,10 @@
 
 	var _database2 = _interopRequireDefault(_database);
 
+	var _api = __webpack_require__(22);
+
+	var _api2 = _interopRequireDefault(_api);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	window.$ = window.jQuery = _jquery2.default;
@@ -109,7 +113,9 @@
 		var database = new _database2.default('personalworkouts', options);
 
 		App.message = new _message2.default();
+		App.api = new _api2.default();
 		App.database = database;
+
 		_routes2.default.init();
 	};
 
@@ -172,15 +178,8 @@
 		init: function init() {
 			var router = new _router2.default();
 
-			var pageLogin = new _login2.default();
-			var pageHome = new _home2.default();
-
-			router.add('login', function () {
-				pageLogin.init('login');
-			});
-			router.add('home', function () {
-				pageHome.init('home');
-			}, true);
+			router.add('login', _login2.default);
+			router.add('home', _home2.default, true);
 
 			router.start();
 		}
@@ -233,27 +232,18 @@
 			});
 		}
 
-		/**
-	  *
-	  */
-
-
 		_createClass(Router, [{
 			key: 'add',
 			value: function add(alias, init, hasSecurity) {
-				var _this2 = this;
+				var page = new init(hasSecurity);
+				var _that = this;
 
-				if (hasSecurity) (0, _page2.default)('/' + alias, function () {
-					_this2.security.validate() ? init(alias) : function () {};
-				});else (0, _page2.default)('/' + alias, function () {
-					init(alias);
+				(0, _page2.default)('/' + alias, function (ctx) {
+					if (hasSecurity) _that.security.validate().then(function () {
+						page.init(alias, ctx);
+					});else page.init(alias, ctx);
 				});
 			}
-
-			/**
-	   *
-	   */
-
 		}, {
 			key: 'start',
 			value: function start() {
@@ -1524,10 +1514,6 @@
 
 	var _page2 = _interopRequireDefault(_page);
 
-	var _api = __webpack_require__(22);
-
-	var _api2 = _interopRequireDefault(_api);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1550,7 +1536,8 @@
 
 		_createClass(Login, [{
 			key: 'init',
-			value: function init(page) {
+			value: function init(page, ctx) {
+				console.log(ctx);
 				_get(Login.prototype.__proto__ || Object.getPrototypeOf(Login.prototype), 'load', this).call(this, page);
 			}
 		}, {
@@ -1566,10 +1553,11 @@
 
 					if (!data.email && !data.password) return false;
 
-					_api2.default.login(data.email, data.password).then(function (res) {
+					App.api.login(data.email, data.password).then(function (res) {
 						if (res.success) {
 							App.database.set('token', res.token);
 							App.database.set('user', res.user);
+							App.api.setHeader('Authorization', 'Bearer ' + token);
 							window.Page('/home');
 						} else {
 							if (res.error) {
@@ -11946,14 +11934,17 @@
 
 		_createClass(Home, [{
 			key: 'init',
-			value: function init(page) {
+			value: function init(page, ctx) {
+				console.log(ctx);
 				_get(Home.prototype.__proto__ || Object.getPrototypeOf(Home.prototype), 'load', this).call(this, page);
-
-				this.bindEvents();
 			}
 		}, {
-			key: 'bindEvents',
-			value: function bindEvents() {}
+			key: '_bindEvents',
+			value: function _bindEvents() {
+				App.api.users().then(function (res) {
+					console.log(res);
+				});
+			}
 		}]);
 
 		return Home;
@@ -11967,40 +11958,77 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _config = __webpack_require__(11);
 
 	var _config2 = _interopRequireDefault(_config);
 
+	var _cryptoJs = __webpack_require__(23);
+
+	var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var CryptoJS = __webpack_require__(23); // Configurations
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	/**
+	*
+	*/
+	var Api = function () {
+		function Api() {
+			_classCallCheck(this, Api);
 
-	var Api = {
-		url: 'http://' + _config2.default.apiurl
-	};
+			this.url = 'http://' + _config2.default.apiurl;
+			this.headers = {};
+		}
 
-	Api.request = function (method, path, data) {
-		return new Promise(function (_success, error) {
-			var ajaxOptions = {
-				method: method,
-				data: data,
-				url: Api.url + path,
-				success: function success(response) {
-					_success(response);
-				},
-				error: error
-			};
-			$.ajax(ajaxOptions);
-		});
-	};
+		_createClass(Api, [{
+			key: 'setHeader',
+			value: function setHeader(name, value) {
+				this.headers[name] = value;
+			}
+		}, {
+			key: 'request',
+			value: function request(method, path, data) {
+				var _this = this;
 
-	Api.login = function (email, pass) {
-		var password = CryptoJS.HmacSHA1(pass, _config2.default.key).toString();
-		return Api.request('POST', '/login', { email: email, password: password });
-	};
+				return new Promise(function (_success, error) {
+					var ajaxOptions = {
+						method: method,
+						data: data,
+						url: _this.url + path,
+						success: function success(response) {
+							_success(response);
+						},
+						error: error,
+						headers: _this.headers
+					};
+					$.ajax(ajaxOptions);
+				});
+			}
+		}, {
+			key: 'login',
+			value: function login(email, pass) {
+				var password = _cryptoJs2.default.HmacSHA1(pass, _config2.default.key).toString();
+				return this.request('POST', '/login', { email: email, password: password });
+			}
+		}, {
+			key: 'users',
+			value: function users() {
+				return this.request('GET', '/users');
+			}
+		}]);
 
-	module.exports = Api;
+		return Api;
+	}();
+
+	exports.default = Api;
 
 /***/ }),
 /* 23 */
@@ -18845,11 +18873,14 @@
 		_createClass(Security, [{
 			key: 'validate',
 			value: function validate() {
-				var token = App.database.get('token');
+				return new Promise(function (success, error) {
+					var token = App.database.get('token');
 
-				if (!token) window.Page('/login');else return true;
-
-				return false;
+					if (!token) window.Page('/login');else {
+						App.api.setHeader('Authorization', 'Bearer ' + token);
+						success();
+					}
+				});
 			}
 		}]);
 

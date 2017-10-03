@@ -5,7 +5,6 @@
  * Import
  */
 import Page from '../components/page';
-import Api from '../components/api';
 
 /**
  *
@@ -15,7 +14,8 @@ class Login extends Page {
 		super();
 	}
 
-	init (page) {
+	init(page, ctx) {
+		console.log(ctx);
 		super.load(page);
 	}
 
@@ -30,10 +30,11 @@ class Login extends Page {
 
 			if (!data.email && !data.password) return false;
 
-			Api.login(data.email, data.password).then(res => {
+			App.api.login(data.email, data.password).then(res => {
 				if (res.success) {
 					App.database.set('token',res.token);
 					App.database.set('user',res.user);
+					App.api.setHeader('Authorization', 'Bearer ' + token);
 					window.Page('/home');
 				}
 				else {

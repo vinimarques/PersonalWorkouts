@@ -7,6 +7,7 @@ window.$ = window.jQuery = $;
 
 import Message from './components/message';
 import Database from './components/database';
+import Api from './components/api';
 
 //Applications
 window.App = {};
@@ -19,7 +20,9 @@ App.init = () => {
 	const database = new Database('personalworkouts', options);
 
 	App.message = new Message();
+	App.api = new Api();
 	App.database = database;
+
 	Routes.init();
 };
 

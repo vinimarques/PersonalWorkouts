@@ -5,9 +5,11 @@ const Resolve = require('./resolve');
 
 class Auth {
 
-  static middleware(required) {
-    return function(req, res, next) {
-		const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  static middleware() {
+   return function(req, res, next) {
+		const token = req.headers['authorization'].replace('Bearer ','');
+
+		console.log(token);
 
 		if (token) {
 			Users.getToken(token)

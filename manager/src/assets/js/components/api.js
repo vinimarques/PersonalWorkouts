@@ -1,6 +1,5 @@
 // Configurations
-var config = require('../config');
-var $ = require('jquery');
+import config from '../config';
 var CryptoJS = require("crypto-js");
 
 var Api = {
@@ -11,7 +10,6 @@ Api.request = (method, path, data) => {
 	return new Promise((success, error) => {
 		let ajaxOptions = {
 			method,
-			contentType: 'application/json',
 			data: data,
 			url: Api.url + path,
 			success: (response) => {
@@ -25,7 +23,7 @@ Api.request = (method, path, data) => {
 
 Api.login = (email, pass) => {
 	let password = CryptoJS.HmacSHA1(pass, config.key).toString();
-	return Api.request('GET', '/users', {email, password});
+	return Api.request('POST', '/login', {email, password});
 };
 
 module.exports = Api;

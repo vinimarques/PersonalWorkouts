@@ -149,6 +149,67 @@ body {
       background: #ed305d;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35); }
 
+#modal-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: #000;
+  opacity: 0.8;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s ease .25s, opacity .1s ease 0s; }
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+  z-index: 100;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s ease .25s, opacity .1s ease 0s; }
+  .modal__close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    background: #EF476F;
+    border-radius: 100%; }
+    .modal__close::before, .modal__close::after {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      position: absolute;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+      top: 18px;
+      left: 10px; }
+    .modal__close::before {
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
+  .modal__content {
+    background: #F2F2F2;
+    padding: 30px;
+    border-radius: 5px; }
+
+.modal-active .modal.active {
+  transition: visibility 0s ease 0s, opacity .5s ease .1s;
+  visibility: visible;
+  opacity: 1; }
+
+.modal-active #modal-layer {
+  transition: visibility 0s ease 0s, opacity .5s ease .1s;
+  visibility: visible;
+  opacity: 0.8; }
+
 .login-form {
   width: 500px;
   position: absolute;

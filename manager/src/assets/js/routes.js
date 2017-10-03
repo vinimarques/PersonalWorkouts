@@ -21,8 +21,12 @@ export default {
 		let pageLogin = new Login();
 		let pageHome = new Home();
 
-		router.add('login', pageLogin.init);
-		router.add('home', pageHome.init);
+		router.add('login', () => {
+			pageLogin.init('login');
+		});
+		router.add('home', () => {
+			pageHome.init('home');
+		}, true);
 
 		router.start();
 	}

@@ -3,22 +3,31 @@
 /**
  * Import
  */
-
+import Security from './security.js';
 import Page from 'page';
+window.Page = Page;
 
 /**
  *
  */
 class Router {
 	constructor() {
-		Page('/', this.redirect);
+		this.security = new Security();
+		Page('/', () => {
+			this.redirect();
+		});
 	}
 
 	/**
 	 *
 	 */
-	add(alias, init) {
-		Page('/' + alias, () => { init(alias) });
+	add(alias, init, hasSecurity) {
+		if (hasSecurity)
+			Page('/' + alias, () => {
+				this.security.validate() ? init(alias) : () => {};
+			});
+		else
+			Page('/' + alias, () => { init(alias) });
 	}
 
 	/**
@@ -31,7 +40,7 @@ class Router {
 	}
 
 	redirect () {
-		if (1 === 1) {
+		if (!this.security.validate()) {
 			Page('/login');
 		}
 		else {

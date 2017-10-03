@@ -17,7 +17,11 @@ class Home extends Page {
 	init (page) {
 		super.load(page);
 
-		console.log('init home');
+		this.bindEvents();
+	}
+
+	bindEvents () {
+
 	}
 }
 

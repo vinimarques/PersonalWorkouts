@@ -37,7 +37,7 @@ a {
   a:hover, a:focus, a:visited {
     text-decoration: none; }
 
-a:focus, a:active, input:focus, input:active {
+a:focus, a:active, input:focus, input:active, button:focus, button:active {
   outline: none; }
 
 i, em {
@@ -76,6 +76,84 @@ body {
       -ms-grid-row-align: center;
       align-self: center; }
 
+.global__search input {
+  background: #F2F2F2; }
+
+.header {
+  padding: 0 30px;
+  height: 100px;
+  background: #4470DA;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  z-index: 1; }
+  .header h1 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.05em; }
+  .header__user {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    color: #fff;
+    font-size: 12px;
+    -ms-flex-item-align: start;
+        align-self: flex-start;
+    padding: 10px 0;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .header__user li {
+      padding: 3px 20px;
+      border-right: solid 1px rgba(255, 255, 255, 0.2); }
+      .header__user li:last-child {
+        border: none;
+        padding-right: 0; }
+      .header__user li.type {
+        text-transform: uppercase; }
+      .header__user li.quit a {
+        display: block;
+        padding: 10px;
+        border-radius: 3px;
+        background: #EF476F;
+        transition: all .3s;
+        text-transform: uppercase;
+        font-weight: 500; }
+        .header__user li.quit a:hover {
+          background: #ed305d;
+          box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35); }
+
+.nav {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  background: #F2F2F2;
+  padding: 30px;
+  box-sizing: border-box;
+  z-index: 3; }
+  .nav ul li {
+    padding: 10px 0; }
+    .nav ul li:first-child {
+      padding-top: 0; }
+    .nav ul li a {
+      display: block;
+      padding: 5px 0;
+      font-weight: 500;
+      font-size: 18px; }
+      .nav ul li a.active {
+        color: #EF476F;
+        font-weight: 700; }
+
 .page {
   opacity: 0;
   transition: opacity .3s;
@@ -89,12 +167,19 @@ body {
   .page.active {
     opacity: 1;
     z-index: 2; }
+  .page__container {
+    position: absolute;
+    top: 100px;
+    left: 300px;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    padding: 30px;
+    box-sizing: border-box;
+    z-index: 2; }
 
-.header {
-  padding: 30px; }
-  .header h1 {
-    color: #ddd;
-    font-size: 50px; }
+.btn--add + .page__container {
+  padding-top: 60px; }
 
 .formm {
   display: -webkit-box;
@@ -148,6 +233,34 @@ body {
     .btn--primary:hover {
       background: #ed305d;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35); }
+  .btn--add {
+    background: #EF476F;
+    height: 60px;
+    width: 60px;
+    transition: all .3s;
+    position: absolute;
+    top: 70px;
+    right: 30px;
+    z-index: 10;
+    border-radius: 100%; }
+    .btn--add::after, .btn--add::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      position: absolute;
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+      top: 28px;
+      left: 20px; }
+    .btn--add::before {
+      -webkit-transform: rotate(90deg);
+              transform: rotate(90deg); }
+    .btn--add:hover {
+      background: #ed305d;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg); }
 
 #modal-layer {
   position: fixed;
@@ -209,6 +322,19 @@ body {
   transition: visibility 0s ease 0s, opacity .5s ease .1s;
   visibility: visible;
   opacity: 0.8; }
+
+.ttable {
+  width: 100%; }
+  .ttable__header th {
+    text-align: left;
+    padding: 20px 5px 10px 5px;
+    border-bottom: solid 1px #F2F2F2;
+    font-size: 18px;
+    font-weight: 500; }
+  .ttable__body td {
+    text-align: left;
+    padding: 20px 5px;
+    font-size: 14px; }
 
 .login-form {
   width: 500px;

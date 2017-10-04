@@ -52,11 +52,21 @@ router.post('/login', Resolve.send(
 
 router.get('/users', Auth.middleware(), Resolve.send(
 	function (req) {
-		return Users.All()
+		const company_id = req.query.company_id;
+
+		if (!company_id) {
+			const error = ApiError.companyRequired();
+			return {
+				success: false,
+				error: error.data
+			};
+		}
+
+		return Users.All(company_id)
 			.then(users => {
 				return {
 					success: true,
-					users
+					data: users
 				};
 			});
 	}

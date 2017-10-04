@@ -15,7 +15,6 @@ class Login extends Page {
 	}
 
 	init(page, ctx) {
-		console.log(ctx);
 		super.load(page);
 	}
 
@@ -34,7 +33,7 @@ class Login extends Page {
 				if (res.success) {
 					App.database.set('token',res.token);
 					App.database.set('user',res.user);
-					App.api.setHeader('Authorization', 'Bearer ' + token);
+					App.api.setHeader('Authorization', 'Bearer ' + res.token);
 					window.Page('/home');
 				}
 				else {

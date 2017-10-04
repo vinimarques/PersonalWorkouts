@@ -1,35 +1,95 @@
 'use strict';
 
+import Global from '../global';
+
 /**
  *
  */
 class Page {
-	constructor() {}
+	constructor() {
+		this.page = {};
+		this.global = new Global();
+	}
 
 	load(pageName) {
 		return new Promise((success, error) => {
 			let pages = $('.pages');
 			let page = $(`[data-page="${pageName}"`);
+			let last = pages.find('.page.active');
 
-			pages.find('.page.active').removeClass('active');
+			this.page.active = last.data('page');
+
+			if (this.page.active === pageName) return false;
+
+			last.removeClass('active');
+
+			setTimeout(() => {
+				last.remove();
+			}, 500);
 
 			if (page.length === 0) {
 				$.get('page/' + pageName + '.html')
 					.then((res) => {
-						pages.append(res);
-						page = $(`[data-page="${pageName}"`);
+						let html = res;
+						if (html.indexOf('{include') !== -1) {
+							let maths = html.match(/({include\[)(.*)[\]}]/g);
 
-						page.addClass('active');
-						this._bindEvents && this._bindEvents();
-						success();
+							let pMaths = maths.map((item) => {
+								let partialFile = item.replace('{include[','').replace(']}','');
+								return $.get('partials/' + partialFile + '.html');
+							});
+
+							Promise.all(pMaths).then((htmls) => {
+								htmls.map((content, index) => {
+									html = html.replace(maths[index], content);
+								});
+
+								pages.append(html);
+								page = $(`[data-page="${pageName}"`);
+
+								page.addClass('active');
+								this.activeNav(pageName);
+								this._bindEvents && this._bindEvents();
+								this.global.bindEvents && this.global.bindEvents();
+								this.onload && this.onload();
+								success();
+							})
+						}
+						else {
+							pages.append(html);
+							page = $(`[data-page="${pageName}"`);
+
+							page.addClass('active');
+							this.activeNav(pageName);
+							this._bindEvents && this._bindEvents();
+							this.global.bindEvents && this.global.bindEvents();
+							this.onload && this.onload();
+							success();
+						}
 					})
 					.catch(error);
 			}
 			else {
 				page.addClass('active');
+				this.activeNav(pageName);
 				success();
 			}
 		});
+	}
+
+	activeNav(pageName) {
+		$('.nav').find('.active').removeClass('active');
+		$('.nav').find('.' + pageName).addClass('active');
+
+		this.loadUserInfos();
+	}
+
+	loadUserInfos () {
+		const user = App.database.get('user');
+
+		$('.header__user .name').text(user.name);
+		$('.header__user .company').text(user.company_name);
+		$('.header__user .type').text(user.user_type_name);
 	}
 }
 

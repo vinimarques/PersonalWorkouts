@@ -1,6 +1,7 @@
 'use strict';
 
 import config from '../config';
+import Security from './security';
 import CryptoJS from 'crypto-js';
 
 /**
@@ -11,6 +12,7 @@ class Api {
 	constructor() {
 		this.url = 'http://' + config.apiurl;
 		this.headers = {};
+		this.security = new Security();
 	}
 
 	setHeader(name, value) {
@@ -26,11 +28,20 @@ class Api {
 				success: (response) => {
 					success(response);
 				},
-				error: error,
+				error: (err) => {
+					this.verifyError(err.responseJSON);
+				},
 				headers: this.headers
 			};
 			$.ajax(ajaxOptions);
 		})
+	}
+
+	verifyError (res) {
+		console.log(res);
+		if (res.error.status === 432) {
+			this.security.clearAndRedirect();
+		}
 	}
 
 	login (email, pass) {
@@ -38,8 +49,8 @@ class Api {
 		return this.request('POST', '/login', { email, password });
 	}
 
-	users () {
-		return this.request('GET', '/users');
+	users(company_id) {
+		return this.request('GET', '/users', {company_id});
 	}
 }
 

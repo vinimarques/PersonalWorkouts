@@ -15,7 +15,13 @@ class Auth {
 			Users.getToken(token)
 				.then(user => {
 					console.log(user);
-					next();
+					if (user.length > 0) {
+						next();
+					}
+					else {
+						const error = ApiError.userRequired();
+						return res.status(error.statusCode).send({ error: error.data });
+					}
 				})
 				.catch(() => {
 					const error = ApiError.userRequired();
@@ -26,8 +32,6 @@ class Auth {
 			const error = ApiError.userRequired();
 			return res.status(error.statusCode).send({ error: error.data });
 		}
-
-      next();
     }
   }
 }

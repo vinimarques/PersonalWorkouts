@@ -33,22 +33,13 @@ class ApiError extends Error {
     return new ApiError(`Há erros no formulário`, 435, detail);
   }
 
-  static postNotFound(detail) {
-    return new ApiError(`Post não encontrado`, 436, detail);
+  static companyRequired(detail) {
+	  return new ApiError('company_id is required.', 436, detail);
   }
 
   static unknown(detail) {
     return new ApiError(`Erro desconhecido`, 500, detail);
   }
-
-  static alreadyLiked(details) {
-    return new ApiError(`Você ja deu like neste post`, 437, details);
-  }
-
-  static notLikedYet(details) {
-    return new ApiError(`Você ainda não deu like neste post`, 437, details);
-  }
-
 }
 
 module.exports = ApiError;

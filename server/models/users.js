@@ -18,7 +18,7 @@ class Users extends Model {
 		const date = new Date();
 		const data = {
 			token,
-			date: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate(),
+			date: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getMilliseconds()}`,
 			user_id: user.id
 		};
 		return Model.insert(data, 'token').then(() => {
@@ -27,23 +27,24 @@ class Users extends Model {
 	}
 
 	static getToken(token) {
-		return Model.first(`
+		return Model.query(`
 			SELECT u.id, u.company_id, u.user_type_id
 			FROM users as u
 			LEFT JOIN company as c ON u.company_id = c.id
 			LEFT JOIN user_type as t ON u.user_type_id = t.id
 			LEFT JOIN token as o ON o.user_id = u.id
 			WHERE o.token = ?
-		`, [token]);
+		`, [token], { limit: 1 });
 	}
 
-	static All() {
-		return Model.first(`
+	static All(company_id) {
+		return Model.query(`
 			SELECT u.id, u.name, u.email, u.company_id, u.user_type_id, c.name as 'company_name', t.name as 'user_type_name'
 			FROM users as u
 			LEFT JOIN company as c ON u.company_id = c.id
 			LEFT JOIN user_type as t ON u.user_type_id = t.id
-		`);
+			WHERE c.id = ?
+		`, [company_id]);
 	}
 
   	static insert(data) {

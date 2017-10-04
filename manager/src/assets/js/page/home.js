@@ -15,14 +15,11 @@ class Home extends Page {
 	}
 
 	init(page, ctx) {
-		console.log(ctx);
 		super.load(page);
 	}
 
 	_bindEvents () {
-		App.api.users().then((res) => {
-			console.log(res);
-		})
+
 	}
 }
 

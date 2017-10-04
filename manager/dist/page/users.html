@@ -1,0 +1,35 @@
+<section class="page" data-page="users">
+	{include[header]}
+	{include[nav]}
+
+	<button class="btn btn--add" id="btn-add-users"></button>
+	<div class="page__container">
+		<div class="formm global__search">
+			<label class="formm__item">
+				<input type="text" placeholder="Search" name="search" class="formm__text">
+			</label>
+		</div>
+		<table class="ttable">
+			<thead class="ttable__header">
+				<tr>
+					<th>Name</th>
+					<th>E-mail</th>
+					<th>Type</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody class="ttable__body" id="users-content"></tbody>
+		</table>
+	</div>
+</section>
+
+<script type="text/x-jsrender" id="template-users">
+	{{for users}}
+		<tr>
+			<td>{{:name}}</td>
+			<td>{{:email}}</td>
+			<td>{{:user_type_name}}</td>
+			<td>edit delete</td>
+		</tr>
+	{{/for}}
+</script>

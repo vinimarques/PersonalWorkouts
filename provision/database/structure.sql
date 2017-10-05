@@ -172,6 +172,28 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`token` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `personalworkouts`.`exercise_company`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personalworkouts`.`exercise_company` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `company_id` INT NOT NULL,
+  `exercise_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_exercise_company_company1_idx` (`company_id` ASC),
+  INDEX `fk_exercise_company_exercise1_idx` (`exercise_id` ASC),
+  CONSTRAINT `fk_exercise_company_company1`
+    FOREIGN KEY (`company_id`)
+    REFERENCES `personalworkouts`.`company` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_exercise_company_exercise1`
+    FOREIGN KEY (`exercise_id`)
+    REFERENCES `personalworkouts`.`exercise` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

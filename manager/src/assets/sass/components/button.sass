@@ -51,3 +51,76 @@
 			background: darken($color-secondary, 5%)
 			box-shadow: 0 -2px 5px rgba(0,0,0,0.5)
 			transform: rotate(180deg)
+
+	&--more
+		position: relative
+		background: transparent
+		width: 20px
+		height: 40px
+		display: flex
+		justify-content: center
+		align-items: center
+		cursor: pointer
+		transition: all .3s
+		border-radius: 0 5px 5px 0
+
+		span::before,
+		span::after,
+		span
+			display: block
+			width: 5px
+			height: 5px
+			border-radius: 100%
+			background: $color-bullet
+			position: relative
+
+		span::before,
+		span::after
+			content: ''
+			position: absolute
+			top: -8px
+
+		span::after
+			top: 8px
+
+		ul
+			position: absolute
+			display: flex
+			right: 100%
+			height: 40px
+			background: $color-modal
+			border-radius: 5px 0 0 5px
+			transition: all .2s
+			opacity: 0
+			transform: translateX(20px)
+
+			li
+				display: flex
+				align-items: center
+				justify-content: center
+				width: 40px
+				border-right: solid 1px $white
+				font-size: 20px
+				color: $color-bullet
+
+				a
+					display: flex
+					align-items: center
+					justify-content: center
+					height: 40px
+
+					&:hover
+						color: $color-secondary
+
+		&:hover
+			background: $color-modal
+
+			span::before,
+			span::after,
+			span
+				background: $color-primary
+
+			ul
+				transition: all .3s .2s
+				opacity: 1
+				transform: translateX(0)

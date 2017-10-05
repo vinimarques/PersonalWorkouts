@@ -79,6 +79,10 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
+	var _consts = __webpack_require__(66);
+
+	var _consts2 = _interopRequireDefault(_consts);
+
 	var _jquery = __webpack_require__(22);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
@@ -120,7 +124,9 @@
 		App.api = new _api2.default();
 		App.database = database;
 
-		_routes2.default.init();
+		_consts2.default.init(function () {
+			_routes2.default.init();
+		});
 	};
 
 	App.init();
@@ -12334,6 +12340,11 @@
 			value: function users(company_id) {
 				return this.request('GET', '/users', { company_id: company_id });
 			}
+		}, {
+			key: 'getConsts',
+			value: function getConsts() {
+				return this.request('GET', '/consts');
+			}
 		}]);
 
 		return Api;
@@ -21867,6 +21878,32 @@
 	return $ || jsr;
 	}, window));
 
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	window.consts = {};
+
+	/**
+	 *
+	 */
+	exports.default = {
+		init: function init(callback) {
+			App.api.getConsts().then(function (res) {
+				if (res.success) {
+					window.consts.DIFFICULTIES = res.data.difficulties;
+					window.consts.TYPES = res.data.types;
+				}
+				callback && callback();
+			});
+		}
+	};
 
 /***/ })
 /******/ ]);

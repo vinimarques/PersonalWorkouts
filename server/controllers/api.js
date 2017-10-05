@@ -8,8 +8,34 @@ const Validator = require('../services/validator');
 const ApiError = require('../services/error');
 
 const Users = require('../models/users');
+const Consts = require('../models/consts');
 
 const Promise = require('bluebird');
+
+router.get('/consts', Resolve.send(
+	function (req) {
+		return Consts.All()
+			.then(result => {
+				return {
+					success: true,
+					data: {
+						types: result[0],
+						difficulties: result[1]
+					}
+				};
+			})
+			.catch((err) => {
+				console.log(err);
+				return {
+					success: false,
+					error: {
+						status: 500,
+						message: err
+					}
+				};
+			});
+	}
+));
 
 router.post('/login', Resolve.send(
   function (req) {

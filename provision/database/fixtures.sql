@@ -78,9 +78,10 @@ LOCK TABLES `user_type` WRITE;
 
 INSERT INTO `user_type` (`id`, `name`)
 VALUES
-	(1,'admin'),
-	(2,'professor'),
-	(3,'estudante');
+	(1,'master'),
+	(2,'admin'),
+	(3,'professor'),
+	(4,'estudante');
 
 /*!40000 ALTER TABLE `user_type` ENABLE KEYS */;
 UNLOCK TABLES;

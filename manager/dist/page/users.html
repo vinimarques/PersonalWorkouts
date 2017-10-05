@@ -6,7 +6,10 @@
 	<div class="page__container">
 		<div class="formm global__search">
 			<label class="formm__item">
-				<input type="text" placeholder="Search" name="search" class="formm__text">
+				<span class="formm__text">
+					<input type="text" autocomplete="off" placeholder="Search User" name="search">
+					<em></em>
+				</span>
 			</label>
 		</div>
 		<table class="ttable">
@@ -29,7 +32,15 @@
 			<td>{{:name}}</td>
 			<td>{{:email}}</td>
 			<td>{{:user_type_name}}</td>
-			<td>edit delete</td>
+			<td>
+				<button class="btn btn--more right">
+					<span></span>
+					<ul>
+						<li><a href="javascript:;" class="user-edit"><em class="icon icon-edit"></em></a></li>
+						<li><a href="javascript:;" class="user-delete"><em class="icon icon-delete"></em></a></li>
+					</ul>
+				</button>
+			</td>
 		</tr>
 	{{/for}}
 </script>

@@ -52,6 +52,10 @@ class Api {
 	users(company_id) {
 		return this.request('GET', '/users', {company_id});
 	}
+
+	getConsts() {
+		return this.request('GET', '/consts');
+	}
 }
 
 export { Api as default }

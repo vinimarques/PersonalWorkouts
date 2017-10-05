@@ -1,5 +1,6 @@
 import config from './config';
 import Routes from './routes';
+import Consts from './consts';
 
 // Import jQuery Global
 import $ from 'jquery';
@@ -27,7 +28,9 @@ App.init = () => {
 	App.api = new Api();
 	App.database = database;
 
-	Routes.init();
+	Consts.init(() => {
+		Routes.init();
+	});
 };
 
 App.init();

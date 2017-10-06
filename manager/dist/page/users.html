@@ -12,35 +12,46 @@
 				</span>
 			</label>
 		</div>
-		<table class="ttable">
-			<thead class="ttable__header">
-				<tr>
-					<th>Name</th>
-					<th>E-mail</th>
-					<th>Type</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody class="ttable__body" id="users-content"></tbody>
+		<div class="ttable">
+			<div class="ttable__header">
+				<span class="ttable__header__col col-4">Name</span>
+				<span class="ttable__header__col col-5">E-mail</span>
+				<span class="ttable__header__col col-2">Type</span>
+				<span class="ttable__header__col col-1"></span>
+			</div>
+			<div class="ttable__body" id="users-content"></div>
 		</table>
 	</div>
 </section>
 
+<div class="modal modal-add-user">
+	<a href="javascript:;" class="modal__close"></a>
+	<div class="modal__content">
+		<form class="formm">
+			<label class="formm__item"></label>
+		</form>
+	</div>
+</div>
+
 <script type="text/x-jsrender" id="template-users">
-	{{for users}}
-		<tr>
-			<td>{{:name}}</td>
-			<td>{{:email}}</td>
-			<td>{{:user_type_name}}</td>
-			<td>
-				<button class="btn btn--more right">
-					<span></span>
-					<ul>
-						<li><a href="javascript:;" class="user-edit"><em class="icon icon-edit"></em></a></li>
-						<li><a href="javascript:;" class="user-delete"><em class="icon icon-delete"></em></a></li>
-					</ul>
-				</button>
-			</td>
-		</tr>
-	{{/for}}
+	{{if error}}
+		<span class="ttable__body__col error">{{:error}}</span>
+	{{else}}
+		{{for users}}
+			<div class="ttable__body__row">
+				<span class="ttable__body__col col-4">{{:name}}</span>
+				<span class="ttable__body__col col-5">{{:email}}</span>
+				<span class="ttable__body__col col-2">{{:user_type_name}}</span>
+				<span class="ttable__body__col col-1 actions">
+					<button class="btn btn--more right">
+						<span></span>
+						<ul>
+							<li><a href="javascript:;" class="user-edit"><em class="icon icon-edit"></em></a></li>
+							<li><a href="javascript:;" class="user-delete"><em class="icon icon-delete"></em></a></li>
+						</ul>
+					</button>
+				</span>
+			</div>
+		{{/for}}
+	{{/if}}
 </script>

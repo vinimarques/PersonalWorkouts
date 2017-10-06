@@ -1,16 +1,51 @@
 .ttable
 	width: 100%
+	box-shadow: 0 0 10px rgba(0,0,0,.1)
 
 	&__header
-		th
-			text-align: left
-			padding: 20px 5px 10px 5px
+		display: flex
+
+		&__col
+			display: flex
+			flex-grow: 1
+			padding: 20px
 			border-bottom: solid 1px $color-modal
 			font-size: 18px
 			font-weight: 500
 
 	&__body
-		td
-			text-align: left
-			padding: 20px 5px
+		display: flex
+		flex-direction: column
+		width: 100%
+
+		&__row
+			display: flex
+			width: 100%
+			transition: all .3s
+
+			&:hover
+				background: $color-modal
+
+		&__col
+			display: flex
+			flex-grow: 1
+			align-items: center
+			padding: 10px 20px
 			font-size: 14px
+			border-bottom: solid 1px $color-modal
+
+		.actions
+			padding: 10px 10px
+			justify-content: flex-end
+
+		.error
+			justify-content: center
+			padding: 20px 20px
+			color: $color-secondary
+			font-weight: 700
+			font-size: 18px
+
+	$total-columns: 12
+	@for $i from 1 through $total-columns
+		.col-#{$i}
+			width: #{(100 * ($i / $total-columns)) + '%'}

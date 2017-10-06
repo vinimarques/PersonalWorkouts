@@ -49,7 +49,7 @@ class Page {
 
 								page.addClass('active');
 								this.activeNav(pageName);
-								this._bindEvents && this._bindEvents();
+								this.bindEvents && this.bindEvents();
 								this.global.bindEvents && this.global.bindEvents();
 								this.onload && this.onload();
 								success();
@@ -61,7 +61,7 @@ class Page {
 
 							page.addClass('active');
 							this.activeNav(pageName);
-							this._bindEvents && this._bindEvents();
+							this.bindEvents && this.bindEvents();
 							this.global.bindEvents && this.global.bindEvents();
 							this.onload && this.onload();
 							success();
@@ -75,6 +75,14 @@ class Page {
 				success();
 			}
 		});
+	}
+
+	bindEvents () {
+		$('.global__search input').on('keyup', (ev) => {
+			this._searchKeyUp && this._searchKeyUp(ev);
+		});
+
+		this._bindEvents && this._bindEvents();
 	}
 
 	activeNav(pageName) {

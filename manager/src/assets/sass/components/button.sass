@@ -88,9 +88,10 @@
 			display: flex
 			right: 100%
 			height: 40px
-			background: $color-modal
+			background: $white
 			border-radius: 5px 0 0 5px
-			transition: all .2s
+			transition: visibility 0s ease .25s, opacity .1s ease 0s, transform .1s ease 0s
+			visibility: hidden
 			opacity: 0
 			transform: translateX(20px)
 
@@ -99,7 +100,7 @@
 				align-items: center
 				justify-content: center
 				width: 40px
-				border-right: solid 1px $white
+				border-right: solid 1px $color-modal
 				font-size: 20px
 				color: $color-bullet
 
@@ -113,14 +114,15 @@
 						color: $color-secondary
 
 		&:hover
-			background: $color-modal
+			background: $white
 
 			span::before,
 			span::after,
 			span
-				background: $color-primary
+				background: $color-secondary
 
 			ul
-				transition: all .3s .2s
+				transition: visibility 0s ease 0s, opacity .5s ease .1s, transform .5s ease .1s
 				opacity: 1
+				visibility: visible
 				transform: translateX(0)

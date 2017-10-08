@@ -1,6 +1,7 @@
 
 const Model = require('./model');
 const crypto = require('crypto');
+const Moment = require('moment');
 
 class Users extends Model {
 	static getUserByAuthentication(email, password) {
@@ -18,7 +19,7 @@ class Users extends Model {
 		const date = new Date();
 		const data = {
 			token,
-			date: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getMilliseconds()}`,
+			date: Moment().format('YYYY-MM-DD HH:mm:ss'),
 			user_id: user.id
 		};
 		return Model.insert(data, 'token').then(() => {

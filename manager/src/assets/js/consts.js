@@ -11,8 +11,8 @@ export default {
 			.getConsts()
 			.then((res) => {
 				if (res.success) {
-					window.consts.DIFFICULTIES = res.data.difficulties;
 					window.consts.TYPES = res.data.types;
+					window.consts.DIFFICULTIES = res.data.difficulties;
 				}
 				callback && callback();
 			});

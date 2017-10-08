@@ -2,7 +2,7 @@
 	{include[header]}
 	{include[nav]}
 
-	<button class="btn btn--add" id="btn-add-users"></button>
+	<button class="btn btn--add open-modal" data-modal="add-user" id="btn-add-users"></button>
 	<div class="page__container">
 		<div class="formm global__search">
 			<label class="formm__item">
@@ -28,30 +28,34 @@
 	<a href="javascript:;" class="modal__close"></a>
 	<div class="modal__content">
 		<form class="formm">
-			<label class="formm__item"></label>
+			<label class="formm__item">
+				<span class="formm__text">
+					<input type="text" name="name" autocomplete="off" placeholder="Name">
+					<em></em>
+				</span>
+			</label>
+			<label class="formm__item">
+				<span class="formm__text">
+					<input type="text" name="email" autocomplete="off" placeholder="E-mail">
+					<em></em>
+				</span>
+			</label>
+			<label class="formm__item">
+					<span class="formm__select">
+						<select name="user_type_id">
+							{{for TYPES}}
+								<option value="{{:id}}">{{:name}}</option>
+							{{/for}}
+						</select>
+						<em></em>
+					</span>
+				</label>
+			<label class="formm__item">
+				<span class="formm__text">
+					<input type="pasword" name="password" autocomplete="off" placeholder="Password">
+					<em></em>
+				</span>
+			</label>
 		</form>
 	</div>
 </div>
-
-<script type="text/x-jsrender" id="template-users">
-	{{if error}}
-		<span class="ttable__body__col error">{{:error}}</span>
-	{{else}}
-		{{for users}}
-			<div class="ttable__body__row">
-				<span class="ttable__body__col col-4">{{:name}}</span>
-				<span class="ttable__body__col col-5">{{:email}}</span>
-				<span class="ttable__body__col col-2">{{:user_type_name}}</span>
-				<span class="ttable__body__col col-1 actions">
-					<button class="btn btn--more right">
-						<span></span>
-						<ul>
-							<li><a href="javascript:;" class="user-edit"><em class="icon icon-edit"></em></a></li>
-							<li><a href="javascript:;" class="user-delete"><em class="icon icon-delete"></em></a></li>
-						</ul>
-					</button>
-				</span>
-			</div>
-		{{/for}}
-	{{/if}}
-</script>

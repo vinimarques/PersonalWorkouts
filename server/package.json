@@ -13,6 +13,7 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "mysql": "^2.13.0",
     "node-env-configuration": "^1.0.3"
   }

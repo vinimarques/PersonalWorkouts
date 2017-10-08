@@ -44,7 +44,10 @@ class Page {
 									html = html.replace(maths[index], content);
 								});
 
-								pages.append(html);
+								let tmp = $.templates(html);
+								let tmpHtml = tmp.render($.extend(App.data, window.consts));
+
+								pages.append(tmpHtml);
 								page = $(`[data-page="${pageName}"`);
 
 								page.addClass('active');
@@ -56,7 +59,10 @@ class Page {
 							})
 						}
 						else {
-							pages.append(html);
+							let tmp = $.templates(html);
+							let tmpHtml = tmp.render($.extend(App.data, window.consts));
+
+							pages.append(tmpHtml);
 							page = $(`[data-page="${pageName}"`);
 
 							page.addClass('active');

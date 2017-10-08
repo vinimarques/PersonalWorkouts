@@ -253,6 +253,9 @@ input::-moz-placeholder, input::-ms-input-placeholder, input::-moz-placeholder, 
         -webkit-transform: translateX(0px);
                 transform: translateX(0px); }
 
+.modal .formm input {
+  border-bottom: solid 1px #9B9B9B; }
+
 .btn {
   display: table;
   text-align: center;
@@ -579,3 +582,6 @@ input::-moz-placeholder, input::-ms-input-placeholder, input::-moz-placeholder, 
       height: 36px;
       background-size: cover;
       margin-top: 10px; }
+
+.modal-add-user {
+  width: 500px; }

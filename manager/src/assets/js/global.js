@@ -11,7 +11,9 @@ class Global {
 		$('.header .quit a').on('click', (ev) => {
 			ev.preventDefault();
 
-			console.log('quit');
+			App.database.rm('token');
+			App.database.rm('user');
+			window.Page('/login');
 		});
 
 		$body.on('click', '.open-modal', function () {
@@ -23,6 +25,14 @@ class Global {
 			$('.modal-' + modal).addClass('active');
 			$body.addClass('modal-active');
 		});
+
+		App.openModal = function (name) {
+			$body.removeClass('modal-active');
+			$('.modal').removeClass('active');
+
+			$('.modal-' + name).addClass('active');
+			$body.addClass('modal-active');
+		};
 	}
 }
 

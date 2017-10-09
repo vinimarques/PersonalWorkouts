@@ -49,11 +49,20 @@ class Api {
 		return this.request('POST', '/login', { email, password });
 	}
 
-	users(company_id) {
-		return this.request('GET', '/users', {company_id});
+	getUsers (company_id, type) {
+		return this.request('GET', '/users', { company_id, type });
 	}
 
-	getConsts() {
+	saveUser (data) {
+		data.password = CryptoJS.HmacSHA1(data.password, config.key).toString();
+		return this.request('POST', '/users', data);
+	}
+
+	removeUser (data) {
+		return this.request('DELETE', '/users', data);
+	}
+
+	getConsts () {
 		return this.request('GET', '/consts');
 	}
 }

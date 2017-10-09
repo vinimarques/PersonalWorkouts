@@ -1830,7 +1830,9 @@
 				$('.header .quit a').on('click', function (ev) {
 					ev.preventDefault();
 
-					console.log('quit');
+					App.database.rm('token');
+					App.database.rm('user');
+					window.Page('/login');
 				});
 
 				$body.on('click', '.open-modal', function () {
@@ -1842,6 +1844,14 @@
 					$('.modal-' + modal).addClass('active');
 					$body.addClass('modal-active');
 				});
+
+				App.openModal = function (name) {
+					$body.removeClass('modal-active');
+					$('.modal').removeClass('active');
+
+					$('.modal-' + name).addClass('active');
+					$body.addClass('modal-active');
+				};
 			}
 		}]);
 
@@ -1931,6 +1941,10 @@
 
 	var _page2 = _interopRequireDefault(_page);
 
+	var _validator = __webpack_require__(73);
+
+	var _validator2 = _interopRequireDefault(_validator);
+
 	var _lodash = __webpack_require__(28);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
@@ -1952,7 +1966,10 @@
 		function Users() {
 			_classCallCheck(this, Users);
 
-			return _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).call(this));
+			var _this = _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).call(this));
+
+			_this.validator = new _validator2.default();
+			return _this;
 		}
 
 		_createClass(Users, [{
@@ -1966,6 +1983,10 @@
 				this.message = {
 					error: {
 						users: 'USERS NOT FOUND'
+					},
+					success: {
+						add: 'User has been adding successfully!',
+						remove: 'User was removed successfully!'
 					}
 				};
 			}
@@ -1985,7 +2006,7 @@
 				this.template = $.templates($('#template-users').html());
 				var html = '';
 
-				App.api.users(company_id).then(function (res) {
+				App.api.getUsers(company_id, App.data.user.user_type_id).then(function (res) {
 					if (res.success && res.data.length > 0) {
 						_this2.users = res.data;
 						html = _this2.template.render({ users: res.data });
@@ -1998,18 +2019,63 @@
 		}, {
 			key: '_bindEvents',
 			value: function _bindEvents() {
-				console.log('page bind events');
+				var _this3 = this;
+
+				$('.modal-add-user form').on('submit', function (ev) {
+					ev.preventDefault();
+					var data = _this3.validator.getData(ev.target);
+					var dataSend = _this3.validator.getDataSend(ev.target);
+					var isValide = _this3.validator.isValide(data);
+
+					if (isValide.error) {
+						_this3.validator.resetErrors(ev.target);
+						_this3.validator.showErrors(isValide.errors);
+						return false;
+					}
+
+					App.api.saveUser(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this3.message.success.add);
+							_this3.loadUsers();
+						}
+					});
+				});
+
+				$('.modal-remove-user form').on('submit', function (ev) {
+					ev.preventDefault();
+
+					var dataSend = _this3.validator.getDataSend(ev.target);
+
+					if (!dataSend.user_id) return false;
+
+					App.api.removeUser(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this3.message.success.remove);
+							_this3.loadUsers();
+						}
+					});
+				});
+
+				$('body').on('click', '.actions .user-delete', function (ev) {
+					var line = $(ev.target).parents('.ttable__body__row'),
+					    name = line.find('.user-name').text(),
+					    id = line.data('user-id');
+
+					$('.modal-remove-user input').val(id);
+					$('.modal-remove-user .user-remove-name').text(name);
+					App.openModal('remove-user');
+				});
 			}
 		}, {
 			key: '_searchKeyUp',
 			value: function _searchKeyUp(ev) {
-				var _this3 = this;
+				var _this4 = this;
 
 				var value = ev.target.value;
 				clearTimeout(this.timeSearch);
 				this.timeSearch = setTimeout(function () {
-					_this3.search = value;
-					_this3.highlight(value);
+					_this4.search = value;
+					_this4.highlight(value);
 				}, 700);
 			}
 		}, {
@@ -2019,8 +2085,6 @@
 					return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
 				});
 				var html = '';
-
-				console.log(result);
 
 				if (result && result.length > 0) {
 					html = this.template.render({ users: result });
@@ -29842,9 +29906,20 @@
 				return this.request('POST', '/login', { email: email, password: password });
 			}
 		}, {
-			key: 'users',
-			value: function users(company_id) {
-				return this.request('GET', '/users', { company_id: company_id });
+			key: 'getUsers',
+			value: function getUsers(company_id, type) {
+				return this.request('GET', '/users', { company_id: company_id, type: type });
+			}
+		}, {
+			key: 'saveUser',
+			value: function saveUser(data) {
+				data.password = _cryptoJs2.default.HmacSHA1(data.password, _config2.default.key).toString();
+				return this.request('POST', '/users', data);
+			}
+		}, {
+			key: 'removeUser',
+			value: function removeUser(data) {
+				return this.request('DELETE', '/users', data);
 			}
 		}, {
 			key: 'getConsts',
@@ -39090,6 +39165,142 @@
 	return $ || jsr;
 	}, window));
 
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	/**
+	 *
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Validator = function () {
+		function Validator() {
+			_classCallCheck(this, Validator);
+
+			this.rules = {
+				required: {
+					test: function test(value) {
+						return value !== '' && value !== undefined;
+					},
+					message: 'Field is required'
+				},
+				email: {
+					test: function test(value) {
+						return (/^(?:[\w-]+\.?\+?)*[\w-]+@(?:\w+\.)+\w+$/.test(value)
+						);
+					},
+					message: 'E-mail is invalid'
+				}
+			};
+		}
+
+		_createClass(Validator, [{
+			key: 'getData',
+			value: function getData(form) {
+				var _this = this;
+
+				var data = [];
+				$(form).find('input, select, textarea').each(function (index, element) {
+					data.push({
+						field: {
+							name: element.name,
+							value: element.dataset.type ? _this.convert(element.dataset.type, element.value) : element.value
+						},
+						test: element.dataset.validate.split(',')
+					});
+				});
+
+				return data;
+			}
+		}, {
+			key: 'getDataSend',
+			value: function getDataSend(form) {
+				var _this2 = this;
+
+				var data = {};
+				$(form).find('input, select, textarea').each(function (index, element) {
+					data[element.name] = element.dataset.type ? _this2.convert(element.dataset.type, element.value) : element.value;
+				});
+
+				return data;
+			}
+		}, {
+			key: 'convert',
+			value: function convert(type, value) {
+				var val = value;
+				if (value === '') return undefined;
+
+				switch (type) {
+					case 'int':
+						val = parseInt(value);
+						break;
+				}
+
+				return val;
+			}
+		}, {
+			key: 'isValide',
+			value: function isValide(data) {
+				var _this3 = this;
+
+				if (data.length === 0) return {
+					error: true,
+					message: 'Data is empty.'
+				};
+
+				var errors = [];
+
+				data.map(function (item) {
+					var value = item.field.value,
+					    name = item.field.name,
+					    test = item.test;
+					test.map(function (t) {
+						if (!_this3.rules[t].test(value)) {
+							errors.push({
+								field: name,
+								message: _this3.rules[t].message
+							});
+						}
+					});
+				});
+
+				if (errors.length === 0) return { error: false };else return { error: true, errors: errors };
+			}
+		}, {
+			key: 'resetErrors',
+			value: function resetErrors(form) {
+				$(form).find('.error').removeClass('error');
+				$(form).find('.error-tooltip').remove();
+			}
+		}, {
+			key: 'showErrors',
+			value: function showErrors(errors) {
+				errors.map(function (item) {
+					var element = $('[name="' + item.field + '"]').parent();
+					var parent = element.parent();
+
+					if (parent.find('.error-tooltip').length > 0) parent.find('.error-tooltip').append('<strong>' + item.message + '</strong>');else parent.append('<span class="error-tooltip"><strong>' + item.message + '</strong></span>');
+
+					element.addClass('error');
+				});
+			}
+		}]);
+
+		return Validator;
+	}();
+
+	exports.default = Validator;
 
 /***/ })
 /******/ ]);

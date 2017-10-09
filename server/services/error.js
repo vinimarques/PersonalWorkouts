@@ -37,6 +37,10 @@ class ApiError extends Error {
 	  return new ApiError('company_id is required.', 436, detail);
   }
 
+  static userIdRequired(detail) {
+	  return new ApiError('User id is required.', 437, detail);
+  }
+
   static unknown(detail) {
     return new ApiError(`Erro desconhecido`, 500, detail);
   }

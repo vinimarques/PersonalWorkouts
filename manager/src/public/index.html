@@ -16,8 +16,10 @@
 
 	<div id="modal-layer"></div>
 	<div class="modal modal-message">
-		<a href="javascript:;" class="modal__close"></a>
-		<div class="modal__content"></div>
+		<div class="modal__container">
+			<a href="javascript:;" class="modal__close"></a>
+			<div class="modal__content"></div>
+		</div>
 	</div>
 
 	<!-- TEMPLATES -->
@@ -26,8 +28,8 @@
 			<span class="ttable__body__col error">{{:error}}</span>
 		{{else}}
 			{{for users}}
-				<div class="ttable__body__row">
-					<span class="ttable__body__col col-4">{{:name}}</span>
+				<div class="ttable__body__row" data-user-id="{{:id}}">
+					<span class="ttable__body__col col-4 user-name">{{:name}}</span>
 					<span class="ttable__body__col col-5">{{:email}}</span>
 					<span class="ttable__body__col col-2">{{:user_type_name}}</span>
 					<span class="ttable__body__col col-1 actions">

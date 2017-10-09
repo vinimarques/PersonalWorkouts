@@ -38,19 +38,24 @@ class Users extends Model {
 		`, [token], { limit: 1 });
 	}
 
-	static All(company_id) {
+	static All(company_id, type) {
+		console.log(type);
 		return Model.query(`
 			SELECT u.id, u.name, u.email, u.company_id, u.user_type_id, c.name as 'company_name', t.name as 'user_type_name'
 			FROM users as u
 			LEFT JOIN company as c ON u.company_id = c.id
 			LEFT JOIN user_type as t ON u.user_type_id = t.id
-			WHERE c.id = ?
+			WHERE c.id = ? ${type}
 		`, [company_id]);
 	}
 
   	static insert(data) {
 		return Model.insert(data, 'users');
-  	}
+	}
+
+	static remove(data) {
+		return Model.remove(data, 'users');
+	}
 }
 
 module.exports = Users;

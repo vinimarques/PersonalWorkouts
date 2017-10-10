@@ -1,9 +1,11 @@
-input::-moz-placeholder,
-input::-ms-input-placeholder,
-input::-moz-placeholder,
-input::-webkit-input-placeholder,
-input::placeholder
-	color: $color-text
+textarea,
+input
+	&::-moz-placeholder,
+	&::-ms-input-placeholder,
+	&::-moz-placeholder,
+	&::-webkit-input-placeholder,
+	&::placeholder
+		color: $color-text
 
 .formm
 	display: flex
@@ -37,10 +39,64 @@ input::placeholder
 		input
 			width: 100%
 			height: 50px
+			font-size: 16px
+			font-weight: 300
+			font-family: 'open_sans'
+			line-height: 1.5
 			box-sizing: border-box
 			background: transparent
 			border: none
 			border-bottom: solid 1px $color-modal
+
+			&:focus + em
+				transform: translateX(0px)
+
+		textarea
+			resize: none
+			height: 100px
+
+	&__textarea
+		display: block
+		width: 100%
+		min-height: 50px
+		position: relative
+		overflow: hidden
+
+		em
+			content: ''
+			width: 100%
+			height: 1px
+			position: absolute
+			bottom: 0
+			left: 0
+			background: $color-secondary
+			transform: translateX(-100%)
+			transition: transform .3s
+
+		textarea
+			position: absolute
+			left: -999em
+
+		.textarea
+			width: 100%
+			resize: none
+			min-height: 50px
+			font-size: 16px
+			box-sizing: border-box
+			background: transparent
+			font-weight: 300
+			font-family: 'open_sans'
+			line-height: 1.5
+			padding: 10px 0
+			border-bottom: solid 1px $color-modal
+
+			&:empty:before
+				content: attr(placeholder)
+  				display: block
+				color: #757575
+				font-size: 16px
+				font-weight: 300
+				font-family: 'open_sans'
 
 			&:focus + em
 				transform: translateX(0px)

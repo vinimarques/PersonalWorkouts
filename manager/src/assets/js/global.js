@@ -26,6 +26,10 @@ class Global {
 			$body.addClass('modal-active');
 		});
 
+		$body.on('keyup', '.textarea', function () {
+			$(this).parent().find('textarea').val($(this).text());
+		});
+
 		App.openModal = function (name) {
 			$body.removeClass('modal-active');
 			$('.modal').removeClass('active');

@@ -21,6 +21,10 @@ class Helpers {
 	populateForm (form, data) {
 		Object.keys(data).map((key) => {
 			let value = data[key];
+			if (key === 'description') {
+				$(form).find(`[name="${key}"]`).parent().find('.textarea').html(value);
+				value = value.replace(/<br>/g, '\n');
+			}
 			$(form).find(`[name="${key}"]`).val(value);
 		});
 	}

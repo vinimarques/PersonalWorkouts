@@ -9,13 +9,13 @@ import CryptoJS from 'crypto-js';
 */
 class Api {
 
-	constructor() {
+	constructor () {
 		this.url = 'http://' + config.apiurl;
 		this.headers = {};
 		this.security = new Security();
 	}
 
-	setHeader(name, value) {
+	setHeader (name, value) {
 		this.headers[name] = value;
 	}
 
@@ -44,6 +44,10 @@ class Api {
 		}
 	}
 
+	getConsts () {
+		return this.request('GET', '/consts');
+	}
+
 	login (email, pass) {
 		let password = CryptoJS.HmacSHA1(pass, config.key).toString();
 		return this.request('POST', '/login', { email, password });
@@ -53,7 +57,7 @@ class Api {
 		return this.request('GET', '/users', { company_id, type });
 	}
 
-	getUser(user_id) {
+	getUser (user_id) {
 		return this.request('GET', '/user', { user_id });
 	}
 
@@ -62,7 +66,7 @@ class Api {
 		return this.request('POST', '/user', data);
 	}
 
-	updateUser(data) {
+	updateUser (data) {
 		if (data.password) data.password = CryptoJS.HmacSHA1(data.password, config.key).toString();
 		return this.request('PUT', '/user', data);
 	}
@@ -71,8 +75,24 @@ class Api {
 		return this.request('DELETE', '/user', data);
 	}
 
-	getConsts () {
-		return this.request('GET', '/consts');
+	getExercises (company_id) {
+		return this.request('GET', '/exercises', { company_id });
+	}
+
+	getExercise (exercise_id) {
+		return this.request('GET', '/exercise', { exercise_id });
+	}
+
+	saveExercise (data) {
+		return this.request('POST', '/exercise', data);
+	}
+
+	updateExercise (data) {
+		return this.request('PUT', '/exercise', data);
+	}
+
+	removeExercise (data) {
+		return this.request('DELETE', '/exercise', data);
 	}
 }
 

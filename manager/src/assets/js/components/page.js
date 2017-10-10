@@ -27,38 +27,23 @@ class Page {
 				last.remove();
 			}, 500);
 
-			if (page.length === 0) {
-				$.get('page/' + pageName + '.html')
-					.then((res) => {
-						let html = res;
-						if (html.indexOf('{include') !== -1) {
-							let maths = html.match(/({include\[)(.*)[\]}]/g);
 
-							let pMaths = maths.map((item) => {
-								let partialFile = item.replace('{include[','').replace(']}','');
-								return $.get('partials/' + partialFile + '.html');
+			$.get('page/' + pageName + '.html')
+				.then((res) => {
+					let html = res;
+					if (html.indexOf('{include') !== -1) {
+						let maths = html.match(/({include\[)(.*)[\]}]/g);
+
+						let pMaths = maths.map((item) => {
+							let partialFile = item.replace('{include[','').replace(']}','');
+							return $.get('partials/' + partialFile + '.html');
+						});
+
+						Promise.all(pMaths).then((htmls) => {
+							htmls.map((content, index) => {
+								html = html.replace(maths[index], content);
 							});
 
-							Promise.all(pMaths).then((htmls) => {
-								htmls.map((content, index) => {
-									html = html.replace(maths[index], content);
-								});
-
-								let tmp = $.templates(html);
-								let tmpHtml = tmp.render($.extend(App.data, window.consts));
-
-								pages.append(tmpHtml);
-								page = $(`[data-page="${pageName}"`);
-
-								page.addClass('active');
-								this.activeNav(pageName);
-								this.bindEvents && this.bindEvents();
-								this.global.bindEvents && this.global.bindEvents();
-								this.onload && this.onload();
-								success();
-							})
-						}
-						else {
 							let tmp = $.templates(html);
 							let tmpHtml = tmp.render($.extend(App.data, window.consts));
 
@@ -71,15 +56,24 @@ class Page {
 							this.global.bindEvents && this.global.bindEvents();
 							this.onload && this.onload();
 							success();
-						}
-					})
-					.catch(error);
-			}
-			else {
-				page.addClass('active');
-				this.activeNav(pageName);
-				success();
-			}
+						})
+					}
+					else {
+						let tmp = $.templates(html);
+						let tmpHtml = tmp.render($.extend(App.data, window.consts));
+
+						pages.append(tmpHtml);
+						page = $(`[data-page="${pageName}"`);
+
+						page.addClass('active');
+						this.activeNav(pageName);
+						this.bindEvents && this.bindEvents();
+						this.global.bindEvents && this.global.bindEvents();
+						this.onload && this.onload();
+						success();
+					}
+				})
+				.catch(error);
 		});
 	}
 

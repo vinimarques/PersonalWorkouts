@@ -38,8 +38,7 @@ class Users extends Model {
 		`, [token], { limit: 1 });
 	}
 
-	static All(company_id, type) {
-		console.log(type);
+	static all (company_id, type) {
 		return Model.query(`
 			SELECT u.id, u.name, u.email, u.company_id, u.user_type_id, c.name as 'company_name', t.name as 'user_type_name'
 			FROM users as u
@@ -49,7 +48,7 @@ class Users extends Model {
 		`, [company_id]);
 	}
 
-	static First(user_id) {
+	static first (user_id) {
 		return Model.first(`
 			SELECT u.id, u.name, u.email, u.company_id, u.user_type_id, c.name as 'company_name', t.name as 'user_type_name'
 			FROM users as u
@@ -59,15 +58,15 @@ class Users extends Model {
 		`, [user_id]);
 	}
 
-  	static insert(data) {
+  	static insert (data) {
 		return Model.insert(data, 'users');
 	}
 
-	static remove(data) {
+	static remove (data) {
 		return Model.remove(data, 'users');
 	}
 
-	static update(data, user_id) {
+	static update (data, user_id) {
 		return Model.update(data, { id: user_id }, 'users');
 	}
 }

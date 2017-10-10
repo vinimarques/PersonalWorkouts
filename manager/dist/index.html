@@ -60,6 +60,27 @@
 			{{/for}}
 		{{/if}}
 	</script>
+	<script type="text/x-jsrender" id="template-exercises">
+			{{if error}}
+				<span class="ttable__body__col error">{{:error}}</span>
+			{{else}}
+				{{for exercises}}
+					<div class="ttable__body__row" data-exercise-id="{{:id}}">
+						<span class="ttable__body__col col-4 exercise-name">{{:name}}</span>
+						<span class="ttable__body__col col-7">{{:description}}</span>
+						<span class="ttable__body__col col-1 actions">
+							<button class="btn btn--more right">
+								<span></span>
+								<ul>
+									<li><a href="javascript:;" class="exercise-edit"><em class="icon icon-edit"></em></a></li>
+									<li><a href="javascript:;" class="exercise-delete"><em class="icon icon-delete"></em></a></li>
+								</ul>
+							</button>
+						</span>
+					</div>
+				{{/for}}
+			{{/if}}
+		</script>
 	<!-- // TEMPLATES -->
 
 	<script src="js/bundle.js" charset="utf-8"></script>

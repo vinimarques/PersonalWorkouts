@@ -1724,36 +1724,21 @@
 						last.remove();
 					}, 500);
 
-					if (page.length === 0) {
-						$.get('page/' + pageName + '.html').then(function (res) {
-							var html = res;
-							if (html.indexOf('{include') !== -1) {
-								var maths = html.match(/({include\[)(.*)[\]}]/g);
+					$.get('page/' + pageName + '.html').then(function (res) {
+						var html = res;
+						if (html.indexOf('{include') !== -1) {
+							var maths = html.match(/({include\[)(.*)[\]}]/g);
 
-								var pMaths = maths.map(function (item) {
-									var partialFile = item.replace('{include[', '').replace(']}', '');
-									return $.get('partials/' + partialFile + '.html');
+							var pMaths = maths.map(function (item) {
+								var partialFile = item.replace('{include[', '').replace(']}', '');
+								return $.get('partials/' + partialFile + '.html');
+							});
+
+							Promise.all(pMaths).then(function (htmls) {
+								htmls.map(function (content, index) {
+									html = html.replace(maths[index], content);
 								});
 
-								Promise.all(pMaths).then(function (htmls) {
-									htmls.map(function (content, index) {
-										html = html.replace(maths[index], content);
-									});
-
-									var tmp = $.templates(html);
-									var tmpHtml = tmp.render($.extend(App.data, window.consts));
-
-									pages.append(tmpHtml);
-									page = $('[data-page="' + pageName + '"');
-
-									page.addClass('active');
-									_this.activeNav(pageName);
-									_this.bindEvents && _this.bindEvents();
-									_this.global.bindEvents && _this.global.bindEvents();
-									_this.onload && _this.onload();
-									success();
-								});
-							} else {
 								var tmp = $.templates(html);
 								var tmpHtml = tmp.render($.extend(App.data, window.consts));
 
@@ -1766,13 +1751,22 @@
 								_this.global.bindEvents && _this.global.bindEvents();
 								_this.onload && _this.onload();
 								success();
-							}
-						}).catch(error);
-					} else {
-						page.addClass('active');
-						_this.activeNav(pageName);
-						success();
-					}
+							});
+						} else {
+							var tmp = $.templates(html);
+							var tmpHtml = tmp.render($.extend(App.data, window.consts));
+
+							pages.append(tmpHtml);
+							page = $('[data-page="' + pageName + '"');
+
+							page.addClass('active');
+							_this.activeNav(pageName);
+							_this.bindEvents && _this.bindEvents();
+							_this.global.bindEvents && _this.global.bindEvents();
+							_this.onload && _this.onload();
+							success();
+						}
+					}).catch(error);
 				});
 			}
 		}, {
@@ -1853,6 +1847,10 @@
 
 					$('.modal-' + modal).addClass('active');
 					$body.addClass('modal-active');
+				});
+
+				$body.on('keyup', '.textarea', function () {
+					$(this).parent().find('textarea').val($(this).text());
 				});
 
 				App.openModal = function (name) {
@@ -19337,6 +19335,14 @@
 
 	var _page2 = _interopRequireDefault(_page);
 
+	var _validator = __webpack_require__(73);
+
+	var _validator2 = _interopRequireDefault(_validator);
+
+	var _lodash = __webpack_require__(28);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19354,17 +19360,140 @@
 		function Exercises() {
 			_classCallCheck(this, Exercises);
 
-			return _possibleConstructorReturn(this, (Exercises.__proto__ || Object.getPrototypeOf(Exercises)).call(this));
+			var _this = _possibleConstructorReturn(this, (Exercises.__proto__ || Object.getPrototypeOf(Exercises)).call(this));
+
+			_this.validator = new _validator2.default();
+			return _this;
 		}
 
 		_createClass(Exercises, [{
 			key: 'init',
 			value: function init(page, ctx) {
 				_get(Exercises.prototype.__proto__ || Object.getPrototypeOf(Exercises.prototype), 'load', this).call(this, page);
+
+				this.search = '';
+				this.exercises = '';
+				this.time = null;
+				this.message = {
+					error: {
+						exercises: 'EXERCISES NOT FOUND'
+					},
+					success: {
+						add: 'Exercise has been adding successfully!',
+						update: 'Exercise has been updated successfully!',
+						remove: 'Exercise has been removed successfully!'
+					}
+				};
+			}
+		}, {
+			key: 'onload',
+			value: function onload() {
+				this.exercisesContent = $('#exercises-content');
+				this.loadExercises();
 			}
 		}, {
 			key: '_bindEvents',
-			value: function _bindEvents() {}
+			value: function _bindEvents() {
+				var _this2 = this;
+
+				$('.modal-add-exercise form').on('submit', function (ev) {
+					ev.preventDefault();
+					var data = _this2.validator.getData(ev.target);
+					var dataSend = _this2.validator.getDataSend(ev.target);
+					var isValide = _this2.validator.isValide(data);
+
+					if (isValide.error) {
+						_this2.validator.resetErrors(ev.target);
+						_this2.validator.showErrors(isValide.errors);
+						return false;
+					}
+
+					App.api.saveExercise(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this2.message.success.add);
+							$(ev.target)[0].reset();
+							_this2.loadExercises();
+						}
+					});
+				});
+
+				$('.modal-edit-exercise form').on('submit', function (ev) {
+					ev.preventDefault();
+
+					var data = _this2.validator.getData(ev.target);
+					var dataSend = _this2.validator.getDataSend(ev.target);
+					var isValide = _this2.validator.isValide(data);
+
+					if (isValide.error) {
+						_this2.validator.resetErrors(ev.target);
+						_this2.validator.showErrors(isValide.errors);
+						return false;
+					}
+
+					App.api.updateExercise(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this2.message.success.update);
+							$(ev.target)[0].reset();
+							_this2.loadExercises();
+						}
+					});
+				});
+
+				$('.modal-remove-exercise form').on('submit', function (ev) {
+					ev.preventDefault();
+					var dataSend = _this2.validator.getDataSend(ev.target);
+					if (!dataSend.user_id) return false;
+					App.api.removeExercise(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this2.message.success.remove);
+							_this2.loadUsers();
+						}
+					});
+				});
+
+				$('body').on('click', '.actions .exercise-delete', function (ev) {
+					var line = $(ev.target).parents('.ttable__body__row'),
+					    name = line.find('.exercise-name').text(),
+					    id = line.data('exercise-id');
+
+					$('.modal-remove-exercise input').val(id);
+					$('.modal-remove-exercise .exercise-remove-name').text(name);
+					App.openModal('remove-exercise');
+				});
+
+				$('body').on('click', '.actions .exercise-edit', function (ev) {
+					var line = $(ev.target).parents('.ttable__body__row'),
+					    name = line.find('.exercise-name').text(),
+					    id = line.data('exercise-id');
+
+					App.loader.show();
+					App.api.getExercise(id).then(function (res) {
+						App.loader.hide();
+						App.helpers.populateForm('.modal-edit-exercise form', res.data);
+						App.openModal('edit-exercise');
+					});
+				});
+			}
+		}, {
+			key: 'loadExercises',
+			value: function loadExercises() {
+				var _this3 = this;
+
+				var container = this.exercisesContent;
+				var company_id = App.data.user.company_id;
+				this.template = $.templates($('#template-exercises').html());
+				var html = '';
+
+				App.api.getExercises(company_id).then(function (res) {
+					if (res.success && res.data.length > 0) {
+						_this3.exercises = res.data;
+						html = _this3.template.render({ exercises: res.data });
+					} else {
+						html = _this3.template.render({ error: _this3.message.error.exercises });
+					}
+					container.html(html);
+				});
+			}
 		}]);
 
 		return Exercises;
@@ -29949,6 +30078,11 @@
 				}
 			}
 		}, {
+			key: 'getConsts',
+			value: function getConsts() {
+				return this.request('GET', '/consts');
+			}
+		}, {
 			key: 'login',
 			value: function login(email, pass) {
 				var password = _cryptoJs2.default.HmacSHA1(pass, _config2.default.key).toString();
@@ -29982,9 +30116,29 @@
 				return this.request('DELETE', '/user', data);
 			}
 		}, {
-			key: 'getConsts',
-			value: function getConsts() {
-				return this.request('GET', '/consts');
+			key: 'getExercises',
+			value: function getExercises(company_id) {
+				return this.request('GET', '/exercises', { company_id: company_id });
+			}
+		}, {
+			key: 'getExercise',
+			value: function getExercise(exercise_id) {
+				return this.request('GET', '/exercise', { exercise_id: exercise_id });
+			}
+		}, {
+			key: 'saveExercise',
+			value: function saveExercise(data) {
+				return this.request('POST', '/exercise', data);
+			}
+		}, {
+			key: 'updateExercise',
+			value: function updateExercise(data) {
+				return this.request('PUT', '/exercise', data);
+			}
+		}, {
+			key: 'removeExercise',
+			value: function removeExercise(data) {
+				return this.request('DELETE', '/exercise', data);
 			}
 		}]);
 
@@ -39408,6 +39562,10 @@
 			value: function populateForm(form, data) {
 				Object.keys(data).map(function (key) {
 					var value = data[key];
+					if (key === 'description') {
+						$(form).find("[name=\"" + key + "\"]").parent().find('.textarea').html(value);
+						value = value.replace(/<br>/g, '\n');
+					}
 					$(form).find("[name=\"" + key + "\"]").val(value);
 				});
 			}

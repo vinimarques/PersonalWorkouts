@@ -1742,7 +1742,7 @@
 								var tmp = $.templates(html);
 								var tmpHtml = tmp.render($.extend(App.data, window.consts));
 
-								pages.append(tmpHtml);
+								pages.html(tmpHtml);
 								page = $('[data-page="' + pageName + '"');
 
 								page.addClass('active');

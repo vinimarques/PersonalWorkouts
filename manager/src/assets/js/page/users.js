@@ -29,7 +29,8 @@ class Users extends Page {
 			},
 			success: {
 				add: 'User has been adding successfully!',
-				remove: 'User was removed successfully!'
+				update: 'User has been updated successfully!',
+				remove: 'User has been removed successfully!'
 			}
 		}
 	}
@@ -74,6 +75,30 @@ class Users extends Page {
 				.then((res) => {
 					if (res.success) {
 						App.message.show(this.message.success.add);
+						$(ev.target)[0].reset();
+						this.loadUsers();
+					}
+				});
+		});
+
+		$('.modal-edit-user form').on('submit', (ev) => {
+			ev.preventDefault();
+
+			let data = this.validator.getData(ev.target);
+			let dataSend = this.validator.getDataSend(ev.target);
+			let isValide = this.validator.isValide(data);
+
+			if (isValide.error) {
+				this.validator.resetErrors(ev.target);
+				this.validator.showErrors(isValide.errors);
+				return false;
+			}
+
+			App.api.updateUser(dataSend)
+				.then((res) => {
+					if (res.success) {
+						App.message.show(this.message.success.update);
+						$(ev.target)[0].reset();
 						this.loadUsers();
 					}
 				});
@@ -81,11 +106,8 @@ class Users extends Page {
 
 		$('.modal-remove-user form').on('submit', (ev) => {
 			ev.preventDefault();
-
 			let dataSend = this.validator.getDataSend(ev.target);
-
 			if (!dataSend.user_id) return false;
-
 			App.api.removeUser(dataSend)
 				.then((res) => {
 					if (res.success) {
@@ -93,6 +115,11 @@ class Users extends Page {
 						this.loadUsers();
 					}
 				});
+		});
+
+		$('.btn-generate-pwd').on('click', (ev) => {
+			ev.preventDefault();
+			$(ev.target).parents('.formm__item').find('input').val(App.helpers.generatePassword());
 		});
 
 		$('body').on('click', '.actions .user-delete', (ev) => {
@@ -103,6 +130,19 @@ class Users extends Page {
 			$('.modal-remove-user input').val(id);
 			$('.modal-remove-user .user-remove-name').text(name);
 			App.openModal('remove-user');
+		});
+
+		$('body').on('click', '.actions .user-edit', (ev) => {
+			let line = $(ev.target).parents('.ttable__body__row'),
+				name = line.find('.user-name').text(),
+				id = line.data('user-id');
+
+			App.loader.show();
+			App.api.getUser(id).then((res) => {
+				App.loader.hide();
+				App.helpers.populateForm('.modal-edit-user form', res.data);
+				App.openModal('edit-user');
+			});
 		});
 	}
 

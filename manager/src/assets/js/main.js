@@ -12,6 +12,8 @@ require('jsrender')($);
 import Message from './components/message';
 import Database from './components/database';
 import Api from './components/api';
+import Helpers from './components/helpers';
+import Loader from './components/loader';
 
 //Applications
 window.App = {};
@@ -23,6 +25,8 @@ App.init = () => {
 	};
 	const database = new Database('personalworkouts', options);
 
+	App.loader = new Loader();
+	App.helpers = new Helpers();
 	App.data = {};
 	App.message = new Message();
 	App.api = new Api();

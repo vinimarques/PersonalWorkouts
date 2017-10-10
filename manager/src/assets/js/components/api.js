@@ -53,13 +53,22 @@ class Api {
 		return this.request('GET', '/users', { company_id, type });
 	}
 
+	getUser(user_id) {
+		return this.request('GET', '/user', { user_id });
+	}
+
 	saveUser (data) {
 		data.password = CryptoJS.HmacSHA1(data.password, config.key).toString();
-		return this.request('POST', '/users', data);
+		return this.request('POST', '/user', data);
+	}
+
+	updateUser(data) {
+		if (data.password) data.password = CryptoJS.HmacSHA1(data.password, config.key).toString();
+		return this.request('PUT', '/user', data);
 	}
 
 	removeUser (data) {
-		return this.request('DELETE', '/users', data);
+		return this.request('DELETE', '/user', data);
 	}
 
 	getConsts () {

@@ -24,13 +24,14 @@ class Validator {
 	getData (form) {
 		let data = [];
 		$(form).find('input, select, textarea').each((index, element) => {
-			data.push({
+			let obj = {
 				field: {
 					name: element.name,
 					value: (element.dataset.type) ? this.convert(element.dataset.type, element.value) : element.value
-				},
-				test: element.dataset.validate.split(',')
-			});
+				}
+			};
+			if (element.dataset.validate) obj.test = element.dataset.validate.split(',');
+			data.push(obj);
 		});
 
 		return data;
@@ -39,6 +40,7 @@ class Validator {
 	getDataSend(form) {
 		let data = {};
 		$(form).find('input, select, textarea').each((index, element) => {
+			if (element.value == '') return;
 			data[element.name] = (element.dataset.type) ? this.convert(element.dataset.type, element.value) : element.value;
 		});
 
@@ -71,6 +73,9 @@ class Validator {
 			let value = item.field.value,
 				 name = item.field.name,
 				 test = item.test;
+
+			if (!test) return;
+
 			test.map((t) => {
 				if (!this.rules[t].test(value)) {
 					errors.push({

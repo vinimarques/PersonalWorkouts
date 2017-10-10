@@ -111,7 +111,29 @@ router.get('/users', Auth.middleware(), Resolve.send(
 	}
 ));
 
-router.delete('/users', Auth.middleware(), Resolve.send(
+router.get('/user', Auth.middleware(), Resolve.send(
+	function (req) {
+		const user_id = req.query.user_id;
+
+		if (!user_id) {
+			const error = ApiError.userIdRequired();
+			return {
+				success: false,
+				error: error.data
+			};
+		}
+
+		return Users.First(user_id)
+			.then(user => {
+				return {
+					success: true,
+					data: user
+				};
+			});
+	}
+));
+
+router.delete('/user', Auth.middleware(), Resolve.send(
 	function (req) {
 		const id = req.body.user_id;
 
@@ -132,7 +154,7 @@ router.delete('/users', Auth.middleware(), Resolve.send(
 	}
 ));
 
-router.post('/users', Auth.middleware(), Resolve.send(
+router.post('/user', Auth.middleware(), Resolve.send(
   function (req) {
     const validator = new Validator([
       {field: 'name', type: 'String', required: true},
@@ -159,6 +181,35 @@ router.post('/users', Auth.middleware(), Resolve.send(
         throw ApiError.uniqueEmail(error);
       });
   }
+));
+
+router.put('/user', Auth.middleware(), Resolve.send(
+	function (req) {
+		const validator = new Validator([
+			{ field: 'name', type: 'String', required: true },
+			{ field: 'email', type: 'String', required: true },
+			{ field: 'user_type_id', type: 'Integer', required: true },
+			{ field: 'company_id', type: 'Integer', required: true },
+			{ field: 'password', type: 'String' }
+		]);
+
+		const data = _.pick(req.body, ['name', 'email', 'password', 'user_type_id', 'company_id']);
+		const id = req.body.id;
+
+		validator.validate(data);
+
+		if (validator.hasErrors()) throw validator.getErrors();
+
+		return Users.update(data, id)
+			.then(result => {
+				return {
+					success: true
+				};
+			})
+			.catch(error => {
+				throw ApiError.uniqueEmail(error);
+			});
+	}
 ));
 
 module.exports = router;

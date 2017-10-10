@@ -103,6 +103,14 @@
 
 	var _api2 = _interopRequireDefault(_api);
 
+	var _helpers = __webpack_require__(74);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
+
+	var _loader = __webpack_require__(75);
+
+	var _loader2 = _interopRequireDefault(_loader);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	window.$ = window.jQuery = _jquery2.default;
@@ -123,6 +131,8 @@
 		};
 		var database = new _database2.default('personalworkouts', options);
 
+		App.loader = new _loader2.default();
+		App.helpers = new _helpers2.default();
 		App.data = {};
 		App.message = new _message2.default();
 		App.api = new _api2.default();
@@ -1986,7 +1996,8 @@
 					},
 					success: {
 						add: 'User has been adding successfully!',
-						remove: 'User was removed successfully!'
+						update: 'User has been updated successfully!',
+						remove: 'User has been removed successfully!'
 					}
 				};
 			}
@@ -2036,6 +2047,29 @@
 					App.api.saveUser(dataSend).then(function (res) {
 						if (res.success) {
 							App.message.show(_this3.message.success.add);
+							$(ev.target)[0].reset();
+							_this3.loadUsers();
+						}
+					});
+				});
+
+				$('.modal-edit-user form').on('submit', function (ev) {
+					ev.preventDefault();
+
+					var data = _this3.validator.getData(ev.target);
+					var dataSend = _this3.validator.getDataSend(ev.target);
+					var isValide = _this3.validator.isValide(data);
+
+					if (isValide.error) {
+						_this3.validator.resetErrors(ev.target);
+						_this3.validator.showErrors(isValide.errors);
+						return false;
+					}
+
+					App.api.updateUser(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this3.message.success.update);
+							$(ev.target)[0].reset();
 							_this3.loadUsers();
 						}
 					});
@@ -2043,17 +2077,19 @@
 
 				$('.modal-remove-user form').on('submit', function (ev) {
 					ev.preventDefault();
-
 					var dataSend = _this3.validator.getDataSend(ev.target);
-
 					if (!dataSend.user_id) return false;
-
 					App.api.removeUser(dataSend).then(function (res) {
 						if (res.success) {
 							App.message.show(_this3.message.success.remove);
 							_this3.loadUsers();
 						}
 					});
+				});
+
+				$('.btn-generate-pwd').on('click', function (ev) {
+					ev.preventDefault();
+					$(ev.target).parents('.formm__item').find('input').val(App.helpers.generatePassword());
 				});
 
 				$('body').on('click', '.actions .user-delete', function (ev) {
@@ -2064,6 +2100,19 @@
 					$('.modal-remove-user input').val(id);
 					$('.modal-remove-user .user-remove-name').text(name);
 					App.openModal('remove-user');
+				});
+
+				$('body').on('click', '.actions .user-edit', function (ev) {
+					var line = $(ev.target).parents('.ttable__body__row'),
+					    name = line.find('.user-name').text(),
+					    id = line.data('user-id');
+
+					App.loader.show();
+					App.api.getUser(id).then(function (res) {
+						App.loader.hide();
+						App.helpers.populateForm('.modal-edit-user form', res.data);
+						App.openModal('edit-user');
+					});
 				});
 			}
 		}, {
@@ -29911,15 +29960,26 @@
 				return this.request('GET', '/users', { company_id: company_id, type: type });
 			}
 		}, {
+			key: 'getUser',
+			value: function getUser(user_id) {
+				return this.request('GET', '/user', { user_id: user_id });
+			}
+		}, {
 			key: 'saveUser',
 			value: function saveUser(data) {
 				data.password = _cryptoJs2.default.HmacSHA1(data.password, _config2.default.key).toString();
-				return this.request('POST', '/users', data);
+				return this.request('POST', '/user', data);
+			}
+		}, {
+			key: 'updateUser',
+			value: function updateUser(data) {
+				if (data.password) data.password = _cryptoJs2.default.HmacSHA1(data.password, _config2.default.key).toString();
+				return this.request('PUT', '/user', data);
 			}
 		}, {
 			key: 'removeUser',
 			value: function removeUser(data) {
-				return this.request('DELETE', '/users', data);
+				return this.request('DELETE', '/user', data);
 			}
 		}, {
 			key: 'getConsts',
@@ -39212,13 +39272,14 @@
 
 				var data = [];
 				$(form).find('input, select, textarea').each(function (index, element) {
-					data.push({
+					var obj = {
 						field: {
 							name: element.name,
 							value: element.dataset.type ? _this.convert(element.dataset.type, element.value) : element.value
-						},
-						test: element.dataset.validate.split(',')
-					});
+						}
+					};
+					if (element.dataset.validate) obj.test = element.dataset.validate.split(',');
+					data.push(obj);
 				});
 
 				return data;
@@ -39230,6 +39291,7 @@
 
 				var data = {};
 				$(form).find('input, select, textarea').each(function (index, element) {
+					if (element.value == '') return;
 					data[element.name] = element.dataset.type ? _this2.convert(element.dataset.type, element.value) : element.value;
 				});
 
@@ -39265,6 +39327,9 @@
 					var value = item.field.value,
 					    name = item.field.name,
 					    test = item.test;
+
+					if (!test) return;
+
 					test.map(function (t) {
 						if (!_this3.rules[t].test(value)) {
 							errors.push({
@@ -39301,6 +39366,99 @@
 	}();
 
 	exports.default = Validator;
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	/**
+	 *
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Helpers = function () {
+		function Helpers() {
+			_classCallCheck(this, Helpers);
+		}
+
+		_createClass(Helpers, [{
+			key: "generatePassword",
+			value: function generatePassword() {
+				var length = 8,
+				    charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+				    retVal = "";
+
+				for (var i = 0, n = charset.length; i < length; ++i) {
+					retVal += charset.charAt(Math.floor(Math.random() * n));
+				}
+
+				return retVal;
+			}
+		}, {
+			key: "populateForm",
+			value: function populateForm(form, data) {
+				Object.keys(data).map(function (key) {
+					var value = data[key];
+					$(form).find("[name=\"" + key + "\"]").val(value);
+				});
+			}
+		}]);
+
+		return Helpers;
+	}();
+
+	exports.default = Helpers;
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	/**
+	 *
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Loader = function () {
+		function Loader() {
+			_classCallCheck(this, Loader);
+
+			this.$body = $('body');
+		}
+
+		_createClass(Loader, [{
+			key: 'show',
+			value: function show() {
+				this.$body.addClass('loading');
+			}
+		}, {
+			key: 'hide',
+			value: function hide() {
+				this.$body.removeClass('loading');
+			}
+		}]);
+
+		return Loader;
+	}();
+
+	exports.default = Loader;
 
 /***/ })
 /******/ ]);

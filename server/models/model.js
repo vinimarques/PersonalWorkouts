@@ -57,6 +57,14 @@ class Model {
     where = Object.keys(where).map(key => `${key}=${where[key]}`);
     return Model.query(`DELETE FROM ${table} WHERE ${where.join(' AND ')}`);
   }
+
+  static update(data, where, table) {
+	  where = Object.keys(where).map(key => `${key}=${where[key]}`);
+	  return Model.query(`UPDATE ${table} SET ? WHERE ${where.join(' AND ')}`, data)
+		  .catch(error => {
+			  throw ApiError.unknown(error);
+		  })
+  }
 }
 
 module.exports = Model;

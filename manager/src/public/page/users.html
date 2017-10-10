@@ -64,12 +64,68 @@
 				<input type="hidden" name="company_id" data-type="int" data-validate="required" value="{{:user.company_id}}">
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="password" name="password" data-validate="required" autocomplete="off" placeholder="Password">
+						<input type="text" name="password" data-validate="required" autocomplete="off" placeholder="Password">
 						<em></em>
 					</span>
+					<button class="btn btn--xsmall btn-generate-pwd">
+						<span>Generate</span>
+					</button>
 				</label>
 				<button class="btn btn--small --center">
 					<span>Register</span>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal modal-edit-user">
+	<div class="modal__container">
+		<a href="javascript:;" class="modal__close"></a>
+		<div class="modal__content">
+			<h2 class="modal__title">Edit User</h2>
+			<form class="formm">
+				<input type="hidden" name="company_id" data-type="int" data-validate="required" value="{{:user.company_id}}">
+				<input type="hidden" name="id" data-type="int" data-validate="required">
+				<label class="formm__item">
+					<span class="formm__text">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<em></em>
+					</span>
+				</label>
+				<label class="formm__item">
+					<span class="formm__text">
+						<input type="text" name="email" autocomplete="off" data-validate="required,email" placeholder="E-mail">
+						<em></em>
+					</span>
+				</label>
+				<label class="formm__item">
+					<span class="formm__select">
+						<select name="user_type_id" data-validate="required" data-type="int">
+							<option disabled selected value="">Select user type</option>
+							{{for TYPES}} {{if id == 1 || id == 2 || id == 3}} {{if ~root.user.user_type_id == 1}}
+							<option value="{{:id}}">{{:name}}</option>
+							{{else ~root.user.user_type_id == 2 && id == 3}}
+							<option value="{{:id}}">{{:name}}</option>
+							{{/if}} {{else}}
+							<option value="{{:id}}">{{:name}}</option>
+							{{/if}} {{/for}}
+						</select>
+						<em></em>
+					</span>
+				</label>
+				<label class="formm__item">
+					<span class="formm__text">
+						<input type="text" name="password" autocomplete="off" placeholder="New Password">
+						<em></em>
+					</span>
+					<small class="info">* Isn't possible change password, only create a new.</small>
+					<button class="btn btn--xsmall btn-generate-pwd">
+						<span>Generate</span>
+					</button>
+				</label>
+				<button class="btn btn--small --center">
+					<span>Save</span>
 				</button>
 			</form>
 		</div>

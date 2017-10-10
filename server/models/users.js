@@ -49,12 +49,26 @@ class Users extends Model {
 		`, [company_id]);
 	}
 
+	static First(user_id) {
+		return Model.first(`
+			SELECT u.id, u.name, u.email, u.company_id, u.user_type_id, c.name as 'company_name', t.name as 'user_type_name'
+			FROM users as u
+			LEFT JOIN company as c ON u.company_id = c.id
+			LEFT JOIN user_type as t ON u.user_type_id = t.id
+			WHERE u.id = ?
+		`, [user_id]);
+	}
+
   	static insert(data) {
 		return Model.insert(data, 'users');
 	}
 
 	static remove(data) {
 		return Model.remove(data, 'users');
+	}
+
+	static update(data, user_id) {
+		return Model.update(data, { id: user_id }, 'users');
 	}
 }
 

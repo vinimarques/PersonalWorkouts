@@ -110,9 +110,10 @@
 		{{else}}
 			{{for plans}}
 				<div class="ttable__body__row" data-plan-id="{{:id}}">
-					<span class="ttable__body__col col-5 plan-name">{{:name}}</span>
+					<span class="ttable__body__col col-3 plan-name">{{:name}}</span>
 					<span class="ttable__body__col col-3">{{:difficulty_name}}</span>
 					<span class="ttable__body__col col-3">{{:days_per_week}}</span>
+					<span class="ttable__body__col col-2"><a href="/plans/{{:id}}"><span class="icon icon-list"></span><em>{{:days}}</em></a></span>
 					<span class="ttable__body__col col-1 actions">
 						<button class="btn btn--more right">
 							<span></span>

@@ -5,11 +5,14 @@ class Plans extends Model {
 
 	static all(company_id) {
 		return Model.query(`
-			SELECT p.id, p.name, p.days_per_week, p.difficulty_id, d.name as 'difficulty_name'
-			FROM plan as p
-			LEFT JOIN difficulty as d ON p.difficulty_id = d.id
-			LEFT JOIN plan_company as pc ON pc.plan_id = p.id
-			WHERE pc.company_id = ?
+			SELECT * FROM (
+				SELECT p.id, p.name, p.days_per_week, p.difficulty_id, d.name as 'difficulty_name', COUNT(day.id) as 'days'
+				FROM plan as p
+				LEFT JOIN difficulty as d ON p.difficulty_id = d.id
+				LEFT JOIN plan_company as pc ON pc.plan_id = p.id
+				LEFT JOIN day ON day.plan_id = p.id
+				WHERE pc.company_id = ?
+			) as result WHERE result.id > 0
 		`, [company_id]);
 	}
 

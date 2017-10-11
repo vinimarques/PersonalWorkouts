@@ -4,6 +4,60 @@
     {
       "icon": {
         "paths": [
+          "M810 854v-470h-596v470h596zM810 170c46 0 86 40 86 86v598c0 46-40 84-86 84h-596c-48 0-86-38-86-84v-598c0-46 38-86 86-86h42v-84h86v84h340v-84h86v84h42zM726 470v84h-86v-84h86zM554 470v84h-84v-84h84zM384 470v84h-86v-84h86z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "date_range"
+        ],
+        "defaultCode": 59670,
+        "grid": 24
+      },
+      "attrs": [],
+      "properties": {
+        "ligatures": "date_range",
+        "id": 200,
+        "order": 6,
+        "prevSize": 24,
+        "code": 59670,
+        "name": "date"
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 200
+    },
+    {
+      "icon": {
+        "paths": [
+          "M512 298v-84h-384v84h384zM512 470v-86h-384v86h384zM896 128c46 0 86 40 86 86v596c0 46-40 86-86 86h-768c-46 0-86-40-86-86v-596c0-46 40-86 86-86h768z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "featured_play_list"
+        ],
+        "defaultCode": 57453,
+        "grid": 24
+      },
+      "attrs": [],
+      "properties": {
+        "ligatures": "featured_play_list",
+        "id": 271,
+        "order": 5,
+        "prevSize": 24,
+        "code": 57453,
+        "name": "list"
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 271
+    },
+    {
+      "icon": {
+        "paths": [
           "M884 300l-78 78-160-160 78-78c16-16 44-16 60 0l100 100c16 16 16 44 0 60zM128 736l472-472 160 160-472 472h-160v-160z"
         ],
         "attrs": [],
@@ -24,9 +78,9 @@
         "code": 57940,
         "name": "edit"
       },
-      "setIdx": 0,
-      "setId": 0,
-      "iconIdx": 184
+      "setIdx": 1,
+      "setId": 1,
+      "iconIdx": 0
     },
     {
       "icon": {
@@ -51,9 +105,9 @@
         "code": 59506,
         "name": "delete"
       },
-      "setIdx": 0,
-      "setId": 0,
-      "iconIdx": 202
+      "setIdx": 1,
+      "setId": 1,
+      "iconIdx": 1
     }
   ],
   "height": 1024,

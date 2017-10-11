@@ -83,6 +83,12 @@ b, strong {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+.icon-date:before {
+  content: "\E916"; }
+
+.icon-list:before {
+  content: "\E06D"; }
+
 .icon-edit:before {
   content: "\E254"; }
 

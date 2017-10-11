@@ -25,6 +25,9 @@ App.init = () => {
 	};
 	const database = new Database('personalworkouts', options);
 
+	App.config = {
+		timeCloseModal: config.timeCloseModal
+	};
 	App.loader = new Loader();
 	App.helpers = new Helpers();
 	App.data = {};

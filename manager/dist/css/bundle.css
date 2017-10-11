@@ -101,6 +101,11 @@ body {
       -ms-grid-row-align: center;
       align-self: center; }
 
+.\--right {
+  text-align: right;
+  -ms-flex-item-align: end;
+      align-self: flex-end; }
+
 .global__search input {
   background: #F2F2F2; }
 
@@ -180,7 +185,7 @@ body {
           background: #ed305d;
           box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35); }
 
-.active-page-users .header, .active-page-exercises .header, .active-page-calendar .header, .active-page-home .header, .active-page-plans .header {
+.active-page-exercises-day .header, .active-page-days .header, .active-page-users .header, .active-page-exercises .header, .active-page-calendar .header, .active-page-home .header, .active-page-plans .header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
@@ -209,7 +214,7 @@ body {
       color: #EF476F;
       font-weight: 700; }
 
-.active-page-users .nav, .active-page-exercises .nav, .active-page-calendar .nav, .active-page-home .nav, .active-page-plans .nav {
+.active-page-exercises-day .nav, .active-page-days .nav, .active-page-users .nav, .active-page-exercises .nav, .active-page-calendar .nav, .active-page-home .nav, .active-page-plans .nav {
   display: block; }
 
 .page {
@@ -429,6 +434,8 @@ textarea::-moz-placeholder, textarea::-ms-input-placeholder, textarea::-moz-plac
         display: inline;
         font-size: 13px;
         margin-right: 5px; }
+  .formm .btn.\--right {
+    margin-top: 20px; }
 
 .btn {
   display: table;
@@ -879,10 +886,10 @@ textarea::-moz-placeholder, textarea::-ms-input-placeholder, textarea::-moz-plac
       background-size: cover;
       margin-top: 10px; }
 
-.modal-edit-user .modal__container, .modal-add-user .modal__container {
+.modal-remove-user .modal__container, .modal-edit-user .modal__container, .modal-add-user .modal__container {
   width: 500px; }
 
-.modal-edit-user .btn-generate-pwd, .modal-add-user .btn-generate-pwd {
+.modal-remove-user .btn-generate-pwd, .modal-edit-user .btn-generate-pwd, .modal-add-user .btn-generate-pwd {
   position: absolute;
   top: 50%;
   right: 10px;
@@ -890,4 +897,7 @@ textarea::-moz-placeholder, textarea::-ms-input-placeholder, textarea::-moz-plac
           transform: translateY(-50%); }
 
 .modal-edit-exercise .modal__container, .modal-add-exercise .modal__container, .modal-remove-exercise .modal__container {
+  width: 500px; }
+
+.modal-remove-plan .modal__container, .modal-edit-plan .modal__container, .modal-add-plan .modal__container {
   width: 500px; }

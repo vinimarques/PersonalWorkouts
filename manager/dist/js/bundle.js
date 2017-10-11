@@ -131,6 +131,9 @@
 		};
 		var database = new _database2.default('personalworkouts', options);
 
+		App.config = {
+			timeCloseModal: _config2.default.timeCloseModal
+		};
 		App.loader = new _loader2.default();
 		App.helpers = new _helpers2.default();
 		App.data = {};
@@ -159,6 +162,8 @@
 	config.version = '1.0.0';
 	config.apiurl = 'api.personalworkouts.vm';
 	config.key = 'p3R$0n@L';
+
+	config.timeCloseModal = 1200;
 
 	exports.default = config;
 
@@ -196,6 +201,14 @@
 
 	var _plans2 = _interopRequireDefault(_plans);
 
+	var _days = __webpack_require__(76);
+
+	var _days2 = _interopRequireDefault(_days);
+
+	var _exercisesDay = __webpack_require__(77);
+
+	var _exercisesDay2 = _interopRequireDefault(_exercisesDay);
+
 	var _exercises = __webpack_require__(32);
 
 	var _exercises2 = _interopRequireDefault(_exercises);
@@ -218,11 +231,13 @@
 		init: function init() {
 			var router = new _router2.default();
 
-			// alias , Class , hasSecurity
+			// alias , Class , hasSecurity, params
 			router.add('login', _login2.default);
 			router.add('home', _home2.default, true);
 			router.add('users', _users2.default, true);
 			router.add('plans', _plans2.default, true);
+			router.add('days', _days2.default, true, 'plans/:day');
+			router.add('exercises-day', _exercisesDay2.default, true, 'plans/:day/:ex_day');
 			router.add('exercises', _exercises2.default, true);
 			router.add('calendar', _calendar2.default, true);
 
@@ -279,11 +294,12 @@
 
 		_createClass(Router, [{
 			key: 'add',
-			value: function add(alias, init, hasSecurity) {
+			value: function add(alias, init, hasSecurity, params) {
 				var page = new init(hasSecurity);
 				var _that = this;
+				var path = params ? params : alias;
 
-				(0, _page2.default)('/' + alias, function (ctx) {
+				(0, _page2.default)('/' + path, function (ctx) {
 					if (hasSecurity) _that.security.validate().then(function () {
 						page.init(alias, ctx);
 					});else page.init(alias, ctx);
@@ -1659,7 +1675,7 @@
 							window.Page('/home');
 						} else {
 							if (res.error) {
-								App.message.show(res.error.message);
+								App.message.show(res.error.message, App.config.timeCloseModal);
 							}
 						}
 					});
@@ -2071,7 +2087,7 @@
 
 					App.api.saveUser(dataSend).then(function (res) {
 						if (res.success) {
-							App.message.show(_this3.message.success.add);
+							App.message.show(_this3.message.success.add, App.config.timeCloseModal);
 							$(ev.target)[0].reset();
 							_this3.loadUsers();
 						}
@@ -2093,7 +2109,7 @@
 
 					App.api.updateUser(dataSend).then(function (res) {
 						if (res.success) {
-							App.message.show(_this3.message.success.update);
+							App.message.show(_this3.message.success.update, App.config.timeCloseModal);
 							$(ev.target)[0].reset();
 							_this3.loadUsers();
 						}
@@ -2106,7 +2122,7 @@
 					if (!dataSend.user_id) return false;
 					App.api.removeUser(dataSend).then(function (res) {
 						if (res.success) {
-							App.message.show(_this3.message.success.remove);
+							App.message.show(_this3.message.success.remove, App.config.timeCloseModal);
 							_this3.loadUsers();
 						}
 					});
@@ -2202,6 +2218,12 @@
 						return value !== '' && value !== undefined;
 					},
 					message: 'Field is required'
+				},
+				number: {
+					test: function test(value) {
+						return Number.isInteger(value) && value > 0;
+					},
+					message: 'Value isn\'t number'
 				},
 				email: {
 					test: function test(value) {
@@ -19449,6 +19471,14 @@
 
 	var _page2 = _interopRequireDefault(_page);
 
+	var _validator = __webpack_require__(28);
+
+	var _validator2 = _interopRequireDefault(_validator);
+
+	var _lodash = __webpack_require__(29);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19466,17 +19496,139 @@
 		function Plans() {
 			_classCallCheck(this, Plans);
 
-			return _possibleConstructorReturn(this, (Plans.__proto__ || Object.getPrototypeOf(Plans)).call(this));
+			var _this = _possibleConstructorReturn(this, (Plans.__proto__ || Object.getPrototypeOf(Plans)).call(this));
+
+			_this.validator = new _validator2.default();
+			return _this;
 		}
 
 		_createClass(Plans, [{
 			key: 'init',
 			value: function init(page, ctx) {
 				_get(Plans.prototype.__proto__ || Object.getPrototypeOf(Plans.prototype), 'load', this).call(this, page);
+
+				this.search = '';
+				this.plans = '';
+				this.message = {
+					error: {
+						plans: 'PLANS NOT FOUND'
+					},
+					success: {
+						add: 'Plan has been adding successfully!',
+						update: 'Plan has been updated successfully!',
+						remove: 'Plan has been removed successfully!'
+					}
+				};
+			}
+		}, {
+			key: 'onload',
+			value: function onload() {
+				this.plansContent = $('#plans-content');
+				this.loadPlans();
+			}
+		}, {
+			key: 'loadPlans',
+			value: function loadPlans() {
+				var _this2 = this;
+
+				var container = this.plansContent;
+				var company_id = App.data.user.company_id;
+				this.template = $.templates($('#template-plans').html());
+				var html = '';
+
+				App.api.getPlans(company_id).then(function (res) {
+					if (res.success && res.data.length > 0) {
+						_this2.plans = res.data;
+						html = _this2.template.render({ plans: res.data });
+					} else {
+						html = _this2.template.render({ error: _this2.message.error.plans });
+					}
+					container.html(html);
+				});
 			}
 		}, {
 			key: '_bindEvents',
-			value: function _bindEvents() {}
+			value: function _bindEvents() {
+				var _this3 = this;
+
+				$('.modal-add-plan form').on('submit', function (ev) {
+					ev.preventDefault();
+					var data = _this3.validator.getData(ev.target);
+					var dataSend = _this3.validator.getDataSend(ev.target);
+					var isValide = _this3.validator.isValide(data);
+
+					if (isValide.error) {
+						_this3.validator.resetErrors(ev.target);
+						_this3.validator.showErrors(isValide.errors);
+						return false;
+					}
+
+					App.api.savePlan(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this3.message.success.add, App.config.timeCloseModal);
+							$(ev.target)[0].reset();
+							_this3.loadPlans();
+						}
+					});
+				});
+
+				$('.modal-edit-plan form').on('submit', function (ev) {
+					ev.preventDefault();
+
+					var data = _this3.validator.getData(ev.target);
+					var dataSend = _this3.validator.getDataSend(ev.target);
+					var isValide = _this3.validator.isValide(data);
+
+					if (isValide.error) {
+						_this3.validator.resetErrors(ev.target);
+						_this3.validator.showErrors(isValide.errors);
+						return false;
+					}
+
+					App.api.updatePlan(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this3.message.success.update, App.config.timeCloseModal);
+							$(ev.target)[0].reset();
+							_this3.loadPlans();
+						}
+					});
+				});
+
+				$('.modal-remove-plan form').on('submit', function (ev) {
+					ev.preventDefault();
+					var dataSend = _this3.validator.getDataSend(ev.target);
+					if (!dataSend.plan_id) return false;
+					App.api.removePlan(dataSend).then(function (res) {
+						if (res.success) {
+							App.message.show(_this3.message.success.remove, App.config.timeCloseModal);
+							_this3.loadPlans();
+						}
+					});
+				});
+
+				$('body').on('click', '.actions .plan-delete', function (ev) {
+					var line = $(ev.target).parents('.ttable__body__row'),
+					    name = line.find('.plan-name').text(),
+					    id = line.data('plan-id');
+
+					$('.modal-remove-plan input').val(id);
+					$('.modal-remove-plan .plan-remove-name').text(name);
+					App.openModal('remove-plan');
+				});
+
+				$('body').on('click', '.actions .plan-edit', function (ev) {
+					var line = $(ev.target).parents('.ttable__body__row'),
+					    name = line.find('.plan-name').text(),
+					    id = line.data('plan-id');
+
+					App.loader.show();
+					App.api.getPlan(id).then(function (res) {
+						App.loader.hide();
+						App.helpers.populateForm('.modal-edit-plan form', res.data);
+						App.openModal('edit-plan');
+					});
+				});
+			}
 		}]);
 
 		return Plans;
@@ -19581,7 +19733,7 @@
 
 					App.api.saveExercise(dataSend).then(function (res) {
 						if (res.success) {
-							App.message.show(_this2.message.success.add);
+							App.message.show(_this2.message.success.add, App.config.timeCloseModal);
 							$(ev.target)[0].reset();
 							_this2.loadExercises();
 						}
@@ -19603,7 +19755,7 @@
 
 					App.api.updateExercise(dataSend).then(function (res) {
 						if (res.success) {
-							App.message.show(_this2.message.success.update);
+							App.message.show(_this2.message.success.update, App.config.timeCloseModal);
 							$(ev.target)[0].reset();
 							_this2.loadExercises();
 						}
@@ -19616,7 +19768,7 @@
 					if (!dataSend.exercise_id) return false;
 					App.api.removeExercise(dataSend).then(function (res) {
 						if (res.success) {
-							App.message.show(_this2.message.success.remove);
+							App.message.show(_this2.message.success.remove, App.config.timeCloseModal);
 							_this2.loadExercises();
 						}
 					});
@@ -30087,21 +30239,33 @@
 				}, time);else this.content.html('');
 			}
 		}, {
+			key: 'close',
+			value: function close(time) {
+				var _this2 = this;
+
+				setTimeout(function () {
+					_this2.body.removeClass('modal-active');
+					$('.modal').removeClass('active');
+				}, time ? time : 0);
+			}
+		}, {
 			key: 'show',
-			value: function show(text) {
+			value: function show(text, time) {
 				this.reset();
 
 				this.content.html('<p>' + text + '</p>');
 				this.modal.addClass('active');
 				this.body.addClass('modal-active');
+
+				if (time) this.close(time);
 			}
 		}, {
 			key: 'bindEvents',
 			value: function bindEvents() {
-				var _this2 = this;
+				var _this3 = this;
 
 				$('body').on('click', '.modal__close', function () {
-					_this2.reset(300);
+					_this3.reset(300);
 				});
 			}
 		}]);
@@ -30337,6 +30501,31 @@
 			key: 'removeExercise',
 			value: function removeExercise(data) {
 				return this.request('DELETE', '/exercise', data);
+			}
+		}, {
+			key: 'getPlans',
+			value: function getPlans(company_id) {
+				return this.request('GET', '/plans', { company_id: company_id });
+			}
+		}, {
+			key: 'getPlan',
+			value: function getPlan(plan_id) {
+				return this.request('GET', '/plan', { plan_id: plan_id });
+			}
+		}, {
+			key: 'savePlan',
+			value: function savePlan(data) {
+				return this.request('POST', '/plan', data);
+			}
+		}, {
+			key: 'updatePlan',
+			value: function updatePlan(data) {
+				return this.request('PUT', '/plan', data);
+			}
+		}, {
+			key: 'removePlan',
+			value: function removePlan(data) {
+				return this.request('DELETE', '/plan', data);
 			}
 		}]);
 
@@ -39674,6 +39863,122 @@
 	return $ || jsr;
 	}, window));
 
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Import
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _page = __webpack_require__(24);
+
+	var _page2 = _interopRequireDefault(_page);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 *
+	 */
+	var Days = function (_Page) {
+		_inherits(Days, _Page);
+
+		function Days() {
+			_classCallCheck(this, Days);
+
+			return _possibleConstructorReturn(this, (Days.__proto__ || Object.getPrototypeOf(Days)).call(this));
+		}
+
+		_createClass(Days, [{
+			key: 'init',
+			value: function init(page, ctx) {
+				_get(Days.prototype.__proto__ || Object.getPrototypeOf(Days.prototype), 'load', this).call(this, page);
+			}
+		}, {
+			key: '_bindEvents',
+			value: function _bindEvents() {}
+		}]);
+
+		return Days;
+	}(_page2.default);
+
+	exports.default = Days;
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Import
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _page = __webpack_require__(24);
+
+	var _page2 = _interopRequireDefault(_page);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 *
+	 */
+	var ExercisesDay = function (_Page) {
+		_inherits(ExercisesDay, _Page);
+
+		function ExercisesDay() {
+			_classCallCheck(this, ExercisesDay);
+
+			return _possibleConstructorReturn(this, (ExercisesDay.__proto__ || Object.getPrototypeOf(ExercisesDay)).call(this));
+		}
+
+		_createClass(ExercisesDay, [{
+			key: 'init',
+			value: function init(page, ctx) {
+				_get(ExercisesDay.prototype.__proto__ || Object.getPrototypeOf(ExercisesDay.prototype), 'load', this).call(this, page);
+			}
+		}, {
+			key: '_bindEvents',
+			value: function _bindEvents() {}
+		}]);
+
+		return ExercisesDay;
+	}(_page2.default);
+
+	exports.default = ExercisesDay;
 
 /***/ })
 /******/ ]);

@@ -38,7 +38,7 @@ class Login extends Page {
 				}
 				else {
 					if (res.error) {
-						App.message.show(res.error.message);
+						App.message.show(res.error.message, App.config.timeCloseModal);
 					}
 				}
 			});

@@ -28,12 +28,21 @@ class Message {
 			this.content.html('');
 	}
 
-	show (text) {
+	close (time) {
+		setTimeout(() => {
+			this.body.removeClass('modal-active');
+			$('.modal').removeClass('active');
+		}, time ? time  : 0);
+	}
+
+	show (text, time) {
 		this.reset();
 
 		this.content.html(`<p>${text}</p>`);
 		this.modal.addClass('active');
 		this.body.addClass('modal-active');
+
+		if (time) this.close(time);
 	}
 
 	bindEvents () {

@@ -12,6 +12,12 @@ class Validator {
 				},
 				message: 'Field is required'
 			},
+			number: {
+				test: function (value) {
+					return Number.isInteger(value) && value > 0;
+				},
+				message: 'Value isn\'t number'
+			},
 			email: {
 				test: function (value) {
 					return /^(?:[\w-]+\.?\+?)*[\w-]+@(?:\w+\.)+\w+$/.test(value);

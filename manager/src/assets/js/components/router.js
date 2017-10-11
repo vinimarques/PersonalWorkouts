@@ -18,11 +18,12 @@ class Router {
 		});
 	}
 
-	add(alias, init, hasSecurity) {
+	add(alias, init, hasSecurity, params) {
 		let page = new init(hasSecurity);
 		let _that = this;
+		let path = params ? params : alias;
 
-		Page('/' + alias, function (ctx) {
+		Page('/' + path, function (ctx) {
 			if (hasSecurity) _that.security.validate().then(() => { page.init(alias, ctx) });
 			else page.init(alias, ctx);
 		});

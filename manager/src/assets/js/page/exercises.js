@@ -55,7 +55,7 @@ class Exercises extends Page {
 			App.api.saveExercise(dataSend)
 				.then((res) => {
 					if (res.success) {
-						App.message.show(this.message.success.add);
+						App.message.show(this.message.success.add, App.config.timeCloseModal);
 						$(ev.target)[0].reset();
 						this.loadExercises();
 					}
@@ -78,7 +78,7 @@ class Exercises extends Page {
 			App.api.updateExercise(dataSend)
 				.then((res) => {
 					if (res.success) {
-						App.message.show(this.message.success.update);
+						App.message.show(this.message.success.update, App.config.timeCloseModal);
 						$(ev.target)[0].reset();
 						this.loadExercises();
 					}
@@ -92,7 +92,7 @@ class Exercises extends Page {
 			App.api.removeExercise(dataSend)
 				.then((res) => {
 					if (res.success) {
-						App.message.show(this.message.success.remove);
+						App.message.show(this.message.success.remove, App.config.timeCloseModal);
 						this.loadExercises();
 					}
 				});

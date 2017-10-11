@@ -73,7 +73,7 @@ class Users extends Page {
 			App.api.saveUser(dataSend)
 				.then((res) => {
 					if (res.success) {
-						App.message.show(this.message.success.add);
+						App.message.show(this.message.success.add, App.config.timeCloseModal);
 						$(ev.target)[0].reset();
 						this.loadUsers();
 					}
@@ -96,7 +96,7 @@ class Users extends Page {
 			App.api.updateUser(dataSend)
 				.then((res) => {
 					if (res.success) {
-						App.message.show(this.message.success.update);
+						App.message.show(this.message.success.update, App.config.timeCloseModal);
 						$(ev.target)[0].reset();
 						this.loadUsers();
 					}
@@ -110,7 +110,7 @@ class Users extends Page {
 			App.api.removeUser(dataSend)
 				.then((res) => {
 					if (res.success) {
-						App.message.show(this.message.success.remove);
+						App.message.show(this.message.success.remove, App.config.timeCloseModal);
 						this.loadUsers();
 					}
 				});

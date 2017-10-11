@@ -26,8 +26,8 @@ class Global {
 			$body.addClass('modal-active');
 		});
 
-		$body.on('keyup', '.textarea', function () {
-			$(this).parent().find('textarea').val($(this).text());
+		$body.on('keyup', 'textarea', function () {
+			$(this).parent().find('.textarea').html($(this).val() + '\n');
 		});
 
 		App.openModal = function (name) {

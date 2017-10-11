@@ -22,7 +22,6 @@ class Users extends Page {
 
 		this.search = '';
 		this.users = '';
-		this.time = null;
 		this.message = {
 			error: {
 				users: 'USERS NOT FOUND'

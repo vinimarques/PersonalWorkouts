@@ -55,6 +55,10 @@ class Validator {
 			case 'int':
 				val = parseInt(value);
 				break;
+
+			case 'text':
+				val = value.replace(/\n/g, '<br>');
+				break;
 		}
 
 		return val;

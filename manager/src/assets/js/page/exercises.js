@@ -22,7 +22,6 @@ class Exercises extends Page {
 
 		this.search = '';
 		this.exercises = '';
-		this.time = null;
 		this.message = {
 			error: {
 				exercises: 'EXERCISES NOT FOUND'
@@ -89,12 +88,12 @@ class Exercises extends Page {
 		$('.modal-remove-exercise form').on('submit', (ev) => {
 			ev.preventDefault();
 			let dataSend = this.validator.getDataSend(ev.target);
-			if (!dataSend.user_id) return false;
+			if (!dataSend.exercise_id) return false;
 			App.api.removeExercise(dataSend)
 				.then((res) => {
 					if (res.success) {
 						App.message.show(this.message.success.remove);
-						this.loadUsers();
+						this.loadExercises();
 					}
 				});
 		});
@@ -139,6 +138,30 @@ class Exercises extends Page {
 			}
 			container.html(html);
 		})
+	}
+
+	_searchKeyUp(ev) {
+		let value = ev.target.value;
+		clearTimeout(this.timeSearch);
+		this.timeSearch = setTimeout(() => {
+			this.search = value;
+			this.highlight(value);
+		}, 700);
+	}
+
+	highlight(word) {
+		let result = _.filter(this.exercises, (o) => {
+			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
+		});
+		let html = '';
+
+		if (result && result.length > 0) {
+			html = this.template.render({ exercises: result });
+		}
+		else {
+			html = this.template.render({ error: this.message.error.exercises });
+		}
+		this.exercisesContent.html(html);
 	}
 }
 

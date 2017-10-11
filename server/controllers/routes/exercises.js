@@ -53,7 +53,7 @@ module.exports = function (router) {
 		}
 	));
 
-	router.delete('/user', Auth.middleware(), Resolve.send(
+	router.delete('/exercise', Auth.middleware(), Resolve.send(
 		function (req) {
 			const id = req.body.exercise_id;
 
@@ -108,7 +108,7 @@ module.exports = function (router) {
 				{ field: 'description', type: 'String' }
 			]);
 
-			const data = _.pick(req.body, ['name', 'email', 'password', 'user_type_id', 'company_id']);
+			const data = _.pick(req.body, ['name', 'description']);
 			const id = req.body.id;
 
 			validator.validate(data);

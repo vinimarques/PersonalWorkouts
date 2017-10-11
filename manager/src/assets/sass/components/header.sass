@@ -2,10 +2,10 @@
 	padding: 0 30px
 	height: 100px
 	background: $color-primary
-	display: flex
 	align-items: center
 	justify-content: space-between
 	z-index: 1
+	display: none
 
 	h1
 		color: $white
@@ -45,3 +45,11 @@
 				&:hover
 					background: darken($color-secondary, 5%)
 					box-shadow: 0 5px 5px rgba(0,0,0,0.35)
+
+.active-page-users,
+.active-page-exercises,
+.active-page-calendar,
+.active-page-home,
+.active-page-plans
+	.header
+		display: flex

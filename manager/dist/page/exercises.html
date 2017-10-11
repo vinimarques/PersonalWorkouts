@@ -1,6 +1,4 @@
 <section class="page" data-page="exercises">
-	{include[header]}
-	{include[nav]}
 	<button class="btn btn--add open-modal" data-modal="add-exercise" id="btn-add-exercise"></button>
 	<div class="page__container">
 		<div class="formm global__search">
@@ -35,10 +33,10 @@
 						<em></em>
 					</span>
 				</label>
-				<label class="formm__item" for="new-description-exercise">
+				<label class="formm__item">
 					<span class="formm__textarea">
-						<textarea name="description" autocomplete="off"></textarea>
-						<div class="textarea" contenteditable="true" placeholder="Description" id="new-description-exercise"></div>
+						<div class="textarea"></div>
+						<textarea name="description" autocomplete="off" placeholder="Description" data-type="text"></textarea>
 						<em></em>
 					</span>
 				</label>
@@ -65,8 +63,8 @@
 				</label>
 				<label class="formm__item" for="edit-description-exercise">
 					<span class="formm__textarea">
-						<textarea name="description" autocomplete="off"></textarea>
-						<div class="textarea" contenteditable="true" placeholder="Description" id="edit-description-exercise"></div>
+						<div class="textarea"></div>
+						<textarea name="description" autocomplete="off" placeholder="Description" data-type="text"></textarea>
 						<em></em>
 					</span>
 				</label>

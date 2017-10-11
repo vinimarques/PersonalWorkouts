@@ -8,6 +8,7 @@
 	padding: 30px
 	box-sizing: border-box
 	z-index: 3
+	display: none
 
 	ul
 		li
@@ -15,13 +16,22 @@
 
 			&:first-child
 				padding-top: 0
-
 			a
 				display: block
 				padding: 5px 0
 				font-weight: 500
 				font-size: 18px
 
-				&.active
+			&.active
+				a
 					color: $color-secondary
 					font-weight: 700
+
+
+.active-page-users,
+.active-page-exercises,
+.active-page-calendar,
+.active-page-home,
+.active-page-plans
+	.nav
+		display: block

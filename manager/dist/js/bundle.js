@@ -83,31 +83,31 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _consts = __webpack_require__(33);
+	var _consts = __webpack_require__(34);
 
 	var _consts2 = _interopRequireDefault(_consts);
 
-	var _jquery = __webpack_require__(34);
+	var _jquery = __webpack_require__(35);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _message = __webpack_require__(35);
+	var _message = __webpack_require__(36);
 
 	var _message2 = _interopRequireDefault(_message);
 
-	var _database = __webpack_require__(36);
+	var _database = __webpack_require__(37);
 
 	var _database2 = _interopRequireDefault(_database);
 
-	var _api = __webpack_require__(37);
+	var _api = __webpack_require__(38);
 
 	var _api2 = _interopRequireDefault(_api);
 
-	var _helpers = __webpack_require__(74);
+	var _helpers = __webpack_require__(73);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
-	var _loader = __webpack_require__(75);
+	var _loader = __webpack_require__(74);
 
 	var _loader2 = _interopRequireDefault(_loader);
 
@@ -119,7 +119,7 @@
 
 
 	// Import jQuery Global
-	__webpack_require__(72)(_jquery2.default);
+	__webpack_require__(75)(_jquery2.default);
 
 	//Applications
 	window.App = {};
@@ -192,15 +192,15 @@
 
 	var _users2 = _interopRequireDefault(_users);
 
-	var _plans = __webpack_require__(30);
+	var _plans = __webpack_require__(31);
 
 	var _plans2 = _interopRequireDefault(_plans);
 
-	var _exercises = __webpack_require__(31);
+	var _exercises = __webpack_require__(32);
 
 	var _exercises2 = _interopRequireDefault(_exercises);
 
-	var _calendar = __webpack_require__(32);
+	var _calendar = __webpack_require__(33);
 
 	var _calendar2 = _interopRequireDefault(_calendar);
 
@@ -1742,29 +1742,33 @@
 								var tmp = $.templates(html);
 								var tmpHtml = tmp.render($.extend(App.data, window.consts));
 
-								pages.html(tmpHtml);
-								page = $('[data-page="' + pageName + '"');
+								setTimeout(function () {
+									pages.html(tmpHtml);
+									page = $('[data-page="' + pageName + '"');
 
+									page.addClass('active');
+									_this.activeNav(pageName);
+									_this.bindEvents && _this.bindEvents();
+									_this.global.bindEvents && _this.global.bindEvents();
+									_this.onload && _this.onload();
+									success();
+								}, 300);
+							});
+						} else {
+							var tmp = $.templates(html);
+							var tmpHtml = tmp.render($.extend(App.data, window.consts));
+
+							pages.html(tmpHtml);
+							page = $('[data-page="' + pageName + '"');
+
+							setTimeout(function () {
 								page.addClass('active');
 								_this.activeNav(pageName);
 								_this.bindEvents && _this.bindEvents();
 								_this.global.bindEvents && _this.global.bindEvents();
 								_this.onload && _this.onload();
 								success();
-							});
-						} else {
-							var tmp = $.templates(html);
-							var tmpHtml = tmp.render($.extend(App.data, window.consts));
-
-							pages.append(tmpHtml);
-							page = $('[data-page="' + pageName + '"');
-
-							page.addClass('active');
-							_this.activeNav(pageName);
-							_this.bindEvents && _this.bindEvents();
-							_this.global.bindEvents && _this.global.bindEvents();
-							_this.onload && _this.onload();
-							success();
+							}, 300);
 						}
 					}).catch(error);
 				});
@@ -1786,12 +1790,36 @@
 				$('.nav').find('.active').removeClass('active');
 				$('.nav').find('.' + pageName).addClass('active');
 
+				this.addBodyActive(pageName);
 				this.loadUserInfos();
+			}
+		}, {
+			key: 'addBodyActive',
+			value: function addBodyActive(pageName) {
+				var bodyClass = $('body').attr('class');
+				var prefix = 'active-page-';
+				if (bodyClass) {
+					var arr = bodyClass.split(' ');
+
+					arr = arr.filter(function (c) {
+						return c.indexOf(prefix) === -1;
+					});
+
+					$('body')[0].className = arr.join(' ');
+				}
+
+				$('body').addClass(prefix + pageName);
 			}
 		}, {
 			key: 'loadUserInfos',
 			value: function loadUserInfos() {
 				var user = App.database.get('user');
+
+				if (user.user_type_id !== 1 && user.user_type_id !== 2) {
+					$('.nav').find('.users').hide();
+				} else {
+					$('.nav').find('.users').show();
+				}
 
 				$('.header__user .name').text(user.name);
 				$('.header__user .company').text(user.company_name);
@@ -1849,8 +1877,8 @@
 					$body.addClass('modal-active');
 				});
 
-				$body.on('keyup', '.textarea', function () {
-					$(this).parent().find('textarea').val($(this).text());
+				$body.on('keyup', 'textarea', function () {
+					$(this).parent().find('.textarea').html($(this).val() + '\n');
 				});
 
 				App.openModal = function (name) {
@@ -1949,11 +1977,11 @@
 
 	var _page2 = _interopRequireDefault(_page);
 
-	var _validator = __webpack_require__(73);
+	var _validator = __webpack_require__(28);
 
 	var _validator2 = _interopRequireDefault(_validator);
 
-	var _lodash = __webpack_require__(28);
+	var _lodash = __webpack_require__(29);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -1987,7 +2015,6 @@
 
 				this.search = '';
 				this.users = '';
-				this.time = null;
 				this.message = {
 					error: {
 						users: 'USERS NOT FOUND'
@@ -2149,6 +2176,151 @@
 
 /***/ }),
 /* 28 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	/**
+	 *
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Validator = function () {
+		function Validator() {
+			_classCallCheck(this, Validator);
+
+			this.rules = {
+				required: {
+					test: function test(value) {
+						return value !== '' && value !== undefined;
+					},
+					message: 'Field is required'
+				},
+				email: {
+					test: function test(value) {
+						return (/^(?:[\w-]+\.?\+?)*[\w-]+@(?:\w+\.)+\w+$/.test(value)
+						);
+					},
+					message: 'E-mail is invalid'
+				}
+			};
+		}
+
+		_createClass(Validator, [{
+			key: 'getData',
+			value: function getData(form) {
+				var _this = this;
+
+				var data = [];
+				$(form).find('input, select, textarea').each(function (index, element) {
+					var obj = {
+						field: {
+							name: element.name,
+							value: element.dataset.type ? _this.convert(element.dataset.type, element.value) : element.value
+						}
+					};
+					if (element.dataset.validate) obj.test = element.dataset.validate.split(',');
+					data.push(obj);
+				});
+
+				return data;
+			}
+		}, {
+			key: 'getDataSend',
+			value: function getDataSend(form) {
+				var _this2 = this;
+
+				var data = {};
+				$(form).find('input, select, textarea').each(function (index, element) {
+					if (element.value == '') return;
+					data[element.name] = element.dataset.type ? _this2.convert(element.dataset.type, element.value) : element.value;
+				});
+
+				return data;
+			}
+		}, {
+			key: 'convert',
+			value: function convert(type, value) {
+				var val = value;
+				if (value === '') return undefined;
+
+				switch (type) {
+					case 'int':
+						val = parseInt(value);
+						break;
+
+					case 'text':
+						val = value.replace(/\n/g, '<br>');
+						break;
+				}
+
+				return val;
+			}
+		}, {
+			key: 'isValide',
+			value: function isValide(data) {
+				var _this3 = this;
+
+				if (data.length === 0) return {
+					error: true,
+					message: 'Data is empty.'
+				};
+
+				var errors = [];
+
+				data.map(function (item) {
+					var value = item.field.value,
+					    name = item.field.name,
+					    test = item.test;
+
+					if (!test) return;
+
+					test.map(function (t) {
+						if (!_this3.rules[t].test(value)) {
+							errors.push({
+								field: name,
+								message: _this3.rules[t].message
+							});
+						}
+					});
+				});
+
+				if (errors.length === 0) return { error: false };else return { error: true, errors: errors };
+			}
+		}, {
+			key: 'resetErrors',
+			value: function resetErrors(form) {
+				$(form).find('.error').removeClass('error');
+				$(form).find('.error-tooltip').remove();
+			}
+		}, {
+			key: 'showErrors',
+			value: function showErrors(errors) {
+				errors.map(function (item) {
+					var element = $('[name="' + item.field + '"]').parent();
+					var parent = element.parent();
+
+					if (parent.find('.error-tooltip').length > 0) parent.find('.error-tooltip').append('<strong>' + item.message + '</strong>');else parent.append('<span class="error-tooltip"><strong>' + item.message + '</strong></span>');
+
+					element.addClass('error');
+				});
+			}
+		}]);
+
+		return Validator;
+	}();
+
+	exports.default = Validator;
+
+/***/ }),
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -19236,10 +19408,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(29)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(30)(module)))
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -19255,7 +19427,7 @@
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19313,7 +19485,7 @@
 	exports.default = Plans;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19335,11 +19507,11 @@
 
 	var _page2 = _interopRequireDefault(_page);
 
-	var _validator = __webpack_require__(73);
+	var _validator = __webpack_require__(28);
 
 	var _validator2 = _interopRequireDefault(_validator);
 
-	var _lodash = __webpack_require__(28);
+	var _lodash = __webpack_require__(29);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -19373,7 +19545,6 @@
 
 				this.search = '';
 				this.exercises = '';
-				this.time = null;
 				this.message = {
 					error: {
 						exercises: 'EXERCISES NOT FOUND'
@@ -19442,11 +19613,11 @@
 				$('.modal-remove-exercise form').on('submit', function (ev) {
 					ev.preventDefault();
 					var dataSend = _this2.validator.getDataSend(ev.target);
-					if (!dataSend.user_id) return false;
+					if (!dataSend.exercise_id) return false;
 					App.api.removeExercise(dataSend).then(function (res) {
 						if (res.success) {
 							App.message.show(_this2.message.success.remove);
-							_this2.loadUsers();
+							_this2.loadExercises();
 						}
 					});
 				});
@@ -19494,6 +19665,33 @@
 					container.html(html);
 				});
 			}
+		}, {
+			key: '_searchKeyUp',
+			value: function _searchKeyUp(ev) {
+				var _this4 = this;
+
+				var value = ev.target.value;
+				clearTimeout(this.timeSearch);
+				this.timeSearch = setTimeout(function () {
+					_this4.search = value;
+					_this4.highlight(value);
+				}, 700);
+			}
+		}, {
+			key: 'highlight',
+			value: function highlight(word) {
+				var result = _lodash2.default.filter(this.exercises, function (o) {
+					return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
+				});
+				var html = '';
+
+				if (result && result.length > 0) {
+					html = this.template.render({ exercises: result });
+				} else {
+					html = this.template.render({ error: this.message.error.exercises });
+				}
+				this.exercisesContent.html(html);
+			}
 		}]);
 
 		return Exercises;
@@ -19502,7 +19700,7 @@
 	exports.default = Exercises;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19560,7 +19758,7 @@
 	exports.default = Calendar;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -19586,7 +19784,7 @@
 	};
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -29845,7 +30043,7 @@
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -29914,7 +30112,7 @@
 	exports.default = Message;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -30003,7 +30201,7 @@
 	exports.default = Database;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30023,7 +30221,7 @@
 
 	var _security2 = _interopRequireDefault(_security);
 
-	var _cryptoJs = __webpack_require__(38);
+	var _cryptoJs = __webpack_require__(39);
 
 	var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
 
@@ -30148,13 +30346,13 @@
 	exports.default = Api;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(40), __webpack_require__(41), __webpack_require__(42), __webpack_require__(43), __webpack_require__(44), __webpack_require__(45), __webpack_require__(46), __webpack_require__(47), __webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(65), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(41), __webpack_require__(42), __webpack_require__(43), __webpack_require__(44), __webpack_require__(45), __webpack_require__(46), __webpack_require__(47), __webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(65), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -30171,7 +30369,7 @@
 	}));
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
@@ -30936,13 +31134,13 @@
 	}));
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -31245,13 +31443,13 @@
 	}));
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -31326,13 +31524,13 @@
 	}));
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -31480,13 +31678,13 @@
 	}));
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -31620,13 +31818,13 @@
 	}));
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -31893,13 +32091,13 @@
 	}));
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32048,13 +32246,13 @@
 	}));
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32252,13 +32450,13 @@
 	}));
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(46));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(47));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32337,13 +32535,13 @@
 	}));
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(41));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32665,13 +32863,13 @@
 	}));
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(40), __webpack_require__(48));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(41), __webpack_require__(49));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32753,13 +32951,13 @@
 	}));
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(41));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33081,13 +33279,13 @@
 	}));
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33353,13 +33551,13 @@
 	}));
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39));
+			module.exports = exports = factory(__webpack_require__(40));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33501,13 +33699,13 @@
 	}));
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(45), __webpack_require__(52));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(46), __webpack_require__(53));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33651,13 +33849,13 @@
 	}));
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(45), __webpack_require__(52));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(46), __webpack_require__(53));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33788,13 +33986,13 @@
 	}));
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(54));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(55));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -34673,13 +34871,13 @@
 	}));
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -34756,13 +34954,13 @@
 	}));
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -34819,13 +35017,13 @@
 	}));
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -34940,13 +35138,13 @@
 	}));
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -34999,13 +35197,13 @@
 	}));
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35044,13 +35242,13 @@
 	}));
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35098,13 +35296,13 @@
 	}));
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35147,13 +35345,13 @@
 	}));
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35192,13 +35390,13 @@
 	}));
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35242,13 +35440,13 @@
 	}));
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35277,13 +35475,13 @@
 	}));
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35348,13 +35546,13 @@
 	}));
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(43), __webpack_require__(44), __webpack_require__(54), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35585,13 +35783,13 @@
 	}));
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(43), __webpack_require__(44), __webpack_require__(54), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -36360,13 +36558,13 @@
 	}));
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(43), __webpack_require__(44), __webpack_require__(54), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -36504,13 +36702,13 @@
 	}));
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(43), __webpack_require__(44), __webpack_require__(54), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -36701,13 +36899,13 @@
 	}));
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(39), __webpack_require__(43), __webpack_require__(44), __webpack_require__(54), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -36896,7 +37094,104 @@
 	}));
 
 /***/ }),
-/* 72 */
+/* 73 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	/**
+	 *
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Helpers = function () {
+		function Helpers() {
+			_classCallCheck(this, Helpers);
+		}
+
+		_createClass(Helpers, [{
+			key: "generatePassword",
+			value: function generatePassword() {
+				var length = 8,
+				    charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+				    retVal = "";
+
+				for (var i = 0, n = charset.length; i < length; ++i) {
+					retVal += charset.charAt(Math.floor(Math.random() * n));
+				}
+
+				return retVal;
+			}
+		}, {
+			key: "populateForm",
+			value: function populateForm(form, data) {
+				Object.keys(data).map(function (key) {
+					var value = data[key];
+					if (key === 'description') {
+						$(form).find("[name=\"" + key + "\"]").parent().find('.textarea').html(value);
+						value = value.replace(/<br>/g, '\n');
+					}
+					$(form).find("[name=\"" + key + "\"]").val(value);
+				});
+			}
+		}]);
+
+		return Helpers;
+	}();
+
+	exports.default = Helpers;
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	/**
+	 *
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Loader = function () {
+		function Loader() {
+			_classCallCheck(this, Loader);
+
+			this.$body = $('body');
+		}
+
+		_createClass(Loader, [{
+			key: 'show',
+			value: function show() {
+				this.$body.addClass('loading');
+			}
+		}, {
+			key: 'hide',
+			value: function hide() {
+				this.$body.removeClass('loading');
+			}
+		}]);
+
+		return Loader;
+	}();
+
+	exports.default = Loader;
+
+/***/ }),
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*! JsRender v0.9.88 (Beta): http://jsviews.com/#jsrender */
@@ -39379,244 +39674,6 @@
 	return $ || jsr;
 	}, window));
 
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	/**
-	 *
-	 */
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Validator = function () {
-		function Validator() {
-			_classCallCheck(this, Validator);
-
-			this.rules = {
-				required: {
-					test: function test(value) {
-						return value !== '' && value !== undefined;
-					},
-					message: 'Field is required'
-				},
-				email: {
-					test: function test(value) {
-						return (/^(?:[\w-]+\.?\+?)*[\w-]+@(?:\w+\.)+\w+$/.test(value)
-						);
-					},
-					message: 'E-mail is invalid'
-				}
-			};
-		}
-
-		_createClass(Validator, [{
-			key: 'getData',
-			value: function getData(form) {
-				var _this = this;
-
-				var data = [];
-				$(form).find('input, select, textarea').each(function (index, element) {
-					var obj = {
-						field: {
-							name: element.name,
-							value: element.dataset.type ? _this.convert(element.dataset.type, element.value) : element.value
-						}
-					};
-					if (element.dataset.validate) obj.test = element.dataset.validate.split(',');
-					data.push(obj);
-				});
-
-				return data;
-			}
-		}, {
-			key: 'getDataSend',
-			value: function getDataSend(form) {
-				var _this2 = this;
-
-				var data = {};
-				$(form).find('input, select, textarea').each(function (index, element) {
-					if (element.value == '') return;
-					data[element.name] = element.dataset.type ? _this2.convert(element.dataset.type, element.value) : element.value;
-				});
-
-				return data;
-			}
-		}, {
-			key: 'convert',
-			value: function convert(type, value) {
-				var val = value;
-				if (value === '') return undefined;
-
-				switch (type) {
-					case 'int':
-						val = parseInt(value);
-						break;
-				}
-
-				return val;
-			}
-		}, {
-			key: 'isValide',
-			value: function isValide(data) {
-				var _this3 = this;
-
-				if (data.length === 0) return {
-					error: true,
-					message: 'Data is empty.'
-				};
-
-				var errors = [];
-
-				data.map(function (item) {
-					var value = item.field.value,
-					    name = item.field.name,
-					    test = item.test;
-
-					if (!test) return;
-
-					test.map(function (t) {
-						if (!_this3.rules[t].test(value)) {
-							errors.push({
-								field: name,
-								message: _this3.rules[t].message
-							});
-						}
-					});
-				});
-
-				if (errors.length === 0) return { error: false };else return { error: true, errors: errors };
-			}
-		}, {
-			key: 'resetErrors',
-			value: function resetErrors(form) {
-				$(form).find('.error').removeClass('error');
-				$(form).find('.error-tooltip').remove();
-			}
-		}, {
-			key: 'showErrors',
-			value: function showErrors(errors) {
-				errors.map(function (item) {
-					var element = $('[name="' + item.field + '"]').parent();
-					var parent = element.parent();
-
-					if (parent.find('.error-tooltip').length > 0) parent.find('.error-tooltip').append('<strong>' + item.message + '</strong>');else parent.append('<span class="error-tooltip"><strong>' + item.message + '</strong></span>');
-
-					element.addClass('error');
-				});
-			}
-		}]);
-
-		return Validator;
-	}();
-
-	exports.default = Validator;
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	/**
-	 *
-	 */
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Helpers = function () {
-		function Helpers() {
-			_classCallCheck(this, Helpers);
-		}
-
-		_createClass(Helpers, [{
-			key: "generatePassword",
-			value: function generatePassword() {
-				var length = 8,
-				    charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-				    retVal = "";
-
-				for (var i = 0, n = charset.length; i < length; ++i) {
-					retVal += charset.charAt(Math.floor(Math.random() * n));
-				}
-
-				return retVal;
-			}
-		}, {
-			key: "populateForm",
-			value: function populateForm(form, data) {
-				Object.keys(data).map(function (key) {
-					var value = data[key];
-					if (key === 'description') {
-						$(form).find("[name=\"" + key + "\"]").parent().find('.textarea').html(value);
-						value = value.replace(/<br>/g, '\n');
-					}
-					$(form).find("[name=\"" + key + "\"]").val(value);
-				});
-			}
-		}]);
-
-		return Helpers;
-	}();
-
-	exports.default = Helpers;
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	/**
-	 *
-	 */
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Loader = function () {
-		function Loader() {
-			_classCallCheck(this, Loader);
-
-			this.$body = $('body');
-		}
-
-		_createClass(Loader, [{
-			key: 'show',
-			value: function show() {
-				this.$body.addClass('loading');
-			}
-		}, {
-			key: 'hide',
-			value: function hide() {
-				this.$body.removeClass('loading');
-			}
-		}]);
-
-		return Loader;
-	}();
-
-	exports.default = Loader;
 
 /***/ })
 /******/ ]);

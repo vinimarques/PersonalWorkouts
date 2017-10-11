@@ -134,16 +134,14 @@ body {
   padding: 0 30px;
   height: 100px;
   background: #4470DA;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  z-index: 1; }
+  z-index: 1;
+  display: none; }
   .header h1 {
     color: #fff;
     font-size: 20px;
@@ -182,6 +180,11 @@ body {
           background: #ed305d;
           box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35); }
 
+.active-page-users .header, .active-page-exercises .header, .active-page-calendar .header, .active-page-home .header, .active-page-plans .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
 .nav {
   position: absolute;
   top: 100px;
@@ -191,7 +194,8 @@ body {
   background: #F2F2F2;
   padding: 30px;
   box-sizing: border-box;
-  z-index: 3; }
+  z-index: 3;
+  display: none; }
   .nav ul li {
     padding: 10px 0; }
     .nav ul li:first-child {
@@ -201,36 +205,37 @@ body {
       padding: 5px 0;
       font-weight: 500;
       font-size: 18px; }
-      .nav ul li a.active {
-        color: #EF476F;
-        font-weight: 700; }
+    .nav ul li.active a {
+      color: #EF476F;
+      font-weight: 700; }
+
+.active-page-users .nav, .active-page-exercises .nav, .active-page-calendar .nav, .active-page-home .nav, .active-page-plans .nav {
+  display: block; }
 
 .page {
   opacity: 0;
-  transition: opacity .3s;
+  transition: opacity .4s;
   z-index: 1;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 100px;
+  left: 300px;
   right: 0;
   bottom: 0;
-  overflow: auto; }
+  overflow: visible;
+  background: #fff; }
   .page.active {
     opacity: 1;
     z-index: 2; }
   .page__container {
     position: absolute;
-    top: 100px;
-    left: 300px;
+    top: 0;
+    left: 0;
     right: 0;
     bottom: 0;
     overflow: auto;
     padding: 30px;
     box-sizing: border-box;
     z-index: 2; }
-
-.btn--add + .page__container {
-  padding-top: 60px; }
 
 textarea::-moz-placeholder, textarea::-ms-input-placeholder, textarea::-moz-placeholder, textarea::-webkit-input-placeholder, textarea::placeholder, input::-moz-placeholder, input::-ms-input-placeholder, input::-moz-placeholder, input::-webkit-input-placeholder, input::placeholder {
   color: #4A4A4A; }
@@ -308,29 +313,44 @@ textarea::-moz-placeholder, textarea::-ms-input-placeholder, textarea::-moz-plac
       transition: transform .3s, -webkit-transform .3s; }
     .formm__textarea textarea {
       position: absolute;
-      left: -999em; }
-    .formm__textarea .textarea {
+      left: 0;
+      top: 0;
       width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      z-index: 2;
       resize: none;
-      min-height: 50px;
       font-size: 16px;
       box-sizing: border-box;
+      white-space: normal;
+      overflow: hidden;
       background: transparent;
       font-weight: 300;
       font-family: 'open_sans';
       line-height: 1.5;
       padding: 10px 0;
+      border: none;
       border-bottom: solid 1px #F2F2F2; }
-      .formm__textarea .textarea:empty:before {
-        content: attr(placeholder);
-          content-display: block;
-        color: #757575;
-        font-size: 16px;
-        font-weight: 300;
-        font-family: 'open_sans'; }
-      .formm__textarea .textarea:focus + em {
+      .formm__textarea textarea:focus + em {
         -webkit-transform: translateX(0px);
                 transform: translateX(0px); }
+    .formm__textarea .textarea {
+      opacity: 0.1;
+      width: 100%;
+      min-height: 50px;
+      font-size: 16px;
+      box-sizing: border-box;
+      font-weight: 300;
+      font-family: 'open_sans';
+      line-height: 1.5;
+      padding: 10px 0;
+      z-index: 1;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      overflow: hidden;
+      position: relative; }
   .formm__select {
     display: block;
     width: 100%;
@@ -463,7 +483,7 @@ textarea::-moz-placeholder, textarea::-ms-input-placeholder, textarea::-moz-plac
     width: 60px;
     transition: all .3s;
     position: absolute;
-    top: 70px;
+    top: -30px;
     right: 30px;
     z-index: 10;
     border-radius: 100%; }
@@ -810,6 +830,13 @@ textarea::-moz-placeholder, textarea::-ms-input-placeholder, textarea::-moz-plac
     -webkit-transform: scaleY(1);
             transform: scaleY(1);
     background: #EF476F; } }
+
+.active-page-login .nav, .active-page-login .header {
+  display: none; }
+
+.active-page-login [data-page='login'] {
+  top: 0;
+  left: 0; }
 
 .login-form {
   width: 500px;

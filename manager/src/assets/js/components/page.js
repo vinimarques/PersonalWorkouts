@@ -47,30 +47,34 @@ class Page {
 							let tmp = $.templates(html);
 							let tmpHtml = tmp.render($.extend(App.data, window.consts));
 
-							pages.html(tmpHtml);
-							page = $(`[data-page="${pageName}"`);
+							setTimeout(() => {
+								pages.html(tmpHtml);
+								page = $(`[data-page="${pageName}"`);
 
-							page.addClass('active');
-							this.activeNav(pageName);
-							this.bindEvents && this.bindEvents();
-							this.global.bindEvents && this.global.bindEvents();
-							this.onload && this.onload();
-							success();
+								page.addClass('active');
+								this.activeNav(pageName);
+								this.bindEvents && this.bindEvents();
+								this.global.bindEvents && this.global.bindEvents();
+								this.onload && this.onload();
+								success();
+							}, 300);
 						})
 					}
 					else {
 						let tmp = $.templates(html);
 						let tmpHtml = tmp.render($.extend(App.data, window.consts));
 
-						pages.append(tmpHtml);
+						pages.html(tmpHtml);
 						page = $(`[data-page="${pageName}"`);
 
-						page.addClass('active');
-						this.activeNav(pageName);
-						this.bindEvents && this.bindEvents();
-						this.global.bindEvents && this.global.bindEvents();
-						this.onload && this.onload();
-						success();
+						setTimeout(() => {
+							page.addClass('active');
+							this.activeNav(pageName);
+							this.bindEvents && this.bindEvents();
+							this.global.bindEvents && this.global.bindEvents();
+							this.onload && this.onload();
+							success();
+						}, 300);
 					}
 				})
 				.catch(error);
@@ -89,11 +93,36 @@ class Page {
 		$('.nav').find('.active').removeClass('active');
 		$('.nav').find('.' + pageName).addClass('active');
 
+
+		this.addBodyActive(pageName);
 		this.loadUserInfos();
+	}
+
+	addBodyActive (pageName) {
+		let bodyClass = $('body').attr('class');
+		let prefix = 'active-page-';
+		if (bodyClass) {
+			let arr = bodyClass.split(' ');
+
+			arr = arr.filter(function (c) {
+				return c.indexOf(prefix) === -1;
+			});
+
+			$('body')[0].className = arr.join(' ');
+		}
+
+		$('body').addClass(prefix + pageName)
 	}
 
 	loadUserInfos () {
 		const user = App.database.get('user');
+
+		if (user.user_type_id !== 1 && user.user_type_id !== 2) {
+			$('.nav').find('.users').hide();
+		}
+		else {
+			$('.nav').find('.users').show();
+		}
 
 		$('.header__user .name').text(user.name);
 		$('.header__user .company').text(user.company_name);

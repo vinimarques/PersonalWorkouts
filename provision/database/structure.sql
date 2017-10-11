@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`day` (
   CONSTRAINT `fk_day_plan1`
     FOREIGN KEY (`plan_id`)
     REFERENCES `personalworkouts`.`plan` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`day_exercise` (
   CONSTRAINT `fk_day_exercise_day1`
     FOREIGN KEY (`day_id`)
     REFERENCES `personalworkouts`.`day` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_day_exercise_exercise1`
     FOREIGN KEY (`exercise_id`)
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`token` (
   CONSTRAINT `fk_token_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `personalworkouts`.`users` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`exercise_company` (
   CONSTRAINT `fk_exercise_company_exercise1`
     FOREIGN KEY (`exercise_id`)
     REFERENCES `personalworkouts`.`exercise` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

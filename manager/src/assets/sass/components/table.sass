@@ -47,6 +47,37 @@
 			font-weight: 700
 			font-size: 18px
 
+		.i-action
+			background: $color-secondary
+			color: $white
+			font-size: 20px
+			padding: 3px 10px
+			position: relative
+			border-radius: 4px
+			transition: all .3s
+
+			&:hover
+				box-shadow: -1px 3px 8px  rgba(0,0,0,0.5)
+
+			em
+				padding-left: 2px
+				position: absolute
+				top: -8px
+				right: -8px
+				font-size: 12px
+				text-align: center
+				background: $white
+				border-radius: 100%
+				width: 20px
+				height: 20px
+				color: $color-secondary
+				border: solid 1px $color-secondary
+				font-style: normal
+				font-weight: 700
+				display: flex
+				justify-content: center
+				align-items: center
+
 	$total-columns: 12
 	@for $i from 1 through $total-columns
 		.col-#{$i}

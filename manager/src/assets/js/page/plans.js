@@ -139,6 +139,30 @@ class Plans extends Page {
 			});
 		});
 	}
+
+	_searchKeyUp(ev) {
+		let value = ev.target.value;
+		clearTimeout(this.timeSearch);
+		this.timeSearch = setTimeout(() => {
+			this.search = value;
+			this.highlight(value);
+		}, 700);
+	}
+
+	highlight(word) {
+		let result = _.filter(this.plans, (o) => {
+			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
+		});
+		let html = '';
+
+		if (result && result.length > 0) {
+			html = this.template.render({ plans: result });
+		}
+		else {
+			html = this.template.render({ error: this.message.error.plans });
+		}
+		this.plansContent.html(html);
+	}
 }
 
 export { Plans as default }

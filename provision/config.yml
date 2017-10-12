@@ -1,5 +1,5 @@
 vm:
-  memory: 1024
+  memory: 512
   name: personalworkouts
 database:
   dbname: personalworkouts

@@ -37,6 +37,15 @@ UNLOCK TABLES;
 # Dump of table day
 # ------------------------------------------------------------
 
+LOCK TABLES `exercise` WRITE;
+/*!40000 ALTER TABLE `exercise` DISABLE KEYS */;
+
+INSERT INTO `exercise` (`id`, `name`, `description`)
+VALUES
+	(1,'Supino reto com barra','1. Na posição deitada em um banco plano, faça uma pegada na barra com o dorso das mãos voltado para cima e o afastamento entre elas igual à distância entre os ombros.<br><br>2. Abaixe lentamente o peso até tocar a parte média do tórax.<br><br>3. Empurre a barra diretamente para cima, até que ocorra bloqueio dos cotovelos.');
+
+/*!40000 ALTER TABLE `exercise` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table day_exercise
@@ -63,11 +72,40 @@ UNLOCK TABLES;
 # Dump of table exercise
 # ------------------------------------------------------------
 
+LOCK TABLES `exercise_company` WRITE;
+/*!40000 ALTER TABLE `exercise_company` DISABLE KEYS */;
+
+INSERT INTO `exercise_company` (`id`, `company_id`, `exercise_id`)
+VALUES
+	(1,1,1);
+
+/*!40000 ALTER TABLE `exercise_company` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table plan
 # ------------------------------------------------------------
 
+LOCK TABLES `plan` WRITE;
+/*!40000 ALTER TABLE `plan` DISABLE KEYS */;
+
+INSERT INTO `plan` (`id`, `name`, `days_per_week`, `difficulty_id`)
+VALUES
+	(1,'Treino de força',4,2);
+
+/*!40000 ALTER TABLE `plan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+LOCK TABLES `plan_company` WRITE;
+/*!40000 ALTER TABLE `plan_company` DISABLE KEYS */;
+
+INSERT INTO `plan_company` (`id`, `plan_id`, `company_id`)
+VALUES
+	(1,1,1);
+
+/*!40000 ALTER TABLE `plan_company` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table user_type

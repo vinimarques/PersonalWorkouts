@@ -83,31 +83,31 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _consts = __webpack_require__(34);
+	var _consts = __webpack_require__(36);
 
 	var _consts2 = _interopRequireDefault(_consts);
 
-	var _jquery = __webpack_require__(35);
+	var _jquery = __webpack_require__(37);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _message = __webpack_require__(36);
+	var _message = __webpack_require__(38);
 
 	var _message2 = _interopRequireDefault(_message);
 
-	var _database = __webpack_require__(37);
+	var _database = __webpack_require__(39);
 
 	var _database2 = _interopRequireDefault(_database);
 
-	var _api = __webpack_require__(38);
+	var _api = __webpack_require__(40);
 
 	var _api2 = _interopRequireDefault(_api);
 
-	var _helpers = __webpack_require__(73);
+	var _helpers = __webpack_require__(75);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
-	var _loader = __webpack_require__(74);
+	var _loader = __webpack_require__(76);
 
 	var _loader2 = _interopRequireDefault(_loader);
 
@@ -119,7 +119,7 @@
 
 
 	// Import jQuery Global
-	__webpack_require__(75)(_jquery2.default);
+	__webpack_require__(77)(_jquery2.default);
 
 	//Applications
 	window.App = {};
@@ -201,19 +201,19 @@
 
 	var _plans2 = _interopRequireDefault(_plans);
 
-	var _days = __webpack_require__(76);
+	var _days = __webpack_require__(32);
 
 	var _days2 = _interopRequireDefault(_days);
 
-	var _exercisesDay = __webpack_require__(77);
+	var _exercisesDay = __webpack_require__(33);
 
 	var _exercisesDay2 = _interopRequireDefault(_exercisesDay);
 
-	var _exercises = __webpack_require__(32);
+	var _exercises = __webpack_require__(34);
 
 	var _exercises2 = _interopRequireDefault(_exercises);
 
-	var _calendar = __webpack_require__(33);
+	var _calendar = __webpack_require__(35);
 
 	var _calendar2 = _interopRequireDefault(_calendar);
 
@@ -19629,6 +19629,33 @@
 					});
 				});
 			}
+		}, {
+			key: '_searchKeyUp',
+			value: function _searchKeyUp(ev) {
+				var _this4 = this;
+
+				var value = ev.target.value;
+				clearTimeout(this.timeSearch);
+				this.timeSearch = setTimeout(function () {
+					_this4.search = value;
+					_this4.highlight(value);
+				}, 700);
+			}
+		}, {
+			key: 'highlight',
+			value: function highlight(word) {
+				var result = _lodash2.default.filter(this.plans, function (o) {
+					return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
+				});
+				var html = '';
+
+				if (result && result.length > 0) {
+					html = this.template.render({ plans: result });
+				} else {
+					html = this.template.render({ error: this.message.error.plans });
+				}
+				this.plansContent.html(html);
+			}
 		}]);
 
 		return Plans;
@@ -19638,6 +19665,122 @@
 
 /***/ }),
 /* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Import
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _page = __webpack_require__(24);
+
+	var _page2 = _interopRequireDefault(_page);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 *
+	 */
+	var Days = function (_Page) {
+		_inherits(Days, _Page);
+
+		function Days() {
+			_classCallCheck(this, Days);
+
+			return _possibleConstructorReturn(this, (Days.__proto__ || Object.getPrototypeOf(Days)).call(this));
+		}
+
+		_createClass(Days, [{
+			key: 'init',
+			value: function init(page, ctx) {
+				_get(Days.prototype.__proto__ || Object.getPrototypeOf(Days.prototype), 'load', this).call(this, page);
+			}
+		}, {
+			key: '_bindEvents',
+			value: function _bindEvents() {}
+		}]);
+
+		return Days;
+	}(_page2.default);
+
+	exports.default = Days;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Import
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _page = __webpack_require__(24);
+
+	var _page2 = _interopRequireDefault(_page);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 *
+	 */
+	var ExercisesDay = function (_Page) {
+		_inherits(ExercisesDay, _Page);
+
+		function ExercisesDay() {
+			_classCallCheck(this, ExercisesDay);
+
+			return _possibleConstructorReturn(this, (ExercisesDay.__proto__ || Object.getPrototypeOf(ExercisesDay)).call(this));
+		}
+
+		_createClass(ExercisesDay, [{
+			key: 'init',
+			value: function init(page, ctx) {
+				_get(ExercisesDay.prototype.__proto__ || Object.getPrototypeOf(ExercisesDay.prototype), 'load', this).call(this, page);
+			}
+		}, {
+			key: '_bindEvents',
+			value: function _bindEvents() {}
+		}]);
+
+		return ExercisesDay;
+	}(_page2.default);
+
+	exports.default = ExercisesDay;
+
+/***/ }),
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19852,7 +19995,7 @@
 	exports.default = Exercises;
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19910,7 +20053,7 @@
 	exports.default = Calendar;
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -19936,7 +20079,7 @@
 	};
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30195,7 +30338,7 @@
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -30276,7 +30419,7 @@
 	exports.default = Message;
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -30365,7 +30508,7 @@
 	exports.default = Database;
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30385,7 +30528,7 @@
 
 	var _security2 = _interopRequireDefault(_security);
 
-	var _cryptoJs = __webpack_require__(39);
+	var _cryptoJs = __webpack_require__(41);
 
 	var _cryptoJs2 = _interopRequireDefault(_cryptoJs);
 
@@ -30535,13 +30678,13 @@
 	exports.default = Api;
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(41), __webpack_require__(42), __webpack_require__(43), __webpack_require__(44), __webpack_require__(45), __webpack_require__(46), __webpack_require__(47), __webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(65), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(43), __webpack_require__(44), __webpack_require__(45), __webpack_require__(46), __webpack_require__(47), __webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(65), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72), __webpack_require__(73), __webpack_require__(74));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -30558,7 +30701,7 @@
 	}));
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
@@ -31323,13 +31466,13 @@
 	}));
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -31632,13 +31775,13 @@
 	}));
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -31713,13 +31856,13 @@
 	}));
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -31867,13 +32010,13 @@
 	}));
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32007,13 +32150,13 @@
 	}));
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32280,13 +32423,13 @@
 	}));
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32435,13 +32578,13 @@
 	}));
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32639,13 +32782,13 @@
 	}));
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(47));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(49));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -32724,13 +32867,13 @@
 	}));
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(41));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(43));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33052,13 +33195,13 @@
 	}));
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(41), __webpack_require__(49));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(43), __webpack_require__(51));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33140,13 +33283,13 @@
 	}));
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(41));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(43));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33468,13 +33611,13 @@
 	}));
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33740,13 +33883,13 @@
 	}));
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40));
+			module.exports = exports = factory(__webpack_require__(42));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -33888,13 +34031,13 @@
 	}));
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(46), __webpack_require__(53));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(48), __webpack_require__(55));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -34038,13 +34181,13 @@
 	}));
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(46), __webpack_require__(53));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(48), __webpack_require__(55));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -34175,13 +34318,13 @@
 	}));
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(55));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(57));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35060,13 +35203,13 @@
 	}));
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35143,13 +35286,13 @@
 	}));
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35206,13 +35349,13 @@
 	}));
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35327,13 +35470,13 @@
 	}));
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35386,13 +35529,13 @@
 	}));
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35431,13 +35574,13 @@
 	}));
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35485,13 +35628,13 @@
 	}));
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35534,13 +35677,13 @@
 	}));
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35579,13 +35722,13 @@
 	}));
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35629,13 +35772,13 @@
 	}));
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35664,13 +35807,13 @@
 	}));
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35735,13 +35878,13 @@
 	}));
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(46), __webpack_require__(47), __webpack_require__(57), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -35972,13 +36115,13 @@
 	}));
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(46), __webpack_require__(47), __webpack_require__(57), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -36747,13 +36890,13 @@
 	}));
 
 /***/ }),
-/* 70 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(46), __webpack_require__(47), __webpack_require__(57), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -36891,13 +37034,13 @@
 	}));
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(46), __webpack_require__(47), __webpack_require__(57), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -37088,13 +37231,13 @@
 	}));
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	;(function (root, factory, undef) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(40), __webpack_require__(44), __webpack_require__(45), __webpack_require__(55), __webpack_require__(56));
+			module.exports = exports = factory(__webpack_require__(42), __webpack_require__(46), __webpack_require__(47), __webpack_require__(57), __webpack_require__(58));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -37283,7 +37426,7 @@
 	}));
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -37338,7 +37481,7 @@
 	exports.default = Helpers;
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -37380,7 +37523,7 @@
 	exports.default = Loader;
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*! JsRender v0.9.88 (Beta): http://jsviews.com/#jsrender */
@@ -39863,122 +40006,6 @@
 	return $ || jsr;
 	}, window));
 
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	/**
-	 * Import
-	 */
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-	var _page = __webpack_require__(24);
-
-	var _page2 = _interopRequireDefault(_page);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	 *
-	 */
-	var Days = function (_Page) {
-		_inherits(Days, _Page);
-
-		function Days() {
-			_classCallCheck(this, Days);
-
-			return _possibleConstructorReturn(this, (Days.__proto__ || Object.getPrototypeOf(Days)).call(this));
-		}
-
-		_createClass(Days, [{
-			key: 'init',
-			value: function init(page, ctx) {
-				_get(Days.prototype.__proto__ || Object.getPrototypeOf(Days.prototype), 'load', this).call(this, page);
-			}
-		}, {
-			key: '_bindEvents',
-			value: function _bindEvents() {}
-		}]);
-
-		return Days;
-	}(_page2.default);
-
-	exports.default = Days;
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	/**
-	 * Import
-	 */
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-	var _page = __webpack_require__(24);
-
-	var _page2 = _interopRequireDefault(_page);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	 *
-	 */
-	var ExercisesDay = function (_Page) {
-		_inherits(ExercisesDay, _Page);
-
-		function ExercisesDay() {
-			_classCallCheck(this, ExercisesDay);
-
-			return _possibleConstructorReturn(this, (ExercisesDay.__proto__ || Object.getPrototypeOf(ExercisesDay)).call(this));
-		}
-
-		_createClass(ExercisesDay, [{
-			key: 'init',
-			value: function init(page, ctx) {
-				_get(ExercisesDay.prototype.__proto__ || Object.getPrototypeOf(ExercisesDay.prototype), 'load', this).call(this, page);
-			}
-		}, {
-			key: '_bindEvents',
-			value: function _bindEvents() {}
-		}]);
-
-		return ExercisesDay;
-	}(_page2.default);
-
-	exports.default = ExercisesDay;
 
 /***/ })
 /******/ ]);

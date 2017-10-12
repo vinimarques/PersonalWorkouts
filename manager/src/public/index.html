@@ -113,13 +113,34 @@
 					<span class="ttable__body__col col-3 plan-name">{{:name}}</span>
 					<span class="ttable__body__col col-3">{{:difficulty_name}}</span>
 					<span class="ttable__body__col col-3">{{:days_per_week}}</span>
-					<span class="ttable__body__col col-2"><a href="/plans/{{:id}}"><span class="icon icon-list"></span><em>{{:days}}</em></a></span>
+					<span class="ttable__body__col col-2"><a href="/plans/{{:id}}" class="i-action" title="View plan details"><span class="icon icon-list"></span><em>{{:days}}</em></a></span>
 					<span class="ttable__body__col col-1 actions">
 						<button class="btn btn--more right">
 							<span></span>
 							<ul>
 								<li><a href="javascript:;" class="plan-edit" title="Edit plan"><em class="icon icon-edit"></em></a></li>
 								<li><a href="javascript:;" class="plan-delete" title="Delete plan"><em class="icon icon-delete"></em></a></li>
+							</ul>
+						</button>
+					</span>
+				</div>
+			{{/for}}
+		{{/if}}
+	</script>
+	<script type="text/x-jsrender" id="template-days">
+		{{if error}}
+			<span class="ttable__body__col error">{{:error}}</span>
+		{{else}}
+			{{for plans}}
+				<div class="ttable__body__row" data-day-id="{{:id}}">
+					<span class="ttable__body__col col-3 day-name">{{:name}}</span>
+					<span class="ttable__body__col col-2"><a href="/plans/{{:plan_id}}/{{:id}}" class="i-action" title="View day details"><span class="icon icon-list"></span><em>{{:exercises}}</em></a></span>
+					<span class="ttable__body__col col-1 actions">
+						<button class="btn btn--more right">
+							<span></span>
+							<ul>
+								<li><a href="javascript:;" class="day-edit" title="Edit day"><em class="icon icon-edit"></em></a></li>
+								<li><a href="javascript:;" class="day-delete" title="Delete day"><em class="icon icon-delete"></em></a></li>
 							</ul>
 						</button>
 					</span>

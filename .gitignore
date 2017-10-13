@@ -21,9 +21,9 @@ npm-debug.log
 #################################################
 
 # Grunt and vagrant section
-/.dist
-/.tmp
-/.vscode
-/dist
+.dist
+.tmp
+.vscode
+dist
 
 node_modules

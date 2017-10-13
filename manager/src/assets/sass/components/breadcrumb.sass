@@ -1,12 +1,47 @@
 .breadcrumb
-	padding: 0 0 10px 0
-	margin-bottom: 20px
-	border-bottom: solid 1px $color-modal
-	font-size: 12px
-	font-weight: 500
-	color: $color-primary
-	text-transform: uppercase
+	margin: 0 0 30px 0
+	display: flex
+	// background: $color-modal
 
-	li::before
-		content: '⇾'
-		display: inline-block
+	li
+		height: 40px
+		padding: 0 20px
+		margin-right: 5px
+		background: $color-primary
+		font-size: 14px
+		font-weight: 500
+		line-height: 40px
+		text-transform: uppercase
+		position: relative
+		color: $white
+
+		&::after
+			content: ''
+			border-color: transparent transparent transparent $white
+			border-width: 20px 0 20px 10px
+			border-style: solid
+			position: absolute
+			left: 0
+			top: 0
+			z-index: 1
+
+		&::before
+			content: ''
+			border-color: transparent transparent transparent $color-primary
+			border-width: 20px 0 20px 10px
+			border-style: solid
+			position: absolute
+			left: 100%
+			top: 0
+			z-index: 2
+
+		&:last-child
+			background: $color-secondary
+
+			&::before
+				border-color: transparent transparent transparent $color-secondary
+
+
+		&:first-child
+			&::after
+				display: none

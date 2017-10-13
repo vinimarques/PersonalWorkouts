@@ -114,6 +114,26 @@ class Api {
 	removePlan (data) {
 		return this.request('DELETE', '/plan', data);
 	}
+
+	getDays (plan_id) {
+		return this.request('GET', '/days', { plan_id });
+	}
+
+	getDay (day_id) {
+		return this.request('GET', '/day', { day_id });
+	}
+
+	saveDay (data) {
+		return this.request('POST', '/day', data);
+	}
+
+	updateDay (data) {
+		return this.request('PUT', '/day', data);
+	}
+
+	removeDay (data) {
+		return this.request('DELETE', '/day', data);
+	}
 }
 
 export { Api as default }

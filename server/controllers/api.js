@@ -39,5 +39,6 @@ router.get('/consts', Resolve.send(
 require('./routes/users')(router);
 require('./routes/exercises')(router);
 require('./routes/plans')(router);
+require('./routes/days')(router);
 
 module.exports = router;

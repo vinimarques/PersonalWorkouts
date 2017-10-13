@@ -131,11 +131,12 @@
 		{{if error}}
 			<span class="ttable__body__col error">{{:error}}</span>
 		{{else}}
-			{{for plans}}
+			{{for days}}
 				<div class="ttable__body__row" data-day-id="{{:id}}">
-					<span class="ttable__body__col col-3 day-name">{{:name}}</span>
-					<span class="ttable__body__col col-2"><a href="/plans/{{:plan_id}}/{{:id}}" class="i-action" title="View day details"><span class="icon icon-list"></span><em>{{:exercises}}</em></a></span>
-					<span class="ttable__body__col col-1 actions">
+					<span class="ttable__body__col col-2">{{:#index + 1}} of {{:days_per_week}}</span>
+					<span class="ttable__body__col col-4 day-name">{{:name}}</span>
+					<span class="ttable__body__col col-4"><a href="/plans/{{:plan_id}}/{{:id}}" class="i-action" title="View day details"><span class="icon icon-list"></span><em>{{:exercises}}</em></a></span>
+					<span class="ttable__body__col col-2 actions">
 						<button class="btn btn--more right">
 							<span></span>
 							<ul>

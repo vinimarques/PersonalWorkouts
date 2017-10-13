@@ -31,8 +31,8 @@ export default {
 		router.add('home', 					Home, 				true);
 		router.add('users', 					Users, 				true);
 		router.add('plans', 					Plans, 				true);
-		router.add('days', 					Days, 				true, 'plans/:day');
-		router.add('exercises-day', 		ExercisesDay, 		true, 'plans/:day/:ex_day');
+		router.add('days', 					Days, 				true, 'plans/:plan');
+		router.add('exercises-day', 		ExercisesDay, 		true, 'plans/:plan/:day');
 		router.add('exercises', 			Exercises, 			true);
 		router.add('calendar', 				Calendar, 			true);
 

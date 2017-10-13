@@ -1,17 +1,78 @@
 <section class="page" data-page="days">
 	<button class="btn btn--add open-modal" data-modal="add-day" id="btn-add-day"></button>
 	<div class="page__container">
-		<ul class="breadcrumb">
-			<li>Plans</li>
-			<li>Days</li>
-		</ul>
+		<div class="breadcrumb">
+			<a href="/plans">Plans</a>
+			<a href="javascript:;">Days</a>
+		</div>
+		<h2 class="page__title">&nbsp;</h2>
 		<div class="ttable">
 			<div class="ttable__header">
-				<span class="ttable__header__col col-3">Name</span>
-				<span class="ttable__header__col col-2">Exercises</span>
-				<span class="ttable__header__col col-1"></span>
+				<span class="ttable__header__col col-2">#</span>
+				<span class="ttable__header__col col-4">Day Name</span>
+				<span class="ttable__header__col col-4">Exercises</span>
+				<span class="ttable__header__col col-2"></span>
 			</div>
 			<div class="ttable__body" id="days-content"></div>
 			</table>
 		</div>
 </section>
+
+<div class="modal modal-add-day">
+	<div class="modal__container">
+		<a href="javascript:;" class="modal__close"></a>
+		<div class="modal__content">
+			<h2 class="modal__title">Add Day</h2>
+			<form class="formm">
+				<input type="hidden" name="plan_id">
+				<label class="formm__item">
+					<span class="formm__text">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<em></em>
+					</span>
+				</label>
+				<button class="btn btn--small --right">
+					<span>Register</span>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal modal-edit-day">
+	<div class="modal__container">
+		<a href="javascript:;" class="modal__close"></a>
+		<div class="modal__content">
+			<h2 class="modal__title">Edit Day</h2>
+			<form class="formm">
+				<input type="hidden" name="id" data-type="int" data-validate="required">
+				<label class="formm__item">
+					<span class="formm__text">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<em></em>
+					</span>
+				</label>
+				<button class="btn btn--small --right">
+					<span>Save</span>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal modal-remove-day">
+	<div class="modal__container">
+		<a href="javascript:;" class="modal__close"></a>
+		<div class="modal__content">
+			<h2 class="modal__title">Remove Day</h2>
+			<p class="modal__text">Are you sure you want to remove the day
+				<strong class="day-remove-name"></strong>?</p>
+			<form class="formm">
+				<input type="hidden" name="day_id">
+				<button class="btn btn--small --right">
+					<span>Remove</span>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>

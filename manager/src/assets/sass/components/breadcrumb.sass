@@ -1,9 +1,8 @@
 .breadcrumb
 	margin: 0 0 30px 0
 	display: flex
-	// background: $color-modal
 
-	li
+	a
 		height: 40px
 		padding: 0 20px
 		margin-right: 5px
@@ -35,8 +34,16 @@
 			top: 0
 			z-index: 2
 
+		&:hover
+			background: $color-secondary
+
+			&::before
+				content: ''
+				border-color: transparent transparent transparent $color-secondary
+
 		&:last-child
 			background: $color-secondary
+			cursor: default
 
 			&::before
 				border-color: transparent transparent transparent $color-secondary

@@ -9,6 +9,9 @@ window.$ = window.jQuery = $;
 // Import jsRender
 require('jsrender')($);
 
+// Import jsRender
+require('./libs/select2.min');
+
 import Message from './components/message';
 import Database from './components/database';
 import Api from './components/api';

@@ -134,6 +134,26 @@ class Api {
 	removeDay (data) {
 		return this.request('DELETE', '/day', data);
 	}
+
+	getDayExercises (day_id) {
+		return this.request('GET', '/day-exercises', { day_id });
+	}
+
+	getDayExercise (day_exercise_id) {
+		return this.request('GET', '/day-exercise', { day_exercise_id });
+	}
+
+	saveDayExercise (data) {
+		return this.request('POST', '/day-exercise', data);
+	}
+
+	updateDayExercise (data) {
+		return this.request('PUT', '/day-exercise', data);
+	}
+
+	removeDayExercise (data) {
+		return this.request('DELETE', '/day-exercise', data);
+	}
 }
 
 export { Api as default }

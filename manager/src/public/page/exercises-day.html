@@ -18,3 +18,62 @@
 			</table>
 		</div>
 </section>
+
+<div class="modal modal-add-exercises-day">
+	<div class="modal__container">
+		<a href="javascript:;" class="modal__close"></a>
+		<div class="modal__content">
+			<h2 class="modal__title">Add Exercise on the Day</h2>
+			<form class="formm">
+				<label class="formm__item">
+					<span class="formm__select2">
+						<select name="exercise_id" class="select-with-search"><option></option></select>
+						<em></em>
+					</span>
+				</label>
+				<div class="formm__group">
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_1" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 1">
+							<em></em>
+						</span>
+					</label>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_2" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 2">
+							<em></em>
+						</span>
+					</label>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_3" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 3">
+							<em></em>
+						</span>
+					</label>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_4" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 4">
+							<em></em>
+						</span>
+					</label>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_5" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 5">
+							<em></em>
+						</span>
+					</label>
+				</div>
+				<label class="formm__item">
+					<span class="formm__textarea">
+						<div class="textarea"></div>
+						<textarea name="note" autocomplete="off" placeholder="Notes" data-type="text"></textarea>
+						<em></em>
+					</span>
+				</label>
+				<button class="btn btn--small --right">
+					<span>Register</span>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>

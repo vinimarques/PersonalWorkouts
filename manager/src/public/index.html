@@ -149,6 +149,28 @@
 			{{/for}}
 		{{/if}}
 	</script>
+	<script type="text/x-jsrender" id="template-day-exercises">
+		{{if error}}
+			<span class="ttable__body__col error">{{:error}}</span>
+		{{else}}
+			{{for exercises}}
+				<div class="ttable__body__row" data-day-exercise-id="{{:id}}">
+					<span class="ttable__body__col col-4 day-exercise-name">{{:name}}</span>
+					<span class="ttable__body__col col-3"></span>
+					<span class="ttable__body__col col-4">{{:note}}</span>
+					<span class="ttable__body__col col-1 actions">
+						<button class="btn btn--more right">
+							<span></span>
+							<ul>
+								<li><a href="javascript:;" class="day-exercise-edit" title="Edit day"><em class="icon icon-edit"></em></a></li>
+								<li><a href="javascript:;" class="day-exercise-delete" title="Delete day"><em class="icon icon-delete"></em></a></li>
+							</ul>
+						</button>
+					</span>
+				</div>
+			{{/for}}
+		{{/if}}
+	</script>
 	<!-- // TEMPLATES -->
 
 	<script src="js/bundle.js" charset="utf-8"></script>

@@ -14,7 +14,7 @@ class Validator {
 			},
 			number: {
 				test: function (value) {
-					return Number.isInteger(value) && value > 0;
+					return Number.isInteger(value);
 				},
 				message: 'Value isn\'t number'
 			},

@@ -25,6 +25,7 @@
 		<div class="modal__content">
 			<h2 class="modal__title">Add Exercise on the Day</h2>
 			<form class="formm">
+				<input type="hidden" name="day_id">
 				<label class="formm__item">
 					<span class="formm__select2">
 						<select name="exercise_id" class="select-with-search"><option></option></select>
@@ -32,33 +33,34 @@
 					</span>
 				</label>
 				<div class="formm__group">
+					<h3 class="formm__group__title">Repetitions</h3>
 					<label class="formm__item col-2">
 						<span class="formm__text">
-							<input type="text" name="rep_1" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 1">
+							<input type="text" name="rep_1" autocomplete="off" data-validate="required,number" data-type="int" placeholder="1" value="15">
 							<em></em>
 						</span>
 					</label>
 					<label class="formm__item col-2">
 						<span class="formm__text">
-							<input type="text" name="rep_2" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 2">
+							<input type="text" name="rep_2" autocomplete="off" data-validate="required,number" data-type="int" placeholder="2" value="12">
 							<em></em>
 						</span>
 					</label>
 					<label class="formm__item col-2">
 						<span class="formm__text">
-							<input type="text" name="rep_3" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 3">
+							<input type="text" name="rep_3" autocomplete="off" data-validate="required,number" data-type="int" placeholder="3" value="10">
 							<em></em>
 						</span>
 					</label>
 					<label class="formm__item col-2">
 						<span class="formm__text">
-							<input type="text" name="rep_4" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 4">
+							<input type="text" name="rep_4" autocomplete="off" data-validate="required,number" data-type="int" placeholder="4" value="0">
 							<em></em>
 						</span>
 					</label>
 					<label class="formm__item col-2">
 						<span class="formm__text">
-							<input type="text" name="rep_5" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Repetitions 5">
+							<input type="text" name="rep_5" autocomplete="off" data-validate="required,number" data-type="int" placeholder="5" value="0">
 							<em></em>
 						</span>
 					</label>

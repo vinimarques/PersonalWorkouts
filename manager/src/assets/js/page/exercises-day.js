@@ -42,6 +42,9 @@ class ExercisesDay extends Page {
 	loadExercisesDay () {
 		const container = this.exercisesContent;
 		const day_id = this.day_id;
+
+		$('[name="day_id"]').val(day_id);
+
 		this.template = $.templates($('#template-exercises').html());
 		let html = '';
 
@@ -72,7 +75,27 @@ class ExercisesDay extends Page {
 	}
 
 	_bindEvents() {
+		$('.modal-add-exercises-day form').on('submit', (ev) => {
+			ev.preventDefault();
+			let data = this.validator.getData(ev.target);
+			let dataSend = this.validator.getDataSend(ev.target);
+			let isValide = this.validator.isValide(data);
 
+			if (isValide.error) {
+				this.validator.resetErrors(ev.target);
+				this.validator.showErrors(isValide.errors);
+				return false;
+			}
+
+			App.api.saveDayExercise(dataSend)
+				.then((res) => {
+					if (res.success) {
+						App.message.show(this.message.success.add, App.config.timeCloseModal);
+						$(ev.target)[0].reset();
+						this.loadExercisesDay();
+					}
+				});
+		});
 	}
 }
 

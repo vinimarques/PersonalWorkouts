@@ -24,15 +24,15 @@ class DayExercises extends Model {
 	}
 
 	static insert(data) {
-		return Model.insert(data, 'day_exercises');
+		return Model.insert(data, 'day_exercise');
 	}
 
 	static remove(data) {
-		return Model.remove(data, 'day_exercises');
+		return Model.remove(data, 'day_exercise');
 	}
 
 	static update(data, day_exercise_id) {
-		return Model.update(data, { id: day_exercise_id }, 'day_exercises');
+		return Model.update(data, { id: day_exercise_id }, 'day_exercise');
 	}
 }
 

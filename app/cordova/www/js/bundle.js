@@ -101,6 +101,12 @@
 
 	__webpack_require__(16);
 
+	__webpack_require__(30);
+
+	var _state = __webpack_require__(25);
+
+	var _state2 = _interopRequireDefault(_state);
+
 	var _database = __webpack_require__(17);
 
 	var _database2 = _interopRequireDefault(_database);
@@ -126,6 +132,11 @@
 	/**
 	*
 	*/
+
+
+	/**
+	 *
+	 */
 	document.addEventListener('deviceready', function () {
 		var options = {
 			version: _config2.default.version
@@ -154,6 +165,7 @@
 		window.$ = Dom7;
 		window.App = new Framework7(settings);
 
+		App.State = new _state2.default();
 		App.database = database;
 		Template7.global = {};
 
@@ -163,11 +175,6 @@
 		_routes2.default.init();
 		App.init();
 	});
-
-	/**
-	 *
-	 */
-
 
 	/**
 	 * Plugins
@@ -18798,21 +18805,10 @@
 		settings.hooks.appInit = function () {
 			App.api.isLogged().then(function (res) {
 				if (res.success) {
-					App.consts.init(function () {
-						$('.tabbar .toolbar-inner-item').removeClass('-active').eq(0).addClass('-active');
-
-						App.mainView.router.loadPage('pages/home.html');
-						// App.mainView.router.loadPage(`pages/goal-detail.html?id=6&title=Elaborar urbanístico com 120mil m2 de ALV, com lotes de 10 x 30, de acordo com pesquisa de mercado &enterprise=Gaspar`);
-						App.closeModal();
-						App.filters = new Filters();
-						App.notification.verify();
-					}).catch(function () {
-						loader.addClass('-vhidden');
-						loginButton.removeClass('-vhidden');
-					});
+					$('.tabbar .toolbar-inner-item').removeClass('-active').eq(0).addClass('-active');
+					App.mainView.router.loadPage('pages/home.html');
+					App.closeModal();
 				} else {
-					window.plugins.googleplus.logout();
-					window.plugins.googleplus.disconnect();
 					App.database.rm('user');
 					App.api.goToLogin();
 					loader.addClass('-vhidden');
@@ -19420,6 +19416,34 @@
 						break;
 				}
 				callback && callback(response);
+			}
+		}, {
+			key: 'isLogged',
+			value: function isLogged() {
+				return new Promise(function (success, error) {
+					var user = App.database.get('user');
+
+					// if (user) {
+					// 	user = User.parser(user);
+					// 	this.setHeader('Authorization','Bearer ' + user.token);
+					// 	this.getSectors(false)
+					// 		.then((res) => {
+					// 			if (res.success) {
+					success({ success: true, user: {} });
+					// 				Template7.global.user = user;
+					// 			}
+					// 			else {
+					// 				success({success: false});
+					// 			}
+					// 		})
+					// 		.catch(() => {
+					// 			success({success: false});
+					// 		});
+					// }
+					// else {
+					// 	success({success: false});
+					// }
+				});
 			}
 		}]);
 
@@ -37001,6 +37025,17 @@
 	};
 
 	exports.default = Permissions;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	window.consts = {
+		VIEW_MAIN: '.view-main',
+		VIEW_DYNAMIC_NAVBAR: true
+	};
 
 /***/ })
 /******/ ]);

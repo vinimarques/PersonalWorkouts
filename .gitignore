@@ -25,5 +25,16 @@ npm-debug.log
 .tmp
 .vscode
 dist
+.dist
+
+# npm files
+npm-debug.log
+node_modules/
+
+# cordova files
+app/cordova/plugins/
+app/cordova/platforms/
+app/cordova/www/
+app/release/*
 
 node_modules

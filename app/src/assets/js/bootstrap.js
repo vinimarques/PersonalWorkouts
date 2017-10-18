@@ -12,16 +12,17 @@ import './plugins/login.js';
 import './plugins/menu.js';
 import './plugins/form.js';
 import 'components/helpers';
+import './consts';
 
 /**
  *
  */
+import State from 'libs/state';
 import Database from 'libs/database';
 import Api from 'libs/api';
 import Routes from './routes';
 import config from './config';
 import Permissions from 'components/permissions';
-
 /**
 *
 */
@@ -53,9 +54,10 @@ document.addEventListener('deviceready', () => {
 	window.$ = Dom7;
 	window.App = new Framework7(settings);
 
+	App.State = new State();
 	App.database = database;
 	Template7.global = {};
-	
+
 	App.api = new Api();
 	App.permissions = new Permissions();
 

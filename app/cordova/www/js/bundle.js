@@ -101,6 +101,12 @@
 
 	__webpack_require__(16);
 
+	__webpack_require__(30);
+
+	var _state = __webpack_require__(25);
+
+	var _state2 = _interopRequireDefault(_state);
+
 	var _database = __webpack_require__(17);
 
 	var _database2 = _interopRequireDefault(_database);
@@ -126,6 +132,11 @@
 	/**
 	*
 	*/
+
+
+	/**
+	 *
+	 */
 	document.addEventListener('deviceready', function () {
 		var options = {
 			version: _config2.default.version
@@ -154,6 +165,7 @@
 		window.$ = Dom7;
 		window.App = new Framework7(settings);
 
+		App.State = new _state2.default();
 		App.database = database;
 		Template7.global = {};
 
@@ -163,11 +175,6 @@
 		_routes2.default.init();
 		App.init();
 	});
-
-	/**
-	 *
-	 */
-
 
 	/**
 	 * Plugins
@@ -19421,6 +19428,34 @@
 				}
 				callback && callback(response);
 			}
+		}, {
+			key: 'isLogged',
+			value: function isLogged() {
+				return new Promise(function (success, error) {
+					var user = App.database.get('user');
+
+					// if (user) {
+					// 	user = User.parser(user);
+					// 	this.setHeader('Authorization','Bearer ' + user.token);
+					// 	this.getSectors(false)
+					// 		.then((res) => {
+					// 			if (res.success) {
+					success({ success: true, user: {} });
+					// 				Template7.global.user = user;
+					// 			}
+					// 			else {
+					// 				success({success: false});
+					// 			}
+					// 		})
+					// 		.catch(() => {
+					// 			success({success: false});
+					// 		});
+					// }
+					// else {
+					// 	success({success: false});
+					// }
+				});
+			}
 		}]);
 
 		return Api;
@@ -37001,6 +37036,17 @@
 	};
 
 	exports.default = Permissions;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	window.consts = {
+		VIEW_MAIN: '.view-main',
+		VIEW_DYNAMIC_NAVBAR: true
+	};
 
 /***/ })
 /******/ ]);

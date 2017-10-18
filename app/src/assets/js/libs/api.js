@@ -118,6 +118,33 @@ class Api {
 		}
 		callback && callback(response);
 	}
+
+	isLogged () {
+		return new Promise((success, error) => {
+			let user = App.database.get('user');
+
+			// if (user) {
+			// 	user = User.parser(user);
+			// 	this.setHeader('Authorization','Bearer ' + user.token);
+			// 	this.getSectors(false)
+			// 		.then((res) => {
+			// 			if (res.success) {
+							success({success: true, user: {}});
+			// 				Template7.global.user = user;
+			// 			}
+			// 			else {
+			// 				success({success: false});
+			// 			}
+			// 		})
+			// 		.catch(() => {
+			// 			success({success: false});
+			// 		});
+			// }
+			// else {
+			// 	success({success: false});
+			// }
+		})
+	}
 }
 
 export { Api as default }

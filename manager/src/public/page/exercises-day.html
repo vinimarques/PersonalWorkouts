@@ -3,7 +3,7 @@
 	<div class="page__container">
 		<div class="breadcrumb">
 			<a href="/plans">Plans</a>
-			<a href="/plans/4">Days</a>
+			<a class="plan-link" href="">Days</a>
 			<a href="javascript:;">Exercises</a>
 		</div>
 		<h2 class="page__title">&nbsp;</h2>
@@ -74,6 +74,87 @@
 				</label>
 				<button class="btn btn--small --right">
 					<span>Register</span>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal modal-edit-exercises-day">
+	<div class="modal__container">
+		<a href="javascript:;" class="modal__close"></a>
+		<div class="modal__content">
+			<h2 class="modal__title">Edit Exercise on the Day</h2>
+			<form class="formm">
+				<input type="hidden" name="id">
+				<input type="hidden" name="day_id">
+				<label class="formm__item">
+					<span class="formm__select2">
+						<select name="exercise_id" class="select-with-search">
+							<option></option>
+						</select>
+						<em></em>
+					</span>
+				</label>
+				<div class="formm__group">
+					<h3 class="formm__group__title">Repetitions</h3>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_1" autocomplete="off" data-validate="required,number" data-type="int" placeholder="1" value="15">
+							<em></em>
+						</span>
+					</label>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_2" autocomplete="off" data-validate="required,number" data-type="int" placeholder="2" value="12">
+							<em></em>
+						</span>
+					</label>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_3" autocomplete="off" data-validate="required,number" data-type="int" placeholder="3" value="10">
+							<em></em>
+						</span>
+					</label>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_4" autocomplete="off" data-validate="required,number" data-type="int" placeholder="4" value="0">
+							<em></em>
+						</span>
+					</label>
+					<label class="formm__item col-2">
+						<span class="formm__text">
+							<input type="text" name="rep_5" autocomplete="off" data-validate="required,number" data-type="int" placeholder="5" value="0">
+							<em></em>
+						</span>
+					</label>
+				</div>
+				<label class="formm__item">
+					<span class="formm__textarea">
+						<div class="textarea"></div>
+						<textarea name="note" autocomplete="off" placeholder="Notes" data-type="text"></textarea>
+						<em></em>
+					</span>
+				</label>
+				<button class="btn btn--small --right">
+					<span>Save</span>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal modal-remove-day">
+	<div class="modal__container">
+		<a href="javascript:;" class="modal__close"></a>
+		<div class="modal__content">
+			<h2 class="modal__title">Remove Day</h2>
+			<p class="modal__text">Are you sure you want to remove the day
+				<strong class="day-remove-name"></strong>?</p>
+			<form class="formm">
+				<input type="hidden" name="day_id">
+				<button class="btn btn--small --right">
+					<span>Remove</span>
 				</button>
 			</form>
 		</div>

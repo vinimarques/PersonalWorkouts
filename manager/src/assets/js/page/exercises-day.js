@@ -21,6 +21,7 @@ class ExercisesDay extends Page {
 		super.load(page);
 		this.plan_id = parseInt(ctx.params.plan);
 		this.day_id = parseInt(ctx.params.day);
+
 		this.message = {
 			error: {
 				exercises: 'EXERCISES NOT FOUND'
@@ -35,8 +36,17 @@ class ExercisesDay extends Page {
 
 	onload () {
 		this.exercisesContent = $('#exercises-day-content');
+		$('.plan-link').attr('href', '/plans/' + this.plan_id);
 		this.loadExecises();
 		this.loadExercisesDay();
+		this.loadDay();
+	}
+
+	loadDay () {
+		App.api.getDay(this.day_id)
+			.then((res) => {
+				$('.page__title').text(res.data.name);
+			});
 	}
 
 	loadExercisesDay () {
@@ -45,7 +55,7 @@ class ExercisesDay extends Page {
 
 		$('[name="day_id"]').val(day_id);
 
-		this.template = $.templates($('#template-exercises').html());
+		this.template = $.templates($('#template-exercises-day').html());
 		let html = '';
 
 		App.api.getDayExercises(day_id).then((res) => {
@@ -95,6 +105,65 @@ class ExercisesDay extends Page {
 						this.loadExercisesDay();
 					}
 				});
+		});
+
+		$('.modal-edit-exercises-day form').on('submit', (ev) => {
+			ev.preventDefault();
+
+			let data = this.validator.getData(ev.target);
+			let dataSend = this.validator.getDataSend(ev.target);
+			let isValide = this.validator.isValide(data);
+
+			if (isValide.error) {
+				this.validator.resetErrors(ev.target);
+				this.validator.showErrors(isValide.errors);
+				return false;
+			}
+
+			App.api.updateDayExercise(dataSend)
+				.then((res) => {
+					if (res.success) {
+						App.message.show(this.message.success.update, App.config.timeCloseModal);
+						$(ev.target)[0].reset();
+						this.loadExercisesDay();
+					}
+				});
+		});
+
+		$('.modal-remove-exercises-day form').on('submit', (ev) => {
+			ev.preventDefault();
+			let dataSend = this.validator.getDataSend(ev.target);
+			if (!dataSend.day_id) return false;
+			App.api.removeDay(dataSend)
+				.then((res) => {
+					if (res.success) {
+						App.message.show(this.message.success.remove, App.config.timeCloseModal);
+						this.loadDays();
+					}
+				});
+		});
+
+		$('body').on('click', '.actions .exercises-day-delete', (ev) => {
+			let line = $(ev.target).parents('.ttable__body__row'),
+				name = line.find('.day-name').text(),
+				id = line.data('day-id');
+
+			$('.modal-remove-day input').val(id);
+			$('.modal-remove-day .day-remove-name').text(name);
+			App.openModal('remove-day');
+		});
+
+		$('body').on('click', '.actions .exercises-day-edit', (ev) => {
+			let line = $(ev.target).parents('.ttable__body__row'),
+				name = line.find('.exercises-day-name').text(),
+				id = line.data('exercises-day-id');
+
+			App.loader.show();
+			App.api.getDayExercise(id).then((res) => {
+				App.loader.hide();
+				App.helpers.populateForm('.modal-edit-exercises-day form', res.data);
+				App.openModal('edit-exercises-day');
+			});
 		});
 	}
 }

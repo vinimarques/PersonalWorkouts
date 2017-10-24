@@ -8,6 +8,9 @@ window.$ = window.jQuery = $;
 
 // Import jsRender
 require('jsrender')($);
+const renderHelpers = require('./components/render-helpers');
+$.views.helpers(renderHelpers.default);
+
 
 // Import jsRender
 require('./libs/select2.min');

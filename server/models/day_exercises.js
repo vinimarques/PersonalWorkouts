@@ -5,7 +5,7 @@ class DayExercises extends Model {
 
 	static all(day_id) {
 		return Model.query(`
-			SELECT e.name as 'exercise_name', q.rep_1, q.rep_2, q.rep_3, q.rep_4, q.rep_5, q.note
+			SELECT e.name as 'exercise_name', q.id, q.exercise_id, q.rep_1, q.rep_2, q.rep_3, q.rep_4, q.rep_5, q.note
 			FROM day_exercise as q
 			LEFT JOIN exercise as e ON  e.id = q.exercise_id
 			LEFT JOIN day as d ON  d.id = q.day_id
@@ -15,7 +15,7 @@ class DayExercises extends Model {
 
 	static first(day_exercise_id) {
 		return Model.first(`
-			SELECT e.name as 'exercise_name', q.rep_1, q.rep_2, q.rep_3, q.rep_4, q.rep_5, q.note
+			SELECT e.name as 'exercise_name', q.id, q.exercise_id, q.rep_1, q.rep_2, q.rep_3, q.rep_4, q.rep_5, q.note
 			FROM day_exercise as q
 			LEFT JOIN exercise as e ON  e.id = q.exercise_id
 			LEFT JOIN day as d ON  d.id = q.day_id

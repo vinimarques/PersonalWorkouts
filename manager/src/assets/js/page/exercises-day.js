@@ -133,29 +133,28 @@ class ExercisesDay extends Page {
 		$('.modal-remove-exercises-day form').on('submit', (ev) => {
 			ev.preventDefault();
 			let dataSend = this.validator.getDataSend(ev.target);
-			if (!dataSend.day_id) return false;
-			App.api.removeDay(dataSend)
+			if (!dataSend.day_exercise_id) return false;
+			App.api.removeDayExercise(dataSend)
 				.then((res) => {
 					if (res.success) {
 						App.message.show(this.message.success.remove, App.config.timeCloseModal);
-						this.loadDays();
+						this.loadExercisesDay();
 					}
 				});
 		});
 
 		$('body').on('click', '.actions .exercises-day-delete', (ev) => {
 			let line = $(ev.target).parents('.ttable__body__row'),
-				name = line.find('.day-name').text(),
-				id = line.data('day-id');
+				name = line.find('.exercises-day-name').text(),
+				id = line.data('exercises-day-id');
 
-			$('.modal-remove-day input').val(id);
-			$('.modal-remove-day .day-remove-name').text(name);
-			App.openModal('remove-day');
+			$('.modal-remove-exercises-day input').val(id);
+			$('.modal-remove-exercises-day .exercises-day-remove-name').text(name);
+			App.openModal('remove-exercises-day');
 		});
 
 		$('body').on('click', '.actions .exercises-day-edit', (ev) => {
 			let line = $(ev.target).parents('.ttable__body__row'),
-				name = line.find('.exercises-day-name').text(),
 				id = line.data('exercises-day-id');
 
 			App.loader.show();

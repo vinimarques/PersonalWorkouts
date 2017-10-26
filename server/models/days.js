@@ -6,10 +6,14 @@ class Days extends Model {
 	static all (plan_id) {
 		return Model.query(`
 			SELECT * FROM (
-				SELECT d.id, d.name, p.days_per_week, d.plan_id, COUNT(de.id) as 'exercises'
+				SELECT d.id, d.name, p.days_per_week, d.plan_id, r.exercises
 				FROM day as d
-				LEFT JOIN day_exercise as de ON de.day_id = d.id
 				LEFT JOIN plan as p ON d.plan_id = p.id
+				LEFT JOIN (
+					SELECT d.id, COUNT(de.id) as 'exercises'
+					FROM day as d
+					LEFT JOIN day_exercise as de ON de.day_id = d.id
+				) AS r ON r.id = d.id
 				WHERE d.plan_id = ?
 			) as result WHERE result.id > 0
 		`, [plan_id]);

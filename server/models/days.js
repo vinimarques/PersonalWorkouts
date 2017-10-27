@@ -6,7 +6,7 @@ class Days extends Model {
 	static all (plan_id) {
 		return Model.query(`
 			SELECT * FROM (
-				SELECT d.id, d.name, p.days_per_week, d.plan_id, r.exercises
+				SELECT d.id, d.name, p.days_per_week, d.plan_id, IFNULL(r.exercises,0) as 'exercises'
 				FROM day as d
 				LEFT JOIN plan as p ON d.plan_id = p.id
 				LEFT JOIN (

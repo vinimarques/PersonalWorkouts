@@ -78,6 +78,15 @@
 			box-shadow: 0 -2px 5px rgba(0,0,0,0.5)
 			transform: rotate(180deg)
 
+		&.-disabled
+			background: $color-off
+
+			&:hover
+				background: $color-off
+				box-shadow: none
+				transform: rotate(0deg)
+
+
 	&--more
 		position: relative
 		background: transparent

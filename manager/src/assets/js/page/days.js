@@ -41,6 +41,7 @@ class Days extends Page {
 	loadPlan () {
 		App.api.getPlan(this.plan_id).then((res) => {
 			$('.page__title').text(res.data.name);
+			this.days_per_week = res.data.days_per_week;
 		})
 	}
 
@@ -53,6 +54,8 @@ class Days extends Page {
 		$('[name="plan_id"]').val(plan_id);
 
 		App.api.getDays(plan_id).then((res) => {
+			this.total_days = res.data.length;
+
 			if (res.success && res.data.length > 0) {
 				html = this.template.render({ days: res.data });
 			}
@@ -60,6 +63,9 @@ class Days extends Page {
 				html = this.template.render({ error: this.message.error.days });
 			}
 			container.html(html);
+
+			if (this.days_per_week === this.total_days) $('#btn-add-day').addClass('-disabled');
+			else $('#btn-add-day').removeClass('-disabled');
 		})
 	}
 
@@ -84,6 +90,10 @@ class Days extends Page {
 						this.loadDays();
 					}
 				});
+		});
+
+		$('#btn-add-day').on('click', () => {
+			if (this.days_per_week === this.total_days) return false;
 		});
 
 		$('.modal-edit-day form').on('submit', (ev) => {

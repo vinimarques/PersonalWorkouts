@@ -21,11 +21,13 @@ class Api {
 
 	request (method, path, data) {
 		return new Promise((success, error) => {
+			App.loader.show();
 			let ajaxOptions = {
 				method,
 				data: data,
 				url: this.url + path,
 				success: (response) => {
+					App.loader.hide();
 					success(response);
 				},
 				error: (err) => {

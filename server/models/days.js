@@ -13,6 +13,7 @@ class Days extends Model {
 					SELECT d.id, COUNT(de.id) as 'exercises'
 					FROM day as d
 					LEFT JOIN day_exercise as de ON de.day_id = d.id
+					GROUP BY d.id
 				) AS r ON r.id = d.id
 				WHERE d.plan_id = ?
 			) as result WHERE result.id > 0

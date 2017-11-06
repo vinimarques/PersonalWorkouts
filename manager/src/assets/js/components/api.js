@@ -40,7 +40,6 @@ class Api {
 	}
 
 	verifyError (res) {
-		console.log(res);
 		if (res.error.status === 432) {
 			this.security.clearAndRedirect();
 		}

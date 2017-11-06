@@ -81,4 +81,4 @@
 	$total-columns: 12
 	@for $i from 1 through $total-columns
 		.col-#{$i}
-			width: #{(100 * ($i / $total-columns)) + '%'}
+			width: percentage($i / $total-columns)

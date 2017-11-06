@@ -12,7 +12,7 @@ const renderHelpers = require('./components/render-helpers');
 $.views.helpers(renderHelpers.default);
 
 
-// Import jsRender
+// Import Select2
 require('./libs/select2.min');
 
 import Message from './components/message';

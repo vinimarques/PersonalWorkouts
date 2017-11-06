@@ -1,0 +1,52 @@
+.calendar__wrapper
+	transition: visibility 0s ease .25s, opacity .1s ease 0s, transform .1s ease 0s
+	visibility: hidden
+	opacity: 0
+
+	h2
+		padding-bottom: 20px
+
+	.block
+		display: flex
+		justify-content: space-between
+
+	.coll
+		width: 46%
+
+	.days__selected
+		font-size: 14px
+
+		li
+			padding: 20px 0
+			border-bottom: solid 1px $color-modal
+			display: flex
+			justify-content: flex-start
+			align-items: center
+
+			&:first-child
+				border-top: solid 1px $color-modal
+
+			.day
+				background: $color-modal
+				color: $color-modal2
+				display: inline-block
+				padding: 5px
+				font-size: 12px
+				border-radius: 5px
+				font-weight: 200
+				margin-left: auto
+
+			.week
+				color: $color-secondary
+				margin-right: 10px
+
+
+	&.-active
+		transition: visibility 0s ease 0s, opacity .5s ease .1s, transform .5s ease .1s
+		opacity: 1
+		visibility: visible
+
+#calendar
+	width: 46%
+	height: 450px
+	position: relative

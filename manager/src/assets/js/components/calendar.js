@@ -10,6 +10,7 @@ class Calendar {
 	constructor (params) {
 		this.params = params;
 		this.colors = ['#446FDA','#92ADEE','#678AE4','#2254CF','#0D3BAC'];
+		this.selection = [];
 	}
 
 	render (days_per_week, exercises_days) {
@@ -31,15 +32,25 @@ class Calendar {
 
 	bindEvents () {
 		this.calendar.onSelect = (e) => {
-			console.log(e);
+			// console.log(e);
 		};
 
 		$('body').on('click', '.d-table input', (ev) => {
 			let target = ev.target,
-				isSelected = target.checked;
+				isSelected = target.checked,
+				label = $(target).next('label');
 
-			console.log(target,isSelected);
+			if (isSelected) {
+				let position = label.position();
+				let html = ['<div class="box-select-exercise">'];
 
+				this.exercises_days.map((exercise) => {
+					html.push(`<div class="box-select-exercise__item" data-id="${exercise.id}">${exercise.name}</div>`)
+				})
+
+				html.push('</div>');
+				console.log(html)
+			}
 		})
 	}
 

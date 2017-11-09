@@ -50,3 +50,35 @@
 	width: 46%
 	height: 450px
 	position: relative
+
+.box-select-exercise
+	position: absolute
+	z-index: 99
+	background: #fff
+	padding: 10px 0
+	border: solid 1px $color-bullet
+	border-radius: 5px
+
+	&:before,
+	&:after
+		content: ''
+		position: absolute
+		bottom: -10px
+		left: 10px
+		width: 0
+		height: 0
+		border-left: 10px solid transparent
+		border-right: 10px solid transparent
+		border-top: 10px solid $color-bullet
+
+	&:after
+		bottom: -9px
+		border-top: 10px solid #fff
+
+	&__item
+		padding: 10px 20px
+
+		&:hover
+			background: $color-primary
+			color: #fff
+			cursor: pointer

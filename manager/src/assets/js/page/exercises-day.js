@@ -144,6 +144,7 @@ class ExercisesDay extends Page {
 		});
 
 		$('body').on('click', '.actions .exercises-day-delete', (ev) => {
+			ev.preventDefault();
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.exercises-day-name').text(),
 				id = line.data('exercises-day-id');
@@ -154,6 +155,7 @@ class ExercisesDay extends Page {
 		});
 
 		$('body').on('click', '.actions .exercises-day-edit', (ev) => {
+			ev.preventDefault();
 			let line = $(ev.target).parents('.ttable__body__row'),
 				id = line.data('exercises-day-id');
 

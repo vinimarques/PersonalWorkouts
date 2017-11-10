@@ -133,6 +133,7 @@ class Days extends Page {
 		});
 
 		$('body').on('click', '.actions .day-delete', (ev) => {
+			ev.preventDefault();
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.day-name').text(),
 				id = line.data('day-id');
@@ -143,6 +144,7 @@ class Days extends Page {
 		});
 
 		$('body').on('click', '.actions .day-edit', (ev) => {
+			ev.preventDefault();
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.day-name').text(),
 				id = line.data('day-id');

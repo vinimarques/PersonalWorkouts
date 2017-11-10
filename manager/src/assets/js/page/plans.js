@@ -60,6 +60,7 @@ class Plans extends Page {
 	_bindEvents() {
 		$('.modal-add-plan form').on('submit', (ev) => {
 			ev.preventDefault();
+
 			let data = this.validator.getData(ev.target);
 			let dataSend = this.validator.getDataSend(ev.target);
 			let isValide = this.validator.isValide(data);
@@ -105,6 +106,7 @@ class Plans extends Page {
 
 		$('.modal-remove-plan form').on('submit', (ev) => {
 			ev.preventDefault();
+
 			let dataSend = this.validator.getDataSend(ev.target);
 			if (!dataSend.plan_id) return false;
 			App.api.removePlan(dataSend)
@@ -117,6 +119,8 @@ class Plans extends Page {
 		});
 
 		$('body').on('click', '.actions .plan-delete', (ev) => {
+			ev.preventDefault();
+
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.plan-name').text(),
 				id = line.data('plan-id');
@@ -127,6 +131,8 @@ class Plans extends Page {
 		});
 
 		$('body').on('click', '.actions .plan-edit', (ev) => {
+			ev.preventDefault();
+
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.plan-name').text(),
 				id = line.data('plan-id');

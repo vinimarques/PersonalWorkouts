@@ -35,7 +35,7 @@ class Calendar extends Page {
 	}
 
 	loadUsers () {
-		App.api.getUsers(App.data.user.company_id).then((res) => {
+		App.api.getUsers(App.data.user.company_id, App.data.user.user_type_id).then((res) => {
 			let data = res.data.map((item) => {
 				return {
 					id: item.id,
@@ -68,7 +68,7 @@ class Calendar extends Page {
 		});
 	}
 
-	__bindEvents() {
+	__bindEvents () {
 		this.selectUsers.on('select2:select', (e) => {
 			this.selectPlans.select2('enable');
 			var data = e.params.data;
@@ -80,10 +80,27 @@ class Calendar extends Page {
 
 			this.calendarWrapper.addClass('-active');
 			this.calendarWrapper.find('h2 strong').text(data.days_per_week);
+
 			App.api.getDays(data.id).then((res) => {
 				this.calendar.render(data.days_per_week, res.data);
 			});
 		});
+	}
+
+	_bindEvents () {
+		$('.form-calendar').on('submit', (ev) => {
+			ev.preventDefault();
+
+			let data = this.validator.getData(ev.target);
+			let dataSend = this.validator.getDataSend(ev.target);
+			let isValide = this.validator.isValide(data);
+
+			console.log(dataSend);
+
+			console.log(this.calendar.isComplete);
+			console.log(this.calendar.days_per_week);
+			console.log(this.calendar.exercises_select);
+		})
 	}
 }
 

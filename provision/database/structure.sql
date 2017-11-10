@@ -217,6 +217,35 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`plan_company` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `personalworkouts`.`calendar`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personalworkouts`.`calendar` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `plan_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `exercise_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_calendar_plan1_idx` (`plan_id` ASC),
+  INDEX `fk_calendar_users1_idx` (`user_id` ASC),
+  INDEX `fk_calendar_exercise1_idx` (`exercise_id` ASC),
+  CONSTRAINT `fk_calendar_plan1`
+    FOREIGN KEY (`plan_id`)
+    REFERENCES `personalworkouts`.`plan` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_calendar_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `personalworkouts`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_calendar_exercise1`
+    FOREIGN KEY (`exercise_id`)
+    REFERENCES `personalworkouts`.`exercise` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

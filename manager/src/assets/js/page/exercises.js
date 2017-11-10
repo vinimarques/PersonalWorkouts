@@ -42,6 +42,7 @@ class Exercises extends Page {
 	_bindEvents() {
 		$('.modal-add-exercise form').on('submit', (ev) => {
 			ev.preventDefault();
+
 			let data = this.validator.getData(ev.target);
 			let dataSend = this.validator.getDataSend(ev.target);
 			let isValide = this.validator.isValide(data);
@@ -87,6 +88,7 @@ class Exercises extends Page {
 
 		$('.modal-remove-exercise form').on('submit', (ev) => {
 			ev.preventDefault();
+
 			let dataSend = this.validator.getDataSend(ev.target);
 			if (!dataSend.exercise_id) return false;
 			App.api.removeExercise(dataSend)
@@ -99,6 +101,8 @@ class Exercises extends Page {
 		});
 
 		$('body').on('click', '.actions .exercise-delete', (ev) => {
+			ev.preventDefault();
+
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.exercise-name').text(),
 				id = line.data('exercise-id');
@@ -109,6 +113,8 @@ class Exercises extends Page {
 		});
 
 		$('body').on('click', '.actions .exercise-edit', (ev) => {
+			ev.preventDefault();
+
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.exercise-name').text(),
 				id = line.data('exercise-id');

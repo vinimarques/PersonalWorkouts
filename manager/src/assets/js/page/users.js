@@ -60,6 +60,7 @@ class Users extends Page {
 	_bindEvents() {
 		$('.modal-add-user form').on('submit', (ev) => {
 			ev.preventDefault();
+
 			let data = this.validator.getData(ev.target);
 			let dataSend = this.validator.getDataSend(ev.target);
 			let isValide = this.validator.isValide(data);
@@ -105,6 +106,7 @@ class Users extends Page {
 
 		$('.modal-remove-user form').on('submit', (ev) => {
 			ev.preventDefault();
+
 			let dataSend = this.validator.getDataSend(ev.target);
 			if (!dataSend.user_id) return false;
 			App.api.removeUser(dataSend)
@@ -118,10 +120,13 @@ class Users extends Page {
 
 		$('.btn-generate-pwd').on('click', (ev) => {
 			ev.preventDefault();
+
 			$(ev.target).parents('.formm__item').find('input').val(App.helpers.generatePassword());
 		});
 
 		$('body').on('click', '.actions .user-delete', (ev) => {
+			ev.preventDefault();
+
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.user-name').text(),
 				id = line.data('user-id');
@@ -132,6 +137,8 @@ class Users extends Page {
 		});
 
 		$('body').on('click', '.actions .user-edit', (ev) => {
+			ev.preventDefault();
+
 			let line = $(ev.target).parents('.ttable__body__row'),
 				name = line.find('.user-name').text(),
 				id = line.data('user-id');

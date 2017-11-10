@@ -18,6 +18,7 @@ class Calendar {
 		var now = new Date();
 		var rand = () => { return Math.floor((Math.random() * 4) + 1) };
 
+		this.days_per_week = days_per_week;
 		this.daysWrapper = $('.days__selected');
 		this.calendar = new Datepickk({
 			container: document.querySelector('#calendar'),
@@ -75,6 +76,8 @@ class Calendar {
 					left: position.left
 				});
 			}
+
+			that.isComplete = parseInt(that.exercises_select.length) === parseInt(that.days_per_week);
 		};
 
 		$('body').on('click', '.box-select-exercise__item', (e) => {

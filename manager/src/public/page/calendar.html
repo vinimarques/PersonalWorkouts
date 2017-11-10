@@ -3,30 +3,33 @@
 		<div class="breadcrumb">
 			<a href="javascript:;">Calendar</a>
 		</div>
-		<form class="formm">
+		<form class="formm form-calendar">
 			<div class="formm__group">
 				<label class="formm__item col-5">
 					<span class="formm__select2">
-						<select name="user_id" class="select-with-search" id="users-list"><option></option></select>
+						<select name="user_id" class="select-with-search" data-type="int" id="users-list"><option></option></select>
 						<em></em>
 					</span>
 				</label>
 				<label class="formm__item col-5">
 					<span class="formm__select2">
-						<select name="plan_id" class="select-with-search" id="plans-list"><option></option></select>
+						<select name="plan_id" class="select-with-search" data-type="int" id="plans-list"><option></option></select>
 						<em></em>
 					</span>
 				</label>
 			</div>
-		</form>
-
-		<div class="calendar__wrapper">
-			<h2>Select <strong class="day_for_train"></strong> days on calendar:</h2>
-			<div class="block">
-				<div id="calendar" class="coll"></div>
-				<ul class="days__selected coll"></ul>
+			<div class="calendar__wrapper">
+				<h2>Select
+					<strong class="day_for_train"></strong> days on calendar:</h2>
+				<div class="block">
+					<div id="calendar" class="coll"></div>
+					<ul class="days__selected coll"></ul>
+				</div>
+				<button class="btn btn--small">
+					<span>Register</span>
+				</button>
 			</div>
-		</div>
+		</form>
 	</div>
 </section>
 

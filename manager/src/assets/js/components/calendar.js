@@ -37,29 +37,30 @@ class Calendar {
 		var that = this;
 
 		this.calendar.onSelect = function (checked) {
-			if (!checked && that.exercises_select.length > 0) {
-				// use moment to compare dates
-				let item = _.filter(that.exercises_select, (i) => { return moment(i.date, 'X').diff(this.toString()) === 0 })[0];
-				let list = _.filter(that.exercises_select, (i) => { return moment(i.date, 'X').diff(this.toString()) !== 0 });
+			if (!checked) {
+				if (that.exercises_select.length > 0) {
+					let item = _.filter(that.exercises_select, (i) => { return moment(i.date, 'X').diff(this.toString()) === 0 })[0];
+					let list = _.filter(that.exercises_select, (i) => { return moment(i.date, 'X').diff(this.toString()) !== 0 });
 
-				that.exercises_list.push(item.exercise);
-				that.exercises_select = list;
-				that.renderDays();
+					that.exercises_list.push(item.exercise);
+					that.exercises_select = list;
+					that.renderDays();
+				}
+				$('.box-select-exercise').remove();
 			}
-		};
+			else {
+				let t = moment(this.toString()).format('YYYY-MM-DD');
+				let el = $('input[data-date^="' + t + '"]');
 
-		$('body').on('click', '.d-table input', (ev) => {
-			let target = ev.target,
-				isSelected = target.checked,
-				label = $(target).next('label'),
-				date = target.dataset.date;
+				let target = el,
+					label = target.next('label'),
+					date = t;
 
-			if (isSelected) {
 				let position = label.offset();
 				let html = ['<div class="box-select-exercise">'];
 				let $tooltip, height;
 
-				this.exercises_list.map((exercise) => {
+				that.exercises_list.map((exercise) => {
 					html.push(`<div class="box-select-exercise__item" data-date="${date}" data-id="${exercise.id}">${exercise.name}</div>`)
 				});
 				html.push('</div>');
@@ -72,12 +73,9 @@ class Calendar {
 				$tooltip.css({
 					top: position.top - height - 20,
 					left: position.left
-				})
+				});
 			}
-			else {
-				$('.box-select-exercise').remove();
-			}
-		});
+		};
 
 		$('body').on('click', '.box-select-exercise__item', (e) => {
 			if (this.calendar.locked) return false;
@@ -100,7 +98,7 @@ class Calendar {
 	renderDays () {
 		let html = [];
 		let arr = this.exercises_select;
-		console.log(arr);
+
 		arr = _.sortBy(arr, ['date']);
 
 		arr.map((item) => {

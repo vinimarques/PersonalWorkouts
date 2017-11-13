@@ -1,1 +1,17 @@
 .toolbar
+	background: $white
+	height: 50px
+
+	.toolbar-inner-item
+		font-size: 25px
+		color: $color-grey
+		display: flex
+		flex-direction: column
+		justify-content: center
+		align-items: center
+		flex-basis: 25%
+		height: 100%
+		transition: all .3s
+
+		&.-active
+			color: $color-primary

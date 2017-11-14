@@ -1,5 +1,6 @@
 .page-home
 	&__header
+		transition: all .3s
 		height: 165px
 
 		.selected-date
@@ -89,6 +90,8 @@
 		height: calc(100% - 165px)
 		box-sizing: border-box
 		padding: 20px
+		overflow: auto
+		transition: all .3s
 
 		&__titles
 			padding-bottom: 10px
@@ -101,18 +104,16 @@
 		&__exercises
 			&__item
 				background: $white
-				border-bottom: solid 1px $color-grey
+				box-shadow: 0 1px 1px $color-grey
+				transition: margin .3s
+
+				$parent: &
 
 				&__title
-					width: 100%
 					display: flex
-					background: none
-					border: none
 					padding: 15px 20px
 					justify-content: space-between
 					align-items: center
-					font-family: 'roboto'
-					font-weight: 300
 
 					&:after,
 					&:before
@@ -120,9 +121,94 @@
 
 					span
 						font-size: 12px
+						color: $black
+						font-weight: 500
 
 					em
 						font-size: 8px
 						color: $color-grey
+						transition: all .3s
 
 				&__content
+					max-height: 0
+					overflow: hidden
+					transition: max-height .3s
+					border-bottom: solid 1px #eee
+
+					p
+						font-size: 12px
+						color: $color-text
+						padding: 0 20px 20px
+						line-height: 1.5
+
+				&.-active
+					margin: 10px 0
+
+					&:first-child
+						margin: 0 0 10px 0
+
+					#{$parent}__content
+							max-height: 800px
+
+					#{$parent}__title
+						em
+							transform: rotate(180deg)
+
+	.btn-timer
+		position: absolute
+		bottom: 70px
+		right: 20px
+		width: 50px
+		height: 50px
+		border-radius: 100%
+		background: $color-primary
+		z-index: 99
+		transition: all .3s
+
+		.icon
+			position: absolute
+			top: 50%
+			left: 50%
+			transform: translate(-50%,-50%)
+
+		.icon-play
+			margin-left: 3px
+			width: 0
+			height: 0
+			border-top: 15px solid transparent
+			border-bottom: 15px solid transparent
+			border-left: 20px solid $white
+
+		.icon-pause
+			opacity: 0
+			width: 20px
+			height: 24px
+			display: flex
+			justify-content: space-between
+
+			&::after,
+			&::before
+				content: ''
+				width: 7px
+				height: 24px
+				background: $white
+
+		&.-playing
+			.icon-play
+				opacity: 0
+
+			.icon-pause
+				opacity: 1
+
+	&.-loading
+		.btn-timer
+			transform: translateX(100px)
+			opacity: 0
+
+		.page-home__header
+			transform: translateY(-50%)
+			opacity: 0
+
+		.page-home__content
+			transform: translateY(50%)
+			opacity: 0

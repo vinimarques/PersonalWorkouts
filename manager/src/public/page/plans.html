@@ -2,22 +2,22 @@
 	<button class="btn btn--add open-modal" data-modal="add-plan" id="btn-add-plans"></button>
 	<div class="page__container">
 		<div class="breadcrumb">
-			<a href="javascript:;">Plans</a>
+			<a href="javascript:;">Plano de Treino</a>
 		</div>
 		<div class="formm global__search">
 			<label class="formm__item">
 				<span class="formm__text">
-					<input type="text" autocomplete="off" placeholder="Search Plan" name="search">
+					<input type="text" autocomplete="off" placeholder="Buscar Plano de Treino" name="search">
 					<em></em>
 				</span>
 			</label>
 		</div>
 		<div class="ttable">
 			<div class="ttable__header">
-				<span class="ttable__header__col col-3">Plan Name</span>
-				<span class="ttable__header__col col-3">Difficulty</span>
-				<span class="ttable__header__col col-3">Days per Week</span>
-				<span class="ttable__header__col col-2">Days Created</span>
+				<span class="ttable__header__col col-3">Nome do Plano</span>
+				<span class="ttable__header__col col-3">Dificuldade</span>
+				<span class="ttable__header__col col-3">Dias por Semana</span>
+				<span class="ttable__header__col col-2">Dias de treino criados</span>
 				<span class="ttable__header__col col-1"></span>
 			</div>
 			<div class="ttable__body" id="plans-content"></div>
@@ -29,19 +29,19 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Add Plan</h2>
+			<h2 class="modal__title">Adicionar novo Plano de Treino</h2>
 			<form class="formm">
 				<input type="hidden" name="company_id" value="{{:user.company_id}}">
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Nome">
 						<em></em>
 					</span>
 				</label>
 				<label class="formm__item">
 					<span class="formm__select">
 						<select name="difficulty_id" data-validate="required" data-type="int">
-							<option disabled selected value="">Select difficulty</option>
+							<option disabled selected value="">Selecione a dificuldade</option>
 							{{for DIFFICULTIES}}
 								<option value="{{:id}}">{{:name}}</option>
 							{{/for}}
@@ -51,12 +51,12 @@
 				</label>
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="days_per_week" autocomplete="off" data-validate="required,number"  data-type="int" placeholder="Days per week">
+						<input type="text" name="days_per_week" autocomplete="off" data-validate="required,number"  data-type="int" placeholder="Dias por Semana">
 						<em></em>
 					</span>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Register</span>
+					<span>Salvar</span>
 				</button>
 			</form>
 		</div>
@@ -67,19 +67,19 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Edit Plan</h2>
+			<h2 class="modal__title">Editar Plano de Treino</h2>
 			<form class="formm">
 				<input type="hidden" name="id" data-type="int" data-validate="required">
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Nome">
 						<em></em>
 					</span>
 				</label>
 				<label class="formm__item">
 					<span class="formm__select">
 						<select name="difficulty_id" data-validate="required" data-type="int">
-							<option disabled selected value="">Select difficulty</option>
+							<option disabled selected value="">Selecione a dificuldade</option>
 							{{for DIFFICULTIES}}
 							<option value="{{:id}}">{{:name}}</option>
 							{{/for}}
@@ -89,12 +89,12 @@
 				</label>
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="days_per_week" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Days per week">
+						<input type="text" name="days_per_week" autocomplete="off" data-validate="required,number" data-type="int" placeholder="Dias por Semana">
 						<em></em>
 					</span>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Save</span>
+					<span>Savar</span>
 				</button>
 			</form>
 		</div>
@@ -105,13 +105,12 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Remove Plan</h2>
-			<p class="modal__text">Are you sure you want to remove the plan
-				<strong class="plan-remove-name"></strong>?</p>
+			<h2 class="modal__title">Remover Plano de Treino</h2>
+			<p class="modal__text">Você tem certeza que deseja remover o plano <strong class="plan-remove-name"></strong>?</p>
 			<form class="formm">
 				<input type="hidden" name="plan_id">
 				<button class="btn btn--small --right">
-					<span>Remove</span>
+					<span>Remover</span>
 				</button>
 			</form>
 		</div>

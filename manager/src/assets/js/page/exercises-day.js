@@ -24,12 +24,12 @@ class ExercisesDay extends Page {
 
 		this.message = {
 			error: {
-				exercises: 'EXERCISES NOT FOUND'
+				exercises: 'NENHUM DADO ENCONTRADO'
 			},
 			success: {
-				add: 'Exercise has been adding successfully!',
-				update: 'Exercise has been updated successfully!',
-				remove: 'Exercise has been removed successfully!'
+				add: 'Exercício do Dia adicionado com sucesso!',
+				update: 'Exercício do Dia atualizado com sucesso!',
+				remove: 'Exercício do Dia removido com sucesso!'
 			}
 		};
 	}
@@ -79,7 +79,7 @@ class ExercisesDay extends Page {
 			});
 			$('.select-with-search').select2({
 				data: data,
-				placeholder: 'Select an exercise'
+				placeholder: 'Selecione um exercício'
 			});
 		});
 	}

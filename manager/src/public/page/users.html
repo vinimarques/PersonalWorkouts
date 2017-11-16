@@ -2,21 +2,21 @@
 	<button class="btn btn--add open-modal" data-modal="add-user" id="btn-add-users"></button>
 	<div class="page__container">
 		<div class="breadcrumb">
-			<a href="javascript:;">Users</a>
+			<a href="javascript:;">Usuários</a>
 		</div>
 		<div class="formm global__search">
 			<label class="formm__item">
 				<span class="formm__text">
-					<input type="text" autocomplete="off" placeholder="Search User" name="search">
+					<input type="text" autocomplete="off" placeholder="Buscar Usuário" name="search">
 					<em></em>
 				</span>
 			</label>
 		</div>
 		<div class="ttable">
 			<div class="ttable__header">
-				<span class="ttable__header__col col-4">Name</span>
+				<span class="ttable__header__col col-4">Nome</span>
 				<span class="ttable__header__col col-5">E-mail</span>
-				<span class="ttable__header__col col-2">Type</span>
+				<span class="ttable__header__col col-2">Tipo</span>
 				<span class="ttable__header__col col-1"></span>
 			</div>
 			<div class="ttable__body" id="users-content"></div>
@@ -28,11 +28,11 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Add User</h2>
+			<h2 class="modal__title">Adicionar Usuário</h2>
 			<form class="formm">
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Nome">
 						<em></em>
 					</span>
 				</label>
@@ -45,7 +45,7 @@
 				<label class="formm__item">
 					<span class="formm__select">
 						<select name="user_type_id" data-validate="required" data-type="int">
-							<option disabled selected value="">Select user type</option>
+							<option disabled selected value="">Tipo de Usuário</option>
 							{{for TYPES}}
 								{{if id == 1 || id == 2 || id == 3}}
 									{{if ~root.user.user_type_id == 1}}
@@ -64,15 +64,15 @@
 				<input type="hidden" name="company_id" data-type="int" data-validate="required" value="{{:user.company_id}}">
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="password" data-validate="required" autocomplete="off" placeholder="Password">
+						<input type="text" name="password" data-validate="required" autocomplete="off" placeholder="Senha">
 						<em></em>
 					</span>
 					<button class="btn btn--xsmall btn-generate-pwd">
-						<span>Generate</span>
+						<span>Gerar</span>
 					</button>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Register</span>
+					<span>Salvar</span>
 				</button>
 			</form>
 		</div>
@@ -83,13 +83,13 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Edit User</h2>
+			<h2 class="modal__title">Editar Usuário</h2>
 			<form class="formm">
 				<input type="hidden" name="company_id" data-type="int" data-validate="required" value="{{:user.company_id}}">
 				<input type="hidden" name="id" data-type="int" data-validate="required">
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Nome">
 						<em></em>
 					</span>
 				</label>
@@ -102,7 +102,7 @@
 				<label class="formm__item">
 					<span class="formm__select">
 						<select name="user_type_id" data-validate="required" data-type="int">
-							<option disabled selected value="">Select user type</option>
+							<option disabled selected value="">Tipo de usuário</option>
 							{{for TYPES}} {{if id == 1 || id == 2 || id == 3}} {{if ~root.user.user_type_id == 1}}
 							<option value="{{:id}}">{{:name}}</option>
 							{{else ~root.user.user_type_id == 2 && id == 3}}
@@ -116,16 +116,16 @@
 				</label>
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="password" autocomplete="off" placeholder="New Password">
+						<input type="text" name="password" autocomplete="off" placeholder="Nova Senha">
 						<em></em>
 					</span>
-					<small class="info">* Isn't possible change password, only create a new.</small>
+					<small class="info">* Não é possivel trocar a senha,apenas criar uma nova.</small>
 					<button class="btn btn--xsmall btn-generate-pwd">
-						<span>Generate</span>
+						<span>Gerar</span>
 					</button>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Save</span>
+					<span>Savar</span>
 				</button>
 			</form>
 		</div>
@@ -136,12 +136,12 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Remove User</h2>
-			<p class="modal__text">Are you sure you want to remove the user <strong class="user-remove-name"></strong>?</p>
+			<h2 class="modal__title">Remover Usuário</h2>
+			<p class="modal__text">Você tem certeza que deseja remover o usuário <strong class="user-remove-name"></strong>?</p>
 			<form class="formm">
 				<input type="hidden" name="user_id">
 				<button class="btn btn--small --right">
-					<span>Remove</span>
+					<span>Remover</span>
 				</button>
 			</form>
 		</div>

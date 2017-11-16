@@ -24,12 +24,12 @@ class Users extends Page {
 		this.users = '';
 		this.message = {
 			error: {
-				users: 'USERS NOT FOUND'
+				users: 'NENHUM DADO ENCONTRADO'
 			},
 			success: {
-				add: 'User has been adding successfully!',
-				update: 'User has been updated successfully!',
-				remove: 'User has been removed successfully!'
+				add: 'Usuário adicionado com sucesso!',
+				update: 'Usuário atualizado com sucesso!',
+				remove: 'Usuário removido com sucesso!'
 			}
 		}
 	}
@@ -163,7 +163,7 @@ class Users extends Page {
 
 	highlight (word) {
 		let result = _.filter(this.users, (o) => {
-			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
+			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1 || o.email.toLowerCase().indexOf(word.toLowerCase()) !== -1;
 		});
 		let html = '';
 

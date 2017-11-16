@@ -155,6 +155,14 @@ class Api {
 	removeDayExercise (data) {
 		return this.request('DELETE', '/day-exercise', data);
 	}
+
+	getCalendar (data) {
+		return this.request('GET', '/calendar', data);
+	}
+
+	saveCalendar (data) {
+		return this.request('POST', '/calendar', data);
+	}
 }
 
 export { Api as default }

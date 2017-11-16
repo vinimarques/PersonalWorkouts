@@ -24,12 +24,12 @@ class Exercises extends Page {
 		this.exercises = '';
 		this.message = {
 			error: {
-				exercises: 'EXERCISES NOT FOUND'
+				exercises: 'NENHUM DADO ENCONTRADO'
 			},
 			success: {
-				add: 'Exercise has been adding successfully!',
-				update: 'Exercise has been updated successfully!',
-				remove: 'Exercise has been removed successfully!'
+				add: 'Exercício adicionado com sucesso!',
+				update: 'Exercício atualizado com sucesso!',
+				remove: 'Exercício removido com sucesso!'
 			}
 		}
 	}
@@ -157,7 +157,7 @@ class Exercises extends Page {
 
 	highlight(word) {
 		let result = _.filter(this.exercises, (o) => {
-			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
+			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1 || o.description.toLowerCase().indexOf(word.toLowerCase()) !== -1;
 		});
 		let html = '';
 

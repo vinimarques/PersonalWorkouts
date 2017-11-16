@@ -28,10 +28,10 @@
 
 	<nav class="nav">
 		<ul>
-			<li class="users"><a href="/users">Users</a></li>
-			<li class="exercises"><a href="/exercises" >Exercises</a></li>
-			<li class="plans days exercises-day"><a href="/plans">Plans</a></li>
-			<li class="calendar"><a href="/calendar">Calendar</a></li>
+			<li class="users"><a href="/users">Usuários</a></li>
+			<li class="exercises"><a href="/exercises" >Exercícios</a></li>
+			<li class="plans days exercises-day"><a href="/plans">Planos de Treinos</a></li>
+			<li class="calendar"><a href="/calendar">Calendário</a></li>
 		</ul>
 	</nav>
 
@@ -74,8 +74,8 @@
 						<button class="btn btn--more right">
 							<span></span>
 							<ul>
-								<li><a href="javascript:;" class="user-edit" title="Edit user"><em class="icon icon-edit"></em></a></li>
-								<li><a href="javascript:;" class="user-delete" title="Delete user"><em class="icon icon-delete"></em></a></li>
+								<li><a href="javascript:;" class="user-edit" title="Editar usuário"><em class="icon icon-edit"></em></a></li>
+								<li><a href="javascript:;" class="user-delete" title="Deletar usuário"><em class="icon icon-delete"></em></a></li>
 							</ul>
 						</button>
 					</span>
@@ -95,8 +95,8 @@
 						<button class="btn btn--more right">
 							<span></span>
 							<ul>
-								<li><a href="javascript:;" class="exercise-edit" title="Edit exercise"><em class="icon icon-edit"></em></a></li>
-								<li><a href="javascript:;" class="exercise-delete" title="Delete exercise"><em class="icon icon-delete"></em></a></li>
+								<li><a href="javascript:;" class="exercise-edit" title="Editar exercício"><em class="icon icon-edit"></em></a></li>
+								<li><a href="javascript:;" class="exercise-delete" title="Deletar exercício"><em class="icon icon-delete"></em></a></li>
 							</ul>
 						</button>
 					</span>
@@ -113,13 +113,13 @@
 					<span class="ttable__body__col col-3 plan-name">{{:name}}</span>
 					<span class="ttable__body__col col-3">{{:difficulty_name}}</span>
 					<span class="ttable__body__col col-3">{{:days_per_week}}</span>
-					<span class="ttable__body__col col-2"><a href="/plans/{{:id}}" class="i-action" title="View plan details"><span class="icon icon-list"></span><em>{{:days}}</em></a></span>
+					<span class="ttable__body__col col-2"><a href="/plans/{{:id}}" class="i-action" title="Ver detalhe do Plano de Treino"><span class="icon icon-list"></span><em>{{:days}}</em></a></span>
 					<span class="ttable__body__col col-1 actions">
 						<button class="btn btn--more right">
 							<span></span>
 							<ul>
-								<li><a href="javascript:;" class="plan-edit" title="Edit plan"><em class="icon icon-edit"></em></a></li>
-								<li><a href="javascript:;" class="plan-delete" title="Delete plan"><em class="icon icon-delete"></em></a></li>
+								<li><a href="javascript:;" class="plan-edit" title="Editar Plano de Treino"><em class="icon icon-edit"></em></a></li>
+								<li><a href="javascript:;" class="plan-delete" title="Deletar Plano de Treino"><em class="icon icon-delete"></em></a></li>
 							</ul>
 						</button>
 					</span>
@@ -135,13 +135,13 @@
 				<div class="ttable__body__row" data-day-id="{{:id}}">
 					<span class="ttable__body__col col-2">{{:#index + 1}} of {{:days_per_week}}</span>
 					<span class="ttable__body__col col-4 day-name">{{:name}}</span>
-					<span class="ttable__body__col col-4"><a href="/plans/{{:plan_id}}/{{:id}}" class="i-action" title="View day details"><span class="icon icon-list"></span><em>{{:exercises}}</em></a></span>
+					<span class="ttable__body__col col-4"><a href="/plans/{{:plan_id}}/{{:id}}" class="i-action" title="Ver detalhe do dia"><span class="icon icon-list"></span><em>{{:exercises}}</em></a></span>
 					<span class="ttable__body__col col-2 actions">
 						<button class="btn btn--more right">
 							<span></span>
 							<ul>
-								<li><a href="javascript:;" class="day-edit" title="Edit day"><em class="icon icon-edit"></em></a></li>
-								<li><a href="javascript:;" class="day-delete" title="Delete day"><em class="icon icon-delete"></em></a></li>
+								<li><a href="javascript:;" class="day-edit" title="Editar dia"><em class="icon icon-edit"></em></a></li>
+								<li><a href="javascript:;" class="day-delete" title="Deletar dia"><em class="icon icon-delete"></em></a></li>
 							</ul>
 						</button>
 					</span>
@@ -162,8 +162,8 @@
 						<button class="btn btn--more right">
 							<span></span>
 							<ul>
-								<li><a href="javascript:;" class="exercises-day-edit" title="Edit day"><em class="icon icon-edit"></em></a></li>
-								<li><a href="javascript:;" class="exercises-day-delete" title="Delete day"><em class="icon icon-delete"></em></a></li>
+								<li><a href="javascript:;" class="exercises-day-edit" title="Editar exercício do dia"><em class="icon icon-edit"></em></a></li>
+								<li><a href="javascript:;" class="exercises-day-delete" title="Deletar exercício do dia"><em class="icon icon-delete"></em></a></li>
 							</ul>
 						</button>
 					</span>

@@ -24,12 +24,12 @@ class Plans extends Page {
 		this.plans = '';
 		this.message = {
 			error: {
-				plans: 'PLANS NOT FOUND'
+				plans: 'NENHUM DADO ENCONTRADO'
 			},
 			success: {
-				add: 'Plan has been adding successfully!',
-				update: 'Plan has been updated successfully!',
-				remove: 'Plan has been removed successfully!'
+				add: 'Plan adicionado com sucesso!',
+				update: 'Plan atualizado com sucesso!',
+				remove: 'Plan removido com sucesso!'
 			}
 		}
 	}
@@ -157,7 +157,7 @@ class Plans extends Page {
 
 	highlight(word) {
 		let result = _.filter(this.plans, (o) => {
-			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
+			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1 || o.difficulty_name.toLowerCase().indexOf(word.toLowerCase()) !== -1;
 		});
 		let html = '';
 

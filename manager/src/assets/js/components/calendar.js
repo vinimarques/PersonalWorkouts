@@ -4,6 +4,8 @@ import Datepickk from '../libs/datepickk';
 import moment from 'moment';
 import _ from 'lodash';
 
+moment.locale('pt-br')
+
 /**
  *
  */
@@ -40,8 +42,8 @@ class Calendar {
 		this.calendar.onSelect = function (checked) {
 			if (!checked) {
 				if (that.exercises_select.length > 0) {
-					let item = _.filter(that.exercises_select, (i) => { return moment(i.date, 'X').diff(this.toString()) === 0 })[0];
-					let list = _.filter(that.exercises_select, (i) => { return moment(i.date, 'X').diff(this.toString()) !== 0 });
+					let item = _.filter(that.exercises_select, (i) => { return moment(i.date, 'x').diff(this.toString()) === 0 })[0];
+					let list = _.filter(that.exercises_select, (i) => { return moment(i.date, 'x').diff(this.toString()) !== 0 });
 
 					that.exercises_list.push(item.exercise);
 					that.exercises_select = list;
@@ -76,7 +78,6 @@ class Calendar {
 					left: position.left
 				});
 			}
-
 			that.isComplete = parseInt(that.exercises_select.length) === parseInt(that.days_per_week);
 		};
 
@@ -88,13 +89,14 @@ class Calendar {
 				exercise = _.filter(this.exercises_list, (i) => {return i.id === id})[0];
 
 			this.exercises_select.push({
-				date: moment(date).format('X'),
+				date: moment(date).format('x'),
 				exercise: exercise
 			});
 
 			this.exercises_list = _.filter(this.exercises_list, (i) => { return i.id !== id });
 			this.renderDays();
 			$('.box-select-exercise').remove();
+			that.isComplete = parseInt(that.exercises_select.length) === parseInt(that.days_per_week);
 		});
 	}
 
@@ -106,9 +108,9 @@ class Calendar {
 
 		arr.map((item) => {
 			html.push(`	<li>
-								<strong class="week">${moment(item.date, 'X').format('dddd')}:</strong>
+								<strong class="week">${moment(item.date, 'x').format('dddd')}:</strong>
 								<span class="exercise">${item.exercise.name}</span>
-								<strong class="day">${moment(item.date, 'X').format('DD/MM/YYYY')}</strong>
+								<strong class="day">${moment(item.date, 'x').format('DD/MM/YYYY')}</strong>
 							</li>`);
 		});
 		this.daysWrapper.html(html.join(''));

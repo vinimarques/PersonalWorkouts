@@ -2,15 +2,15 @@
 	<button class="btn btn--add open-modal" data-modal="add-day" id="btn-add-day"></button>
 	<div class="page__container">
 		<div class="breadcrumb">
-			<a href="/plans">Plans</a>
-			<a href="javascript:;">Days</a>
+			<a href="/plans">Planos de Treinos</a>
+			<a href="javascript:;">Dias de treino</a>
 		</div>
 		<h2 class="page__title">&nbsp;</h2>
 		<div class="ttable">
 			<div class="ttable__header">
 				<span class="ttable__header__col col-2">#</span>
-				<span class="ttable__header__col col-4">Day Name</span>
-				<span class="ttable__header__col col-4">Exercises</span>
+				<span class="ttable__header__col col-4">Nome do treino</span>
+				<span class="ttable__header__col col-4">Exercícios</span>
 				<span class="ttable__header__col col-2"></span>
 			</div>
 			<div class="ttable__body" id="days-content"></div>
@@ -22,17 +22,17 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Add Day</h2>
+			<h2 class="modal__title">Adicionar novo Dia de Treino</h2>
 			<form class="formm">
 				<input type="hidden" name="plan_id">
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Nome">
 						<em></em>
 					</span>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Register</span>
+					<span>Salvar</span>
 				</button>
 			</form>
 		</div>
@@ -43,17 +43,17 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Edit Day</h2>
+			<h2 class="modal__title">Editar Dia de Treino</h2>
 			<form class="formm">
 				<input type="hidden" name="id" data-type="int" data-validate="required">
 				<label class="formm__item">
 					<span class="formm__text">
-						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Name">
+						<input type="text" name="name" autocomplete="off" data-validate="required" placeholder="Nome">
 						<em></em>
 					</span>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Save</span>
+					<span>Savar</span>
 				</button>
 			</form>
 		</div>
@@ -64,13 +64,12 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Remove Day</h2>
-			<p class="modal__text">Are you sure you want to remove the day
-				<strong class="day-remove-name"></strong>?</p>
+			<h2 class="modal__title">Remover Dia de Treino</h2>
+			<p class="modal__text">Você tem certeza que deseja remover o dia <strong class="day-remove-name"></strong>?</p>
 			<form class="formm">
 				<input type="hidden" name="day_id">
 				<button class="btn btn--small --right">
-					<span>Remove</span>
+					<span>Remover</span>
 				</button>
 			</form>
 		</div>

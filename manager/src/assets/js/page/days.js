@@ -22,12 +22,12 @@ class Days extends Page {
 		this.plan_id = ctx.params.plan;
 		this.message = {
 			error: {
-				days: 'DAYS NOT FOUND'
+				days: 'NENHUM DADO ENCONTRADO'
 			},
 			success: {
-				add: 'Day has been adding successfully!',
-				update: 'Day has been updated successfully!',
-				remove: 'Day has been removed successfully!'
+				add: 'Dia de Treino adicionado com sucesso!',
+				update: 'Dia de Treino atualizado com sucesso!',
+				remove: 'Dia de Treino removido com sucesso!'
 			}
 		}
 	}

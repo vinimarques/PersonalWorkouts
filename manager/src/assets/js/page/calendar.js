@@ -44,7 +44,7 @@ class Calendar extends Page {
 			});
 			this.selectUsers.select2({
 				data: data,
-				placeholder: 'Select a user'
+				placeholder: 'Selecione um usuário'
 			});
 		});
 	}
@@ -62,7 +62,7 @@ class Calendar extends Page {
 			});
 			this.selectPlans.select2({
 				data: data,
-				placeholder: 'Select a plan',
+				placeholder: 'Selecione um Plano de Treino',
 				disabled: true
 			});
 		});

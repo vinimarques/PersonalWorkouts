@@ -2,16 +2,16 @@
 	<button class="btn btn--add open-modal" data-modal="add-exercises-day" id="btn-add-exercises-day"></button>
 	<div class="page__container">
 		<div class="breadcrumb">
-			<a href="/plans">Plans</a>
-			<a class="plan-link" href="">Days</a>
-			<a href="javascript:;">Exercises</a>
+			<a href="/plans">Planos de Treino</a>
+			<a class="plan-link" href="">Dias de Treino</a>
+			<a href="javascript:;">Exercícios do Dia</a>
 		</div>
 		<h2 class="page__title">&nbsp;</h2>
 		<div class="ttable">
 			<div class="ttable__header">
-				<span class="ttable__header__col col-4">Exercise Name</span>
-				<span class="ttable__header__col col-3">Repetitions</span>
-				<span class="ttable__header__col col-4">Notes</span>
+				<span class="ttable__header__col col-4">Nome do Exercício</span>
+				<span class="ttable__header__col col-3">Repetições</span>
+				<span class="ttable__header__col col-4">Observações</span>
 				<span class="ttable__header__col col-1"></span>
 			</div>
 			<div class="ttable__body" id="exercises-day-content"></div>
@@ -23,7 +23,7 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Add Exercise on the Day</h2>
+			<h2 class="modal__title">Adicionar Exercício no Dia</h2>
 			<form class="formm">
 				<input type="hidden" name="day_id">
 				<label class="formm__item">
@@ -33,7 +33,7 @@
 					</span>
 				</label>
 				<div class="formm__group">
-					<h3 class="formm__group__title">Repetitions</h3>
+					<h3 class="formm__group__title">Repetições</h3>
 					<label class="formm__item col-2">
 						<span class="formm__text">
 							<input type="text" name="rep_1" autocomplete="off" data-validate="required,number" data-type="int" placeholder="1" value="15">
@@ -68,12 +68,12 @@
 				<label class="formm__item">
 					<span class="formm__textarea">
 						<div class="textarea"></div>
-						<textarea name="note" autocomplete="off" placeholder="Notes" data-type="text"></textarea>
+						<textarea name="note" autocomplete="off" placeholder="Obsevações" data-type="text"></textarea>
 						<em></em>
 					</span>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Register</span>
+					<span>Savar</span>
 				</button>
 			</form>
 		</div>
@@ -84,7 +84,7 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Edit Exercise on the Day</h2>
+			<h2 class="modal__title">Editar Exercício do Dia</h2>
 			<form class="formm">
 				<input type="hidden" name="id">
 				<input type="hidden" name="day_id">
@@ -97,7 +97,7 @@
 					</span>
 				</label>
 				<div class="formm__group">
-					<h3 class="formm__group__title">Repetitions</h3>
+					<h3 class="formm__group__title">Repetições</h3>
 					<label class="formm__item col-2">
 						<span class="formm__text">
 							<input type="text" name="rep_1" autocomplete="off" data-validate="required,number" data-type="int" placeholder="1" value="15">
@@ -132,12 +132,12 @@
 				<label class="formm__item">
 					<span class="formm__textarea">
 						<div class="textarea"></div>
-						<textarea name="note" autocomplete="off" placeholder="Notes" data-type="text"></textarea>
+						<textarea name="note" autocomplete="off" placeholder="Observações" data-type="text"></textarea>
 						<em></em>
 					</span>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Save</span>
+					<span>Savar</span>
 				</button>
 			</form>
 		</div>
@@ -148,13 +148,12 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Remove Exercise on the Day</h2>
-			<p class="modal__text">Are you sure you want to remove the exercise
-				<strong class="exercises-day-remove-name"></strong>?</p>
+			<h2 class="modal__title">Remover Exercício do Dia</h2>
+			<p class="modal__text">Voce tem certeza de deseja remover o exercício <strong class="exercises-day-remove-name"></strong>?</p>
 			<form class="formm">
 				<input type="hidden" name="day_exercise_id">
 				<button class="btn btn--small --right">
-					<span>Remove</span>
+					<span>Remover</span>
 				</button>
 			</form>
 		</div>

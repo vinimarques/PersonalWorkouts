@@ -225,6 +225,7 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`calendar` (
   `plan_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `exercise_id` INT NOT NULL,
+  `date` varchar(13) DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_calendar_plan1_idx` (`plan_id` ASC),
   INDEX `fk_calendar_users1_idx` (`user_id` ASC),

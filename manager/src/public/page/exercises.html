@@ -2,20 +2,20 @@
 	<button class="btn btn--add open-modal" data-modal="add-exercise" id="btn-add-exercise"></button>
 	<div class="page__container">
 		<div class="breadcrumb">
-			<a href="javascript:;">Exercises</a>
+			<a href="javascript:;">Exercícios</a>
 		</div>
 		<div class="formm global__search">
 			<label class="formm__item">
 				<span class="formm__text">
-					<input type="text" autocomplete="off" placeholder="Search Exercise" name="search">
+					<input type="text" autocomplete="off" placeholder="Buscar Exercícios" name="search">
 					<em></em>
 				</span>
 			</label>
 		</div>
 		<div class="ttable">
 			<div class="ttable__header">
-				<span class="ttable__header__col col-4">Name</span>
-				<span class="ttable__header__col col-7">Description</span>
+				<span class="ttable__header__col col-4">Nome</span>
+				<span class="ttable__header__col col-7">Descrição</span>
 				<span class="ttable__header__col col-1"></span>
 			</div>
 			<div class="ttable__body" id="exercises-content"></div>
@@ -27,7 +27,7 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Add Exercise</h2>
+			<h2 class="modal__title">Adicionar Exercício</h2>
 			<form class="formm">
 				<input type="hidden" name="company_id" value="{{:user.company_id}}">
 				<label class="formm__item">
@@ -44,7 +44,7 @@
 					</span>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Register</span>
+					<span>Salvar</span>
 				</button>
 			</form>
 		</div>
@@ -55,7 +55,7 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Edit Exercise</h2>
+			<h2 class="modal__title">Editar Exercício</h2>
 			<form class="formm">
 				<input type="hidden" name="id" data-type="int" data-validate="required">
 				<label class="formm__item">
@@ -72,7 +72,7 @@
 					</span>
 				</label>
 				<button class="btn btn--small --right">
-					<span>Save</span>
+					<span>Salvar</span>
 				</button>
 			</form>
 		</div>
@@ -83,13 +83,12 @@
 	<div class="modal__container">
 		<a href="javascript:;" class="modal__close"></a>
 		<div class="modal__content">
-			<h2 class="modal__title">Remove Exercise</h2>
-			<p class="modal__text">Are you sure you want to remove the exercise
-				<strong class="exercise-remove-name"></strong>?</p>
+			<h2 class="modal__title">Remover Exercício</h2>
+			<p class="modal__text">Você tem certeza que gotaria de remover o exercício <strong class="exercise-remove-name"></strong>?</p>
 			<form class="formm">
 				<input type="hidden" name="exercise_id">
 				<button class="btn btn--small --right">
-					<span>Remove</span>
+					<span>Remover</span>
 				</button>
 			</form>
 		</div>

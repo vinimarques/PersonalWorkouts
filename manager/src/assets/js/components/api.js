@@ -163,6 +163,10 @@ class Api {
 	saveCalendar (data) {
 		return this.request('POST', '/calendar', data);
 	}
+
+	removeCalendar(data) {
+		return this.request('DELETE', '/calendar', data);
+	}
 }
 
 export { Api as default }

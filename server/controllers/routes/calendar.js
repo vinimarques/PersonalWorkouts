@@ -55,31 +55,35 @@ module.exports = function (router) {
 	router.post('/calendar', Auth.middleware(), Resolve.send(
 		function (req) {
 			const validator = new Validator([
-				{ field: 'exercise_id', type: 'Integer', required: true },
+				{ field: 'day_exercise_id', type: 'Integer', required: true },
 				{ field: 'plan_id', type: 'Integer', required: true },
 				{ field: 'user_id', type: 'Integer', required: true }
 			]);
 
+			const days_per_week = req.body.days_per_week;
 			const workouts = req.body.workouts;
 
-			console.log(workouts);
+			workouts.map(item => {
+				let data = _.pick(item, ['day_exercise_id', 'plan_id', 'user_id']);
+				validator.validate(data);
+				if (validator.hasErrors()) throw validator.getErrors();
+			});
 
-			// const data = _.pick(req.body, ['exercise_id', 'plan_id', 'user_id']);
+			const dataSend = {
+				days_per_week,
+				workouts
+			};
 
-			// validator.validate(data);
-
-			// if (validator.hasErrors()) throw validator.getErrors();
-
-			// return Calendar.insert(data)
-			// 	.then(result => {
-			// 		return {
-			// 			success: true,
-			// 			new_calendar: result.insertId
-			// 		};
-			// 	})
-			// 	.catch(error => {
-			// 		throw error;
-			// 	});
+			return Calendar.insert(dataSend)
+				.then(result => {
+					return {
+						success: true,
+						new_calendar: result.insertId
+					};
+				})
+				.catch(error => {
+					throw error;
+				});
 		}
 	));
 };

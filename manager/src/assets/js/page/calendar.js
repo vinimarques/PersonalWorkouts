@@ -31,7 +31,14 @@ class Calendar extends Page {
 
 		this.loadUsers();
 		this.loadPlans();
+		this.loadUserCalendar();
 		this.__bindEvents();
+	}
+
+	loadUserCalendar () {
+		App.api.getCalendar({ user_id: App.data.user.id }).then(res => {
+			console.log(res);
+		})
 	}
 
 	loadUsers () {
@@ -96,20 +103,23 @@ class Calendar extends Page {
 
 			if (this.calendar.isComplete) {
 				let calendarData = {
-					user_id: dataSend.user_id,
-					plan_id: dataSend.plan_id,
-					days_per_week: this.calendar.days_per_week,
+					days_per_week: parseInt(this.calendar.days_per_week),
 					workouts: []
 				};
 
 				this.calendar.exercises_select.map((item) => {
 					calendarData.workouts.push({
+						user_id: parseInt(dataSend.user_id),
+						plan_id: parseInt(dataSend.plan_id),
 						date: item.date,
-						day_exercise_id: item.exercise.id
+						day_exercise_id: parseInt(item.exercise.id)
 					})
 				});
 
-				console.log(calendarData);
+				App.api.saveCalendar(calendarData)
+					.then((res) => {
+						console.log(res);
+					});
 			}
 		})
 	}

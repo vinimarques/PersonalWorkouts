@@ -41,5 +41,6 @@ require('./routes/exercises')(router);
 require('./routes/plans')(router);
 require('./routes/days')(router);
 require('./routes/day_exercises')(router);
+require('./routes/calendar')(router);
 
 module.exports = router;

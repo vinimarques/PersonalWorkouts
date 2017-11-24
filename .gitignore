@@ -27,6 +27,9 @@ npm-debug.log
 dist
 .dist
 
+# yarn
+yarn-error.log
+
 # npm files
 npm-debug.log
 node_modules/

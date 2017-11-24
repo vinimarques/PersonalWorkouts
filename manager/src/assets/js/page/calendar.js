@@ -72,7 +72,6 @@ class Calendar extends Page {
 		this.selectUsers.on('select2:select', (e) => {
 			this.selectPlans.select2('enable');
 			var data = e.params.data;
-			console.log(data);
 		});
 
 		this.selectPlans.on('select2:select', (e) => {
@@ -95,11 +94,23 @@ class Calendar extends Page {
 			let dataSend = this.validator.getDataSend(ev.target);
 			let isValide = this.validator.isValide(data);
 
-			console.log(dataSend);
+			if (this.calendar.isComplete) {
+				let calendarData = {
+					user_id: dataSend.user_id,
+					plan_id: dataSend.plan_id,
+					days_per_week: this.calendar.days_per_week,
+					workouts: []
+				};
 
-			console.log(this.calendar.isComplete);
-			console.log(this.calendar.days_per_week);
-			console.log(this.calendar.exercises_select);
+				this.calendar.exercises_select.map((item) => {
+					calendarData.workouts.push({
+						date: item.date,
+						day_exercise_id: item.exercise.id
+					})
+				});
+
+				console.log(calendarData);
+			}
 		})
 	}
 }

@@ -218,18 +218,31 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`plan_company` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Table `personalworkouts`.`workout`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personalworkouts`.`workout` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `exercices` INT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `personalworkouts`.`calendar`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`calendar` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `plan_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  `exercise_id` INT NOT NULL,
-  `date` varchar(13) DEFAULT NULL,
+  `workout_id` INT NOT NULL,
+  `date` VARCHAR(45) NULL,
+  `day_exercise_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_calendar_plan1_idx` (`plan_id` ASC),
   INDEX `fk_calendar_users1_idx` (`user_id` ASC),
-  INDEX `fk_calendar_exercise1_idx` (`exercise_id` ASC),
+  INDEX `fk_calendar_workout1_idx` (`workout_id` ASC),
+  INDEX `fk_calendar_day_exercise1_idx` (`day_exercise_id` ASC),
   CONSTRAINT `fk_calendar_plan1`
     FOREIGN KEY (`plan_id`)
     REFERENCES `personalworkouts`.`plan` (`id`)
@@ -240,9 +253,14 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`calendar` (
     REFERENCES `personalworkouts`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_calendar_exercise1`
-    FOREIGN KEY (`exercise_id`)
-    REFERENCES `personalworkouts`.`exercise` (`id`)
+  CONSTRAINT `fk_calendar_workout1`
+    FOREIGN KEY (`workout_id`)
+    REFERENCES `personalworkouts`.`workout` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_calendar_day_exercise1`
+    FOREIGN KEY (`day_exercise_id`)
+    REFERENCES `personalworkouts`.`day_exercise` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

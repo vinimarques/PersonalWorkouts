@@ -1,4 +1,51 @@
 .page-login
-	background: $white
+	background: url(../img/bgr-login.png) top center no-repeat
+	background-size: cover
 
-	
+	&__wrapper
+		position: absolute
+		bottom: 0
+		left: 0
+		right: 0
+
+	&__form
+		display: flex
+		flex-direction: column
+		justify-content: center
+		padding: 30px
+
+		input
+			background: rgba(255,255,255, 0.8)
+			font-size: 14px
+			font-family: 'roboto'
+			font-weight: 500
+			border: none
+			border-radius: 5px
+			width: 100%
+			height: 50px
+			line-height: 50px
+			box-sizing: border-box
+			padding: 15px
+			margin-bottom: 20px
+
+		button
+			background: $color-primary
+			color: $white
+			height: 70px
+			font-size: 20px
+			text-transform: uppercase
+			font-family: 'roboto'
+			font-weight: 500
+
+	.logo
+		color: $white
+		font-size: 20px
+		text-transform: uppercase
+		font-weight: 500
+		text-align: center
+		padding-top: 30px
+
+		.icon
+			display: block
+			font-size: 25px
+			padding-top: 10px

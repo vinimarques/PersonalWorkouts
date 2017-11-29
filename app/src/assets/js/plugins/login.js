@@ -38,33 +38,33 @@ Framework7.prototype.plugins.login = (app, params) => {
 		login.on('submit', (e) => {
 			e.preventDefault();
 
-			loader.removeClass('-vhidden');
-			login.addClass('-vhidden');
-
 			let data = {
 				email: login.find('[name="email"]').val(),
 				password: login.find('[name="password"]').val()
 			};
-			console.log(data);
 
-			// App.api
-			// 	.login()
-			// 	.then((res) => {
-			// 		if (res.success) {
-			// 			App.consts.init(() => {
-			// 				$('.tabbar .toolbar-inner-item').removeClass('-active').eq(0).addClass('-active');
-			// 				App.mainView.router.loadPage(`pages/home.html`);
-			// 				App.closeModal();
-			// 				App.notification.verify();
-			// 			});
-			// 		}
-			// 		loader.addClass('-vhidden');
-			// 		login.removeClass('-vhidden');
-			// 	})
-			// 	.catch((err) => {
-			// 		loader.addClass('-vhidden');
-			// 		login.removeClass('-vhidden');
-			// 	});
+			if (!data.email || !data.password) return false;
+
+			loader.removeClass('-vhidden');
+			login.addClass('-vhidden');
+
+			App.api
+				.login(data.email, data.password)
+				.then((res) => {
+					if (res.success) {
+						App.consts.init(() => {
+							$('.tabbar .toolbar-inner-item').removeClass('-active').eq(0).addClass('-active');
+							App.mainView.router.loadPage(`pages/home.html`);
+							App.closeModal();
+						});
+					}
+					loader.addClass('-vhidden');
+					login.removeClass('-vhidden');
+				})
+				.catch((err) => {
+					loader.addClass('-vhidden');
+					login.removeClass('-vhidden');
+				});
 		});
 	}
 

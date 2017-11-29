@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import config from '../config';
+import CryptoJS from 'crypto-js';
 
 class Api {
 
@@ -129,27 +130,38 @@ class Api {
 		return new Promise((success, error) => {
 			let user = App.database.get('user');
 
-			if (user) {
-				user = User.parser(user);
+			if (user && user.token) {
 				this.setHeader('Authorization','Bearer ' + user.token);
-				this.getSectors(false)
-					.then((res) => {
-						if (res.success) {
-							success({success: true, user: {}});
-							Template7.global.user = user;
-						}
-						else {
-							success({success: false});
-						}
-					})
-					.catch(() => {
-						success({success: false});
-					});
+				success({success: true, user: {}});
+				Template7.global.user = user;
 			}
 			else {
 				success({success: false});
 			}
 		})
+	}
+
+	getConsts () {
+		return this.request('GET', '/consts');
+	}
+
+	login (email, pass) {
+		let password = CryptoJS.HmacSHA1(pass, config.key).toString();
+		return new Promise((success, error) => {
+			this.request('POST', '/login', { email, password })
+				.then((res) => {
+					let user = res.user;
+					user.token = res.token;
+
+					App.database.set('user', user);
+					this.setHeader('Authorization', 'Bearer ' + user.token);
+
+					Template7.global.user = user;
+
+					success({ success: true, user });
+				})
+				.catch((err) => { error && error(err); })
+		});
 	}
 }
 

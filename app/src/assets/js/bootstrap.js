@@ -12,7 +12,7 @@ import './plugins/login.js';
 import './plugins/menu.js';
 import './plugins/form.js';
 import 'components/helpers';
-import './consts';
+import consts from './consts';
 
 /**
  *
@@ -54,6 +54,7 @@ document.addEventListener('deviceready', () => {
 	window.$ = Dom7;
 	window.App = new Framework7(settings);
 
+	App.consts = consts;
 	App.State = new State();
 	App.database = database;
 	Template7.global = {};

@@ -29,7 +29,7 @@ class Home extends Page {
 
 		setTimeout(() => {
 			$('.-loading').removeClass('-loading');
-		}, 1000);
+		}, 500);
 	}
 }
 

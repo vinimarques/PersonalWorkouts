@@ -8,6 +8,7 @@ import Page from '../components/page';
 import Validator from '../components/validator';
 import _ from 'lodash';
 import CalendarInline from '../components/calendar';
+import moment from 'moment';
 
 /**
  *
@@ -31,13 +32,18 @@ class Calendar extends Page {
 
 		this.loadUsers();
 		this.loadPlans();
-		this.loadUserCalendar();
 		this.__bindEvents();
 	}
 
-	loadUserCalendar () {
-		App.api.getCalendar({ user_id: App.data.user.id }).then(res => {
-			console.log(res);
+	loadUserCalendar (user_id) {
+		App.api.getCalendar({ user_id }).then(res => {
+			if (res.success) {
+				let temp = _.groupBy(res.data, item => item.plan_id);
+				console.log(temp);
+				// res.data.map(item => {
+				// 	console.log(moment(item.date, 'x').toDate());
+				// });
+			}
 		})
 	}
 
@@ -79,6 +85,7 @@ class Calendar extends Page {
 		this.selectUsers.on('select2:select', (e) => {
 			this.selectPlans.select2('enable');
 			var data = e.params.data;
+			this.loadUserCalendar(parseInt(data.id));
 		});
 
 		this.selectPlans.on('select2:select', (e) => {

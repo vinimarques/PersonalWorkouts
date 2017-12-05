@@ -13,12 +13,12 @@ class Calendar {
 	constructor (params) {
 		this.params = params;
 		this.colors = ['#446FDA','#92ADEE','#678AE4','#2254CF','#0D3BAC'];
+		this.colorsToUse = this.colors;
 		this.selection = [];
 	}
 
 	render (days_per_week, exercises_days) {
 		var now = new Date();
-		var rand = () => { return Math.floor((Math.random() * 4) + 1) };
 
 		this.days_per_week = days_per_week;
 		this.daysWrapper = $('.days__selected');
@@ -27,7 +27,8 @@ class Calendar {
 			inline:true,
 			today: true,
 			range: false,
-			maxSelections: days_per_week
+			maxSelections: days_per_week,
+			highlight: this.highlight
 		});
 
 		this.exercises_days = exercises_days;
@@ -115,29 +116,49 @@ class Calendar {
 		});
 		this.daysWrapper.html(html.join(''));
 	}
-}
 
-// maxSelections: 3,
-// highlight: [
-// 	{
-// 		dates: [
-// 			{
-// 				start: new Date(2017,9,29),
-// 				end: new Date(2017,9,29)
-// 			},
-// 			{
-// 				start: new Date(2017,9,31),
-// 				end: new Date(2017,9,31)
-// 			},
-// 			{
-// 				start: new Date(2017,10,2),
-// 				end: new Date(2017,10,2)
-// 			}
-// 		],
-// 		backgroundColor: this.colors[rand()],
-// 		color: '#ffffff',
-// 		legend: 'Treino de força'
-// 	}
-// ]
+	getColor () {
+		if (this.colorsToUse.length > 0) {
+			return this.colorsToUse.pop();
+		}
+		else {
+			this.colorsToUse = this.colors;
+			return this.colorsToUse.pop();
+		}
+	}
+
+	setHighlight (exercises) {
+		this.highlight = this.normalize(exercises);
+
+		if (this.calendar &&this.calendar.highlight) {
+			this.calendar.highlight = this.highlight;
+		}
+	}
+
+	normalize (exercises) {
+		var highlight = [];
+
+		Object.keys(exercises).map(item => {
+			let obj = {
+				backgroundColor: this.getColor(),
+				color: '#ffffff',
+				legend: item,
+				dates: []
+			};
+
+			exercises[item].map(i => {
+				let date = moment(i.date, 'x').toDate();
+				obj.dates.push({
+					start: date,
+					end: date
+				});
+			});
+
+			highlight.push(obj);
+		});
+
+		return highlight;
+	}
+}
 
 export { Calendar as default }

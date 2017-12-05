@@ -8,6 +8,7 @@ import Page from '../components/page';
 import Validator from '../components/validator';
 import _ from 'lodash';
 import CalendarInline from '../components/calendar';
+import moment from 'moment';
 
 /**
  *
@@ -37,7 +38,9 @@ class Calendar extends Page {
 
 	loadUserCalendar () {
 		App.api.getCalendar({ user_id: App.data.user.id }).then(res => {
-			console.log(res);
+			let exercises = _.groupBy(res.data, 'plan_name');
+
+			this.calendar.setHighlight(exercises);
 		})
 	}
 

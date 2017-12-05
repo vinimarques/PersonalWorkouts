@@ -32,7 +32,6 @@ class Calendar extends Page {
 
 		this.loadUsers();
 		this.loadPlans();
-		this.loadUserCalendar();
 		this.__bindEvents();
 	}
 
@@ -82,6 +81,7 @@ class Calendar extends Page {
 		this.selectUsers.on('select2:select', (e) => {
 			this.selectPlans.select2('enable');
 			var data = e.params.data;
+			this.loadUserCalendar(parseInt(data.id));
 		});
 
 		this.selectPlans.on('select2:select', (e) => {

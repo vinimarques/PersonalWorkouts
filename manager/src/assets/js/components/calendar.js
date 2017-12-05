@@ -18,23 +18,30 @@ class Calendar {
 	}
 
 	render (days_per_week, exercises_days) {
-		var now = new Date();
-
 		this.days_per_week = days_per_week;
 		this.daysWrapper = $('.days__selected');
-		this.calendar = new Datepickk({
-			container: document.querySelector('#calendar'),
-			inline:true,
-			today: true,
-			range: false,
-			maxSelections: days_per_week,
-			highlight: this.highlight
-		});
+
+		if (!this.calendar) {
+			document.querySelector('#calendar').innerHTML = '';
+			this.calendar = new Datepickk({
+				container: document.querySelector('#calendar'),
+				inline:true,
+				today: true,
+				range: false,
+				maxSelections: days_per_week,
+				highlight: this.highlight
+			});
+			this.bindEvents();
+		}
+		else {
+			this.calendar.highlight = this.highlight;
+			this.calendar.maxSelections = days_per_week;
+			this.calendar.unselectAll();
+		}
 
 		this.exercises_days = exercises_days;
 		this.exercises_list = exercises_days;
 		this.exercises_select = [];
-		this.bindEvents();
 	}
 
 	bindEvents () {
@@ -142,12 +149,12 @@ class Calendar {
 			let obj = {
 				backgroundColor: this.getColor(),
 				color: '#ffffff',
-				legend: item,
 				dates: []
 			};
 
 			exercises[item].map(i => {
 				let date = moment(i.date, 'x').toDate();
+				obj.legend = i.plan_name,
 				obj.dates.push({
 					start: date,
 					end: date
@@ -158,6 +165,11 @@ class Calendar {
 		});
 
 		return highlight;
+	}
+
+	reset () {
+		this.calendar = false;
+		this.highlight = [];
 	}
 }
 

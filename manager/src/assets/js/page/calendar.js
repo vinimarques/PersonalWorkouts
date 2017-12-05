@@ -35,10 +35,9 @@ class Calendar extends Page {
 		this.__bindEvents();
 	}
 
-	loadUserCalendar () {
-		App.api.getCalendar({ user_id: App.data.user.id }).then(res => {
-			let exercises = _.groupBy(res.data, 'plan_name');
-
+	loadUserCalendar (id) {
+		App.api.getCalendar({ user_id: id }).then(res => {
+			let exercises = _.groupBy(res.data, 'workout_id');
 			this.calendar.setHighlight(exercises);
 		})
 	}
@@ -80,8 +79,13 @@ class Calendar extends Page {
 	__bindEvents () {
 		this.selectUsers.on('select2:select', (e) => {
 			this.selectPlans.select2('enable');
+			this.selectPlans.val('').change();
 			var data = e.params.data;
+
 			this.loadUserCalendar(parseInt(data.id));
+
+			this.calendarWrapper.removeClass('-active');
+			this.calendar && this.calendar.reset && this.calendar.reset();
 		});
 
 		this.selectPlans.on('select2:select', (e) => {
@@ -121,7 +125,9 @@ class Calendar extends Page {
 
 				App.api.saveCalendar(calendarData)
 					.then((res) => {
-						console.log(res);
+						if (res.success) {
+							this.loadUserCalendar();
+						}
 					});
 			}
 		})

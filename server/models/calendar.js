@@ -4,7 +4,7 @@ class Calendar extends Model {
 
 	static all(user_id) {
 		return Model.query(`
-			SELECT dy.name as 'day_name', p.name as 'plan_name', c.date, c.plan_id
+			SELECT dy.name as 'day_name', p.name as 'plan_name', c.date, c.plan_id, c.workout_id
 			FROM calendar as c
 			LEFT JOIN day_exercise as d ON  d.id = c.day_exercise_id
 			LEFT JOIN day as dy ON  dy.id = d.day_id

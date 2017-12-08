@@ -4,6 +4,7 @@
  *
  */
 import Page from 'libs/page';
+import _ from 'lodash';
 
 /**
  *
@@ -16,6 +17,7 @@ class Home extends Page {
 
 	onPageAfterAnimation () {
 		this.bindEvents();
+		this.load();
 	}
 
 	bindEvents () {
@@ -30,6 +32,13 @@ class Home extends Page {
 		setTimeout(() => {
 			$('.-loading').removeClass('-loading');
 		}, 500);
+	}
+
+	load () {
+		App.api.getCalendar()
+			.then((res) => {
+				console.log(res);
+			});
 	}
 }
 

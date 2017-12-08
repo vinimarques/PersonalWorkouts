@@ -115,6 +115,7 @@ class Calendar extends Page {
 				};
 
 				this.calendar.exercises_select.map((item) => {
+					console.log(item);
 					calendarData.workouts.push({
 						user_id: parseInt(dataSend.user_id),
 						plan_id: parseInt(dataSend.plan_id),

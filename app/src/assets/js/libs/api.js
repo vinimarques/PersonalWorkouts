@@ -163,6 +163,10 @@ class Api {
 				.catch((err) => { error && error(err); })
 		});
 	}
+
+	getCalendar () {
+		return this.request('GET', `/calendar?user_id=${Template7.global.user.id}`);
+	}
 }
 
 export { Api as default }

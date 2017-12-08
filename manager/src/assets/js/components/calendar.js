@@ -15,6 +15,7 @@ class Calendar {
 		this.colors = ['#446FDA','#92ADEE','#678AE4','#2254CF','#0D3BAC'];
 		this.colorsToUse = this.colors;
 		this.selection = [];
+		this.bindEvents();
 	}
 
 	render (days_per_week, exercises_days) {
@@ -31,7 +32,7 @@ class Calendar {
 				maxSelections: days_per_week,
 				highlight: this.highlight
 			});
-			this.bindEvents();
+			this.bindCalendarEvents();
 		}
 		else {
 			this.calendar.highlight = this.highlight;
@@ -44,7 +45,7 @@ class Calendar {
 		this.exercises_select = [];
 	}
 
-	bindEvents () {
+	bindCalendarEvents () {
 		var that = this;
 
 		this.calendar.onSelect = function (checked) {
@@ -88,6 +89,10 @@ class Calendar {
 			}
 			that.isComplete = parseInt(that.exercises_select.length) === parseInt(that.days_per_week);
 		};
+	}
+
+	bindEvents () {
+		var that = this;
 
 		$('body').on('click', '.box-select-exercise__item', (e) => {
 			if (this.calendar.locked) return false;
@@ -111,6 +116,8 @@ class Calendar {
 	renderDays () {
 		let html = [];
 		let arr = this.exercises_select;
+
+		console.log('renderDays:',arr);
 
 		arr = _.sortBy(arr, ['date']);
 
@@ -170,6 +177,8 @@ class Calendar {
 	reset () {
 		this.calendar = false;
 		this.highlight = [];
+		this.exercises_select = [];
+		this.daysWrapper && this.daysWrapper.html('');
 	}
 }
 

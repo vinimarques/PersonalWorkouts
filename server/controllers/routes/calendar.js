@@ -55,7 +55,7 @@ module.exports = function (router) {
 	router.post('/calendar', Auth.middleware(), Resolve.send(
 		function (req) {
 			const validator = new Validator([
-				{ field: 'day_exercise_id', type: 'Integer', required: true },
+				{ field: 'day_id', type: 'Integer', required: true },
 				{ field: 'plan_id', type: 'Integer', required: true },
 				{ field: 'user_id', type: 'Integer', required: true }
 			]);
@@ -64,7 +64,7 @@ module.exports = function (router) {
 			const workouts = req.body.workouts;
 
 			workouts.map(item => {
-				let data = _.pick(item, ['day_exercise_id', 'plan_id', 'user_id']);
+				let data = _.pick(item, ['day_id', 'plan_id', 'user_id']);
 				validator.validate(data);
 				if (validator.hasErrors()) throw validator.getErrors();
 			});

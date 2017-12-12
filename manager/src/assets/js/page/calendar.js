@@ -115,12 +115,11 @@ class Calendar extends Page {
 				};
 
 				this.calendar.exercises_select.map((item) => {
-					console.log(item);
 					calendarData.workouts.push({
 						user_id: parseInt(dataSend.user_id),
 						plan_id: parseInt(dataSend.plan_id),
 						date: item.date,
-						day_exercise_id: parseInt(item.exercise.id)
+						day_id: parseInt(item.exercise.id)
 					})
 				});
 

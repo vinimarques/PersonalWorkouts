@@ -6,8 +6,7 @@ class Calendar extends Model {
 		return Model.query(`
 			SELECT dy.name as 'day_name', p.name as 'plan_name', c.date, c.plan_id, c.workout_id
 			FROM calendar as c
-			LEFT JOIN day_exercise as d ON  d.id = c.day_exercise_id
-			LEFT JOIN day as dy ON  dy.id = d.day_id
+			LEFT JOIN day as dy ON  dy.id = c.day_id
 			LEFT JOIN plan as p ON  p.id = c.plan_id
 			WHERE c.user_id = ?
 		`, [user_id]);
@@ -23,13 +22,13 @@ class Calendar extends Model {
 				c.workout_id,
 				e.name as 'exercise_name',
 				e.description as 'exercise_description',
-				d.note as 'day_note'
+				de.note as 'day_note'
 			FROM calendar as c
-			LEFT JOIN day_exercise as d ON  d.id = c.day_exercise_id
-			LEFT JOIN day as dy ON  dy.id = d.day_id
+			LEFT JOIN day as dy ON  dy.id = c.day_id
+			LEFT JOIN day_exercise as de ON  de.day_id = dy.id
 			LEFT JOIN plan as p ON  p.id = c.plan_id
-			LEFT JOIN exercise as e ON  e.id = d.exercise_id
-			WHERE c.user_id = ?
+			LEFT JOIN exercise as e ON  e.id = de.exercise_id
+			WHERE c.user_id = 1 AND c.date = '1512957600000'
 		`, [user_id]);
 	}
 

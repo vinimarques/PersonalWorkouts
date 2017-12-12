@@ -120,6 +120,21 @@ VALUES
 /*!40000 ALTER TABLE `muscle_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
+LOCK TABLES `muscle_group_company` WRITE;
+/*!40000 ALTER TABLE `muscle_group_company` DISABLE KEYS */;
+
+INSERT INTO `muscle_group_company` (`id`, `company_id`, `muscle_group_id`)
+VALUES
+	(1,1,1),
+	(2,1,2),
+	(3,1,3),
+	(4,1,4),
+	(5,1,5),
+	(6,1,6);
+
+/*!40000 ALTER TABLE `exercise_company` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 # Dump of table plan
 # ------------------------------------------------------------

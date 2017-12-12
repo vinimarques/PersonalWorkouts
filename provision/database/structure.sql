@@ -75,6 +75,28 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`muscle_group` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `personalworkouts`.`muscle_group_company`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personalworkouts`.`muscle_group_company` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `muscle_group_id` INT UNSIGNED NOT NULL,
+  `company_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_muscle_group_company_muscle_group1_idx` (`muscle_group_id` ASC),
+  INDEX `fk_muscle_group_company_company1_idx` (`company_id` ASC),
+  CONSTRAINT `fk_muscle_group_company_muscle_group1`
+    FOREIGN KEY (`muscle_group_id`)
+    REFERENCES `personalworkouts`.`muscle_group` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_muscle_group_company_company1`
+    FOREIGN KEY (`company_id`)
+    REFERENCES `personalworkouts`.`company` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`exercise`

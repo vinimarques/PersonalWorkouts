@@ -5,16 +5,17 @@ class Exercises extends Model {
 
 	static all (company_id) {
 		return Model.query(`
-			SELECT e.id, e.name, e.description
+			SELECT e.id, e.name, e.description, m.name as 'muscle_group_name'
 			FROM exercise as e
 			LEFT JOIN exercise_company as ec ON ec.exercise_id = e.id
+			LEFT JOIN muscle_group as m ON m.id = e.muscle_group_id
 			WHERE ec.company_id = ?
 		`, [company_id]);
 	}
 
 	static first (exercise_id) {
 		return Model.first(`
-			SELECT e.id, e.name, e.description
+			SELECT e.id, e.name, e.description, e.muscle_group_id
 			FROM exercise as e
 			WHERE e.id = ?
 		`, [exercise_id]);

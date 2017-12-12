@@ -5,11 +5,10 @@ const ApiError = require('../../services/error');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-const Exercises = require('../../models/exercises');
+const Group = require('../../models/group');
 
 module.exports = function (router) {
-
-	router.get('/exercises', Auth.middleware(), Resolve.send(
+	router.get('/groups', Auth.middleware(), Resolve.send(
 		function (req) {
 			const company_id = req.query.company_id;
 
@@ -21,21 +20,21 @@ module.exports = function (router) {
 				};
 			}
 
-			return Exercises.all(company_id)
-				.then(exercises => {
+			return Group.all(company_id)
+				.then(group => {
 					return {
 						success: true,
-						data: exercises
+						data: group
 					};
 				});
 		}
 	));
 
-	router.get('/exercise', Auth.middleware(), Resolve.send(
+	router.get('/group', Auth.middleware(), Resolve.send(
 		function (req) {
-			const exercise_id = req.query.exercise_id;
+			const muscle_group_id = req.query.muscle_group_id;
 
-			if (!exercise_id) {
+			if (!muscle_group_id) {
 				const error = ApiError.userIdRequired();
 				return {
 					success: false,
@@ -43,19 +42,19 @@ module.exports = function (router) {
 				};
 			}
 
-			return Exercises.first(exercise_id)
-				.then(exercise_id => {
+			return Group.first(muscle_group_id)
+				.then(muscle_group_id => {
 					return {
 						success: true,
-						data: exercise_id
+						data: muscle_group_id
 					};
 				});
 		}
 	));
 
-	router.delete('/exercise', Auth.middleware(), Resolve.send(
+	router.delete('/group', Auth.middleware(), Resolve.send(
 		function (req) {
-			const id = req.body.exercise_id;
+			const id = req.body.muscle_group_id;
 
 			if (!id) {
 				const error = ApiError.userIdRequired();
@@ -65,7 +64,7 @@ module.exports = function (router) {
 				};
 			}
 
-			return Exercises.remove({ id })
+			return Group.remove({ id })
 				.then(res => {
 					return {
 						success: true
@@ -74,26 +73,24 @@ module.exports = function (router) {
 		}
 	));
 
-	router.post('/exercise', Auth.middleware(), Resolve.send(
+	router.post('/group', Auth.middleware(), Resolve.send(
 		function (req) {
 			const validator = new Validator([
-				{ field: 'name', type: 'String', required: true },
-				{ field: 'muscle_group_id', type: 'Integer', required: true },
-				{ field: 'description', type: 'String' }
+				{ field: 'name', type: 'String', required: true }
 			]);
 
-			const data = _.pick(req.body, ['name', 'description','muscle_group_id']);
+			const data = _.pick(req.body, ['name']);
 			const company_id = req.body.company_id;
 
 			validator.validate(data);
 
 			if (validator.hasErrors()) throw validator.getErrors();
 
-			return Exercises.insert(data, company_id)
+			return Group.insert(data, company_id)
 				.then(result => {
 					return {
 						success: true,
-						new_exercise_id: result.insertId
+						new_muscle_group_id: result.insertId
 					};
 				})
 				.catch(error => {
@@ -102,22 +99,20 @@ module.exports = function (router) {
 		}
 	));
 
-	router.put('/exercise', Auth.middleware(), Resolve.send(
+	router.put('/group', Auth.middleware(), Resolve.send(
 		function (req) {
 			const validator = new Validator([
-				{ field: 'name', type: 'String', required: true },
-				{ field: 'muscle_group_id', type: 'Integer', required: true },
-				{ field: 'description', type: 'String' }
+				{ field: 'name', type: 'String', required: true }
 			]);
 
-			const data = _.pick(req.body, ['name', 'description', 'muscle_group_id']);
+			const data = _.pick(req.body, ['name']);
 			const id = req.body.id;
 
 			validator.validate(data);
 
 			if (validator.hasErrors()) throw validator.getErrors();
 
-			return Exercises.update(data, id)
+			return Group.update(data, id)
 				.then(result => {
 					return {
 						success: true

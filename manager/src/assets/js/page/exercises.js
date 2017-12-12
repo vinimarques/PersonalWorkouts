@@ -37,6 +37,7 @@ class Exercises extends Page {
 	onload() {
 		this.exercisesContent = $('#exercises-content');
 		this.loadExercises();
+		this.loadGroups();
 	}
 
 	_bindEvents() {
@@ -146,6 +147,21 @@ class Exercises extends Page {
 		})
 	}
 
+	loadGroups () {
+		App.api.getMuscleGroups(App.data.user.company_id).then((res) => {
+			let data = res.data.map((item) => {
+				return {
+					id: item.id,
+					text: item.name
+				};
+			});
+			$('.select-with-search').select2({
+				data: data,
+				placeholder: 'Selecione um grupo'
+			});
+		});
+	}
+
 	_searchKeyUp(ev) {
 		let value = ev.target.value;
 		clearTimeout(this.timeSearch);
@@ -157,7 +173,7 @@ class Exercises extends Page {
 
 	highlight(word) {
 		let result = _.filter(this.exercises, (o) => {
-			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1 || o.description.toLowerCase().indexOf(word.toLowerCase()) !== -1;
+			return o.name.toLowerCase().indexOf(word.toLowerCase()) !== -1 || o.muscle_group_name.toLowerCase().indexOf(word.toLowerCase()) !== -1 || (o.description ? o.description.toLowerCase().indexOf(word.toLowerCase()) !== -1 : false);
 		});
 		let html = '';
 

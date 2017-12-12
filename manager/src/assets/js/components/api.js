@@ -76,6 +76,26 @@ class Api {
 		return this.request('DELETE', '/user', data);
 	}
 
+	getMuscleGroups (company_id) {
+		return this.request('GET', '/groups', { company_id });
+	}
+
+	getMuscleGroup (muscle_group_id) {
+		return this.request('GET', '/group', { company_id });
+	}
+
+	saveMuscleGroup (data) {
+		return this.request('POST', '/group', data);
+	}
+
+	updateMuscleGroup (data) {
+		return this.request('PUT', '/group', data);
+	}
+
+	removeMuscleGroup (data) {
+		return this.request('DELETE', '/group', data);
+	}
+
 	getExercises (company_id) {
 		return this.request('GET', '/exercises', { company_id });
 	}

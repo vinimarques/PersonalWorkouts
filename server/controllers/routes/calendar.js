@@ -86,4 +86,27 @@ module.exports = function (router) {
 				});
 		}
 	));
+
+	router.get('/calendar-user', Auth.middleware(), Resolve.send(
+		function (req) {
+			const user_id = parseInt(req.query.user_id);
+			const date = req.query.date;
+
+			if (!user_id) {
+				const error = ApiError.companyRequired();
+				return {
+					success: false,
+					error: error.data
+				};
+			}
+
+			return Calendar.dateUser(user_id, date)
+				.then(calendar => {
+					return {
+						success: true,
+						data: calendar
+					};
+				});
+		}
+	));
 };

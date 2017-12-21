@@ -1,0 +1,51 @@
+.spinner
+	position: absolute
+	width: 50px
+	height: 50px
+	top: 50%
+	left: 50%
+	margin: -25px 0 0 -25px
+	z-index: 9
+	display: none
+
+	.-loading &
+		display: block
+
+	&:before,
+	&:after
+		content: ''
+		display: block
+		position: absolute
+		border-width: 4px
+		border-style: solid
+		border-radius: 50%
+
+	&:before
+		width: 50px
+		height: 50px
+		border-color: $color-primary
+		top: 0px
+		left: 0px
+		animation: scale-2 1s linear 0s infinite
+
+	&:after
+		width: 50px
+		height: 50px
+		border-color: $color-secondary
+		top: 0
+		left: 0
+		opacity: 0
+		animation: scale-2 1s linear 0.5s infinite
+
+@keyframes scale-2
+	0%
+		transform: scale(0)
+		opacity: 0
+
+	50%
+		transform: scale(0.7)
+		opacity: 1
+
+	100%
+		transform: scale(1)
+		opacity: 0

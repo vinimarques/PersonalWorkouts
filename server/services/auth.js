@@ -7,14 +7,12 @@ class Auth {
 
   static middleware() {
    return function(req, res, next) {
-		const token = req.headers['authorization'].replace('Bearer ','');
-
-		console.log(token);
+		const token = req.headers['authorization'];
 
 		if (token) {
-			Users.getToken(token)
+			let tk = token.replace('Bearer ', '');
+			Users.getToken(tk)
 				.then(user => {
-					console.log(user);
 					if (user.length > 0) {
 						next();
 					}

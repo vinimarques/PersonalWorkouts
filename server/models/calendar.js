@@ -12,7 +12,7 @@ class Calendar extends Model {
 		`, [user_id]);
 	}
 
-	static user(user_id) {
+	static dateUser(user_id, date) {
 		return Model.query(`
 			SELECT
 				dy.name as 'day_name',
@@ -28,8 +28,8 @@ class Calendar extends Model {
 			LEFT JOIN day_exercise as de ON  de.day_id = dy.id
 			LEFT JOIN plan as p ON  p.id = c.plan_id
 			LEFT JOIN exercise as e ON  e.id = de.exercise_id
-			WHERE c.user_id = 1 AND c.date = '1512957600000'
-		`, [user_id]);
+			WHERE c.user_id = ? AND c.date = ?
+		`, [user_id, date]);
 	}
 
 	static insert(data) {

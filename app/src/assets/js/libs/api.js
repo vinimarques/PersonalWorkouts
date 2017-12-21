@@ -164,8 +164,12 @@ class Api {
 		});
 	}
 
-	getCalendar () {
+	getCalendar (date) {
 		return this.request('GET', `/calendar?user_id=${Template7.global.user.id}`);
+	}
+
+	getCalendarDate (date) {
+		return this.request('GET', `/calendar-user?user_id=${Template7.global.user.id}&date=${date}`);
 	}
 }
 

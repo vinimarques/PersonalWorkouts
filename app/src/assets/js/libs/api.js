@@ -41,6 +41,7 @@ class Api {
 	}
 
 	verifyError (err, response, callback) {
+		console.log(err)
 		switch (err) {
 			case 401:
 				clearTimeout(window.timeErrorMsg);
@@ -49,73 +50,12 @@ class Api {
 				}, 250);
 				break;
 
-			case 403:
+			case 432:
 				clearTimeout(window.timeErrorMsg);
 				window.timeErrorMsg = setTimeout(() => {
-					App.message.error('Você não possui autorização para essa funcionalidade.', this.goToLogin);
+					App.message.error('Você precisa estar logado.', this.goToLogin);
 				}, 250);
 				break;
-
-			case 403:
-				clearTimeout(window.timeErrorMsg);
-				window.timeErrorMsg = setTimeout(() => {
-					App.message.error('Você não possui autorização para realizar essa operação.');
-				}, 250);
-				break;
-
-			case 420:
-				clearTimeout(window.timeErrorMsg);
-				window.timeErrorMsg = setTimeout(() => {
-					App.message.error("Esta operação não é válida.");
-				}, 250);
-				break;
-
-			case 421:
-				clearTimeout(window.timeErrorMsg);
-				window.timeErrorMsg = setTimeout(() => {
-					App.message.error('Usuário não encontrado. Tente novamente.', this.goToLogin);
-				}, 250);
-				break;
-
-			case 422:
-				clearTimeout(window.timeErrorMsg);
-				window.timeErrorMsg = setTimeout(() => {
-					App.message.error('É preciso inserir caracteres válidos para criação de uma meta. Tente novamente.');
-				}, 250);
-				break;
-
-			case 423:
-				clearTimeout(window.timeErrorMsg);
-				window.timeErrorMsg = setTimeout(() => {
-					App.message.error('Acesso negado. Apenas é possível inserir acompanhamentos em metas quantitativas.');
-				}, 250);
-				break;
-
-			case 424:
-				clearTimeout(window.timeErrorMsg);
-				window.timeErrorMsg = setTimeout(() => {
-					App.message.error('Acesso negado. Você não possui permissão para editar metas de faturamento.');
-				}, 250);
-				break;
-
-			case 425:
-				clearTimeout(window.timeErrorMsg);
-				window.timeErrorMsg = setTimeout(() => {
-					App.message.error('Esta operação não é válida.');
-				}, 250);
-				break;
-            case 426:
-                clearTimeout(window.timeErrorMsg);
-                window.timeErrorMsg = setTimeout(() => {
-                    App.message.error('Esta meta não possui colaboradores em todos os setores associados.');
-                }, 250);
-                break;
-            case 427:
-                clearTimeout(window.timeErrorMsg);
-                window.timeErrorMsg = setTimeout(() => {
-                    App.message.error('Esta meta já foi criada.');
-                }, 250);
-                break;
 		}
 		callback && callback(response);
 	}
@@ -170,6 +110,18 @@ class Api {
 
 	getCalendarDate (date) {
 		return this.request('GET', `/calendar-user?user_id=${Template7.global.user.id}&date=${date}`);
+	}
+
+	getTime (date) {
+		return this.request('GET', `/tracking?user_id=${Template7.global.user.id}&date=${date}`);
+	}
+
+	saveTime (time, date) {
+		return this.request('POST', `/tracking`, {
+			users_id: Template7.global.user.id,
+			date: date,
+			time: parseInt(time)
+		});
 	}
 }
 

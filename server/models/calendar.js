@@ -22,7 +22,8 @@ class Calendar extends Model {
 				c.workout_id,
 				e.name as 'exercise_name',
 				e.description as 'exercise_description',
-				de.note as 'day_note'
+				de.note as 'day_note',
+				p.days_per_week
 			FROM calendar as c
 			LEFT JOIN day as dy ON  dy.id = c.day_id
 			LEFT JOIN day_exercise as de ON  de.day_id = dy.id

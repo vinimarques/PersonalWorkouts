@@ -23,6 +23,7 @@ import Api from 'libs/api';
 import Routes from './routes';
 import config from './config';
 import Permissions from 'components/permissions';
+import Message from 'components/message';
 /**
 *
 */
@@ -61,6 +62,7 @@ document.addEventListener('deviceready', () => {
 
 	App.api = new Api();
 	App.permissions = new Permissions();
+	App.message = new Message();
 
 	Routes.init();
 	App.init();

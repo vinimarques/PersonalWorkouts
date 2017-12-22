@@ -71,9 +71,32 @@
 
 		<!-- TEMPLATES -->
 
-		<script id="template-goals-dashboard" type="text/template7">
-			{{#each goals}}
-			{{/each}}
+		<script id="template-workout-day" type="text/template7">
+			{{#if hasResult}}
+				<div class="page-home__content__titles">
+					<h2>{{day_name}}</h2>
+					<h2>{{days_per_week}} exercicios</h2>
+				</div>
+				<ul class="page-home__content__exercises">
+					{{#each workouts}}
+					<li class="page-home__content__exercises__item">
+						<div class="page-home__content__exercises__item__title">
+							<span>{{exercise_name}}</span>
+							{{#if hasDescription}}
+							<em class="icon icon-arrow-down"></em>
+							{{/if}}
+						</div>
+						<div class="page-home__content__exercises__item__content">
+							<p>{{exercise_description}}</p>
+						</div>
+					</li>
+					{{/each}}
+				</ul>
+			{{else}}
+				<div class="no-result">
+					Não há treino neste dia.
+				</div>
+			{{/if}}
 		</script>
 		<!-- // TEMPLATES -->
 

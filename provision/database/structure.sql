@@ -304,6 +304,43 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`muscle_group_company` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `personalworkouts`.`weigth`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personalworkouts`.`weigth` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `value` FLOAT NULL,
+  `date` VARCHAR(45) NULL,
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `date_UNIQUE` (`date` ASC),
+  INDEX `fk_weigth_users1_idx` (`users_id` ASC),
+  CONSTRAINT `fk_weigth_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `personalworkouts`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `personalworkouts`.`tracking`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personalworkouts`.`tracking` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `users_id` INT NOT NULL,
+  `date` VARCHAR(45) NULL,
+  `time` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_tracking_users1_idx` (`users_id` ASC),
+  CONSTRAINT `fk_tracking_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `personalworkouts`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

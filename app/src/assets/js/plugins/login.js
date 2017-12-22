@@ -15,6 +15,9 @@ Framework7.prototype.plugins.login = (app, params) => {
 	const loader = $('.login-preloader');
 
 	settings.hooks.appInit = () => {
+		loader.addClass('-vhidden');
+		login.removeClass('-vhidden');
+
 		App.api
 			.isLogged()
 			.then((res) => {

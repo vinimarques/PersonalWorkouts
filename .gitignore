@@ -33,6 +33,7 @@ yarn-error.log
 # npm files
 npm-debug.log
 node_modules/
+.npmignore
 
 # cordova files
 app/cordova/plugins/
@@ -41,3 +42,4 @@ app/cordova/www/
 app/release/*
 
 node_modules
+package-lock.json

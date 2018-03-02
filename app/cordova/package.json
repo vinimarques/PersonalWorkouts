@@ -1,7 +1,7 @@
 {
-    "name": "personal.workouts",
+    "name": "workouts",
     "version": "1.0.0",
-    "displayName": "Personal Workouts",
+    "displayName": "Workouts",
     "cordova": {
         "platforms": [
             "browser",
@@ -16,6 +16,7 @@
         }
     },
     "dependencies": {
+        "cordova-browser": "^5.0.3",
         "cordova-ios": "^4.5.4",
         "cordova-plugin-geolocation": "^4.0.1",
         "cordova-plugin-network-information": "^2.0.1",

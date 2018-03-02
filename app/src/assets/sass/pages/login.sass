@@ -1,6 +1,8 @@
 .page-login
-	background: url(../img/bgr-login.png) top center no-repeat
-	background-size: cover
+	background: $black
+
+	.page-content
+		background: linear-gradient(to bottom, $black 0%, rgba($color-secondary, 0.7) 100%)
 
 	&__wrapper
 		position: absolute
@@ -41,14 +43,14 @@
 		margin: 0 50%
 
 	.logo
-		color: $white
-		font-size: 20px
+		color: $color-primary
+		font-size: 30px
 		text-transform: uppercase
 		font-weight: 500
 		text-align: center
-		padding-top: 30px
+		padding-top: 50px
 
 		.icon
 			display: block
-			font-size: 25px
+			font-size: 35px
 			padding-top: 10px

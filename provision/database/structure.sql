@@ -140,6 +140,14 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`day` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `personalworkouts`.`day_exercise_group`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personalworkouts`.`day_exercise_group` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`day_exercise`
@@ -147,25 +155,25 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`day_exercise` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `day_id` INT NOT NULL,
-  `exercise_id` INT NOT NULL,
   `rep_1` INT NULL,
   `rep_2` INT NULL,
   `rep_3` INT NULL,
   `rep_4` INT NULL,
   `rep_5` INT NULL,
   `note` TEXT(256) NULL,
+  `day_exercise_group_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_day_exercise_day1_idx` (`day_id` ASC),
-  INDEX `fk_day_exercise_exercise1_idx` (`exercise_id` ASC),
+  INDEX `fk_day_exercise_day_exercise_group1_idx` (`day_exercise_group_id` ASC),
   CONSTRAINT `fk_day_exercise_day1`
     FOREIGN KEY (`day_id`)
     REFERENCES `personalworkouts`.`day` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_day_exercise_exercise1`
-    FOREIGN KEY (`exercise_id`)
-    REFERENCES `personalworkouts`.`exercise` (`id`)
+  CONSTRAINT `fk_day_exercise_day_exercise_group1`
+    FOREIGN KEY (`day_exercise_group_id`)
+    REFERENCES `personalworkouts`.`day_exercise_group` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -337,6 +345,28 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`tracking` (
   CONSTRAINT `fk_tracking_users1`
     FOREIGN KEY (`users_id`)
     REFERENCES `personalworkouts`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `personalworkouts`.`exercise_group`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personalworkouts`.`exercise_group` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `exercise_id` INT NOT NULL,
+  `day_exercise_group_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_exercise_group_exercise1_idx` (`exercise_id` ASC),
+  INDEX `fk_exercise_group_day_exercise_group1_idx` (`day_exercise_group_id` ASC),
+  CONSTRAINT `fk_exercise_group_exercise1`
+    FOREIGN KEY (`exercise_id`)
+    REFERENCES `personalworkouts`.`exercise` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_exercise_group_day_exercise_group1`
+    FOREIGN KEY (`day_exercise_group_id`)
+    REFERENCES `personalworkouts`.`day_exercise_group` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

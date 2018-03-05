@@ -51,7 +51,7 @@ redis-cli FLUSHALL
 echo "+ install mysql server and client"
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
-apt-get -q -y install mysql-server-5.5 mysql-client-5.5 1>/dev/null 2>&1
+apt-get -q -y install mysql-server mysql-client 1>/dev/null 2>&1
 service mysql restart 1>/dev/null 2>&1
 echo -e "[client]\nuser=root\npassword=root" | tee ~/.my.cnf 1>/dev/null 2>&1
 

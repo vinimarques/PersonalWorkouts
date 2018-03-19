@@ -21,6 +21,7 @@ class ExercisesDay extends Page {
 		super.load(page);
 		this.plan_id = parseInt(ctx.params.plan);
 		this.day_id = parseInt(ctx.params.day);
+		this.index = 1;
 
 		this.message = {
 			error: {
@@ -60,7 +61,23 @@ class ExercisesDay extends Page {
 
 		App.api.getDayExercises(day_id).then((res) => {
 			if (res.success && res.data.length > 0) {
-				html = this.template.render({ exercises: res.data });
+				let obj = _.groupBy(res.data, 'id');
+				let data = [];
+
+				Object.keys(obj).map((id) => {
+					let d = JSON.parse(JSON.stringify(obj[id][0]));
+					d.exercise_name = [];
+
+					obj[id].map((exercise) => {
+						d.exercise_name.push(exercise.exercise_name);
+					});
+
+					data.push(d);
+				});
+
+				console.log(data);
+
+				html = this.template.render({ exercises: data });
 			}
 			else {
 				html = this.template.render({ error: this.message.error.exercises });
@@ -77,7 +94,10 @@ class ExercisesDay extends Page {
 					text: item.name
 				};
 			});
-			$('.select-with-search').select2({
+
+			this.dataExercises = data;
+
+			$('#exercise-id-1').select2({
 				data: data,
 				placeholder: 'Selecione um exercício'
 			});
@@ -128,6 +148,23 @@ class ExercisesDay extends Page {
 						this.loadExercisesDay();
 					}
 				});
+		});
+
+		$('.modal-add-exercises-day .--add-exercise').on('click', (ev) => {
+			this.index++;
+			let btn = $('.modal-add-exercises-day .--add-exercise');
+			let combo = `<label class="formm__item">
+								<span class="formm__select2">
+									<select name="exercise_id" id="exercise-id-${this.index}" data-type="array"><option></option></select>
+									<em></em>
+								</span>
+							</label>`;
+
+			$(combo).insertBefore(btn);
+			$(`#exercise-id-${this.index}`).select2({
+				data: this.dataExercises,
+				placeholder: 'Selecione um exercício'
+			});
 		});
 
 		$('.modal-remove-exercises-day form').on('submit', (ev) => {

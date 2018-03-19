@@ -72,11 +72,56 @@ INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
 VALUES
 	(1,'Supino reto com barra','',1),
 	(2,'Crossover com cabo',NULL,1),
-	(3,'Supino sentado no aparelho',NULL,1),
+	(3,'Supino reto sentado no aparelho',NULL,1),
 	(4,'Supino inclinado com halter',NULL,1),
 	(5,'Supino inclinado com barra',NULL,1),
 	(6,'Crucifixo inclinado com halter',NULL,1),
-	(7,'Crucifixo inclinado com cabo',NULL,1);
+	(7,'Crucifixo inclinado com cabo',NULL,1),
+	(8,'Crucifixo reto com cabo',NULL,1),
+	(9,'Crucifixo reto com halter',NULL,1),
+	(10,'Supino declinado com barra',NULL,1),
+	(11,'Supino declinado com halter',NULL,1),
+	(12,'Pullover',NULL,1),
+	(13,'Supino inclinado sentado no aparelho',NULL,1),
+	(14,'Supino declinado sentado no aparelho',NULL,1),
+	(15,'Peck-Deck',NULL,1),
+	(16,'Crucifixo declinado com halter',NULL,1),
+	(17,'Barras paralelas',NULL,1),
+	(18,'Flexões',NULL,1);
+
+INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
+VALUES
+	(19,'Barra fixa pegada aberta',NULL,2),
+	(20,'Remada unilateral com haltere',NULL,2),
+	(21,'Barra fixa pegada fechada',NULL,2),
+	(22,'Remada baixa sentada pegada fechada',NULL,2),
+	(23,'Remada baixa sentada pegada aberta',NULL,2),
+	(24,'Remada em pé na barra T',NULL,2),
+	(25,'Remada curvada',NULL,2),
+	(26,'Remada curvada com pegada invertida',NULL,2),
+	(27,'Remada no banco inclinado com halteres',NULL,2),
+	(28,'Levantamento terra com barra',NULL,2),
+	(29,'Levantamento terra com halter',NULL,2),
+	(30,'Pulley com pegada aberta',NULL,2),
+	(31,'Pulley com pegada fechada',NULL,2);
+
+INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
+VALUES
+	(32,'Agachamento livre',NULL,3),
+	(33,'Passadas afundo',NULL,3),
+	(34,'Levantamento terra',NULL,3),
+	(35,'Adução de pernas',NULL,3),
+	(36,'Abdução de pernas',NULL,3),
+	(37,'Agachamento no smith',NULL,3),
+	(38,'Agachamento na máquina',NULL,3),
+	(39,'Agachamento pela frente',NULL,3),
+	(40,'Extensão de joelhos',NULL,3),
+	(41,'Leg press 45º',NULL,3),
+	(42,'Leg Press vertical',NULL,3),
+	(43,'Agachamento sumô',NULL,3),
+	(44,'Stiff',NULL,3),
+	(45,'Flexão de joelhos sentado',NULL,3),
+	(46,'Mesa flexora',NULL,3);
 
 /*!40000 ALTER TABLE `exercise` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -96,7 +141,46 @@ VALUES
 	(4,1,4),
 	(5,1,5),
 	(6,1,6),
-	(7,1,7);
+	(6,1,7),
+	(6,1,8),
+	(6,1,9),
+	(6,1,10),
+	(6,1,11),
+	(6,1,12),
+	(6,1,13),
+	(6,1,14),
+	(6,1,15),
+	(6,1,16),
+	(6,1,17),
+	(6,1,18),
+	(6,1,19),
+	(6,1,20),
+	(6,1,21),
+	(6,1,22),
+	(6,1,23),
+	(6,1,24),
+	(6,1,25),
+	(6,1,26),
+	(6,1,27),
+	(6,1,28),
+	(6,1,29),
+	(6,1,30),
+	(6,1,31),
+	(6,1,32),
+	(6,1,33),
+	(6,1,34),
+	(6,1,35),
+	(6,1,36),
+	(6,1,37),
+	(6,1,38),
+	(6,1,39),
+	(6,1,40),
+	(6,1,41),
+	(6,1,42),
+	(6,1,43),
+	(6,1,44),
+	(6,1,45),
+	(7,1,46);
 
 /*!40000 ALTER TABLE `exercise_company` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -139,7 +223,7 @@ LOCK TABLES `plan` WRITE;
 
 INSERT INTO `plan` (`id`, `name`, `days_per_week`, `difficulty_id`)
 VALUES
-	(1,'Treino de forÃ§a',4,2);
+	(1,'Treino de força',4,2);
 
 /*!40000 ALTER TABLE `plan` ENABLE KEYS */;
 UNLOCK TABLES;

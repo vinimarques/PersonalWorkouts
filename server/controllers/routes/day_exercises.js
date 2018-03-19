@@ -78,7 +78,7 @@ module.exports = function (router) {
 		function (req) {
 			const validator = new Validator([
 				{ field: 'note', type: 'String' },
-				{ field: 'exercise_id', type: 'Integer', required: true },
+				{ field: 'exercise_id', type: 'Array', required: true },
 				{ field: 'day_id', type: 'Integer', required: true },
 				{ field: 'rep_1', type: 'Integer' },
 				{ field: 'rep_2', type: 'Integer' },

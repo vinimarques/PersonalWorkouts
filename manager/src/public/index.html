@@ -157,14 +157,17 @@
 		{{else}}
 			{{for exercises}}
 				<div class="ttable__body__row" data-exercises-day-id="{{:id}}">
-					<span class="ttable__body__col col-4 exercises-day-name">{{:exercise_name}}</span>
+					<span class="ttable__body__col col-4 exercises-day-name">
+						{{for exercise_name}}
+							{{if #getIndex() > 0}}<br>{{/if}}{{:#data}}
+						{{/for}}
+					</span>
 					<span class="ttable__body__col col-3">{{:~splitReps(rep_1,rep_2,rep_3,rep_4,rep_5)}}</span>
 					<span class="ttable__body__col col-4">{{:note}}</span>
 					<span class="ttable__body__col col-1 actions">
 						<button class="btn btn--more right">
 							<span></span>
 							<ul>
-								<li><a href="javascript:;" class="exercises-day-edit" title="Editar exercício do dia"><em class="icon icon-edit"></em></a></li>
 								<li><a href="javascript:;" class="exercises-day-delete" title="Deletar exercício do dia"><em class="icon icon-delete"></em></a></li>
 							</ul>
 						</button>

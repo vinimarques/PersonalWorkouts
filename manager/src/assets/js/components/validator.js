@@ -47,7 +47,15 @@ class Validator {
 		let data = {};
 		$(form).find('input, select, textarea').each((index, element) => {
 			if (element.value == '') return;
-			data[element.name] = (element.dataset.type) ? this.convert(element.dataset.type, element.value) : element.value;
+
+			if (element.dataset.type && element.dataset.type === 'array' && !data[element.name]) data[element.name] = [];
+
+			if (element.dataset.type && element.dataset.type === 'array') {
+				data[element.name].push(element.value);
+			}
+			else {
+				data[element.name] = (element.dataset.type) ? this.convert(element.dataset.type, element.value) : element.value;
+			}
 		});
 
 		return data;

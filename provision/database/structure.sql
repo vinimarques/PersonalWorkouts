@@ -145,7 +145,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`day_exercise_group` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`))
+  `day_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_day_exercise_group_day1_idx` (`day_id` ASC),
+  CONSTRAINT `fk_day_exercise_group_day1`
+    FOREIGN KEY (`day_id`)
+    REFERENCES `personalworkouts`.`day` (`id`)
+    ON DELETE NO CASCADE
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

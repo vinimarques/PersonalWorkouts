@@ -91,7 +91,7 @@ class ExercisesDay extends Page {
 			let data = res.data.map((item) => {
 				return {
 					id: item.id,
-					text: item.name
+					text: `${item.name} - ${item.muscle_group_name}`
 				};
 			});
 

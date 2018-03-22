@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`day_exercise_group` (
   CONSTRAINT `fk_day_exercise_group_day1`
     FOREIGN KEY (`day_id`)
     REFERENCES `personalworkouts`.`day` (`id`)
-    ON DELETE NO CASCADE
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

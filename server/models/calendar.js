@@ -15,21 +15,24 @@ class Calendar extends Model {
 	static dateUser(user_id, date) {
 		return Model.query(`
 			SELECT
-				dy.name as 'day_name',
-				p.name as 'plan_name',
-				c.date,
-				c.plan_id,
-				c.workout_id,
-				e.name as 'exercise_name',
-				e.description as 'exercise_description',
-				de.note as 'day_note',
-				p.days_per_week
-			FROM calendar as c
-			LEFT JOIN day as dy ON  dy.id = c.day_id
-			LEFT JOIN day_exercise as de ON  de.day_id = dy.id
-			LEFT JOIN plan as p ON  p.id = c.plan_id
-			LEFT JOIN exercise as e ON  e.id = de.exercise_id
-			WHERE c.user_id = ? AND c.date = ?
+				day.name as 'day_name',
+				plan.name as 'plan_name',
+				calendar.date,
+				calendar.user_id,
+				calendar.plan_id,
+				calendar.workout_id,
+				exercise.name as 'exercise_name',
+				exercise.description as 'exercise_description',
+				day_exercise.note as 'day_note',
+				day_exercise.day_exercise_group_id as 'exercise_group',
+				plan.days_per_week
+			FROM calendar
+			LEFT JOIN plan ON  plan.id = calendar.plan_id
+			LEFT JOIN day ON day.id = calendar.day_id
+			LEFT JOIN day_exercise ON  day_exercise.day_id = day.id
+			LEFT JOIN exercise_group ON  exercise_group.day_exercise_group_id = day_exercise.day_exercise_group_id
+			LEFT JOIN exercise ON exercise.id = exercise_group.exercise_id
+			WHERE calendar.user_id = ? AND calendar.date = ?
 		`, [user_id, date]);
 	}
 

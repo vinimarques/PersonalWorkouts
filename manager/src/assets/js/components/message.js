@@ -46,8 +46,14 @@ class Message {
 	}
 
 	bindEvents () {
-		$('body').on('click', '.modal__close', () => {
+		$('body').on('click', '.modal__close', (ev) => {
 			this.reset(300);
+			let name = $(ev.target).parents('.modal').data('name');
+
+			if (name) {
+				var modalClose = new CustomEvent('modal:' + name);
+				window.dispatchEvent(modalClose);
+			}
 		});
 	}
 }

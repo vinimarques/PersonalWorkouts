@@ -75,8 +75,6 @@ class ExercisesDay extends Page {
 					data.push(d);
 				});
 
-				console.log(data);
-
 				html = this.template.render({ exercises: data });
 			}
 			else {
@@ -101,6 +99,11 @@ class ExercisesDay extends Page {
 				data: data,
 				placeholder: 'Selecione um exercício'
 			});
+			$('#exercise-id-1').on('select2:open', function (e) {
+				setTimeout(() => {
+					$('.select2-container--open .select2-search__field').focus();
+				}, 100);
+			 });
 		});
 	}
 
@@ -122,10 +125,21 @@ class ExercisesDay extends Page {
 					if (res.success) {
 						App.message.show(this.message.success.add, App.config.timeCloseModal);
 						$(ev.target)[0].reset();
+						$(ev.target).find('.select2-create-after').select2('destroy');
+						$(ev.target).find('.-after-render').remove();
+						this.index = 1;
+						$('#exercise-id-1').val(null).trigger('change');
 						this.loadExercisesDay();
 					}
 				});
 		});
+
+		window.addEventListener('modal:add-exercises-day', () => {
+			$('.modal-add-exercises-day').find('.select2-create-after').select2('destroy');
+			$('.modal-add-exercises-day').find('.-after-render').remove();
+			this.index = 1;
+			$('#exercise-id-1').val(null).trigger('change');
+		}, false);
 
 		$('.modal-edit-exercises-day form').on('submit', (ev) => {
 			ev.preventDefault();
@@ -153,9 +167,9 @@ class ExercisesDay extends Page {
 		$('.modal-add-exercises-day .--add-exercise').on('click', (ev) => {
 			this.index++;
 			let btn = $('.modal-add-exercises-day .--add-exercise');
-			let combo = `<label class="formm__item">
+			let combo = `<label class="formm__item -after-render">
 								<span class="formm__select2">
-									<select name="exercise_id" id="exercise-id-${this.index}" data-type="array"><option></option></select>
+									<select name="exercise_id" class="select2-create-after" id="exercise-id-${this.index}" data-type="array"><option></option></select>
 									<em></em>
 								</span>
 							</label>`;
@@ -165,6 +179,11 @@ class ExercisesDay extends Page {
 				data: this.dataExercises,
 				placeholder: 'Selecione um exercício'
 			});
+			$(`#exercise-id-${this.index}`).on('select2:open', function (e) {
+				setTimeout(() => {
+					$('.select2-container--open .select2-search__field').focus();
+				}, 100);
+			 });
 		});
 
 		$('.modal-remove-exercises-day form').on('submit', (ev) => {

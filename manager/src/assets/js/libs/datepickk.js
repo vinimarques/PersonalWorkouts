@@ -167,6 +167,7 @@ function Datepickk(args){
 	function generateLegends(){
 		var start = new Date(that.el.tables.childNodes[0].childNodes[0].getAttribute('data-date'));
 		var end = new Date(that.el.tables.childNodes[months-1].childNodes[82].getAttribute('data-date'));
+
 		var _highlights = highlight.filter(function(x){
 			for(var m = 0;m < x.dates.length;m++){
 				if(x.dates[m].start < end && x.dates[m].end > start){
@@ -185,6 +186,7 @@ function Datepickk(args){
 						legendItem.setAttribute('data-legend',_highlights[l].legend);
 						legendItem.setAttribute('data-legend-id',highlight.indexOf(_highlights[l]));
 						legendItem.setAttribute('data-color',_highlights[l].backgroundColor);
+						legendItem.setAttribute('data-workout',_highlights[l].workout_id);
 					var legendItemPoint = document.createElement('span');
 						legendItemPoint.setAttribute('style','background-color:' + _highlights[l].backgroundColor);
 
@@ -880,6 +882,7 @@ function Datepickk(args){
 
 							highlightObj.color 				= hl.color;
 							highlightObj.backgroundColor 	= hl.backgroundColor;
+							highlightObj.workout_id 	= hl.workout_id;
 							highlightObj.legend				= ('legend' in hl)?hl.legend:null;
 
 							highlight.push(highlightObj);
@@ -905,6 +908,7 @@ function Datepickk(args){
 
 					highlightObj.color 				= x.color;
 					highlightObj.backgroundColor 	= x.backgroundColor;
+					highlightObj.workout_id 		= x.workout_id;
 					highlightObj.legend				= ('legend' in x)?x.legend:null;
 
 					highlight.push(highlightObj);

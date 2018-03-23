@@ -18,6 +18,7 @@ import ExercisesDay from './page/exercises-day';
 
 import Exercises from './page/exercises';
 import Calendar from './page/calendar';
+import CalendarRemove from './page/calendar-remove';
 
 /**
 *
@@ -35,6 +36,7 @@ export default {
 		router.add('exercises-day', 		ExercisesDay, 		true, 'plans/:plan/:day');
 		router.add('exercises', 			Exercises, 			true);
 		router.add('calendar', 				Calendar, 			true);
+		router.add('calendar-remove', 	CalendarRemove, 			true);
 
 		router.start();
 	}

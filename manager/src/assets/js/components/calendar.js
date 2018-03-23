@@ -19,76 +19,98 @@ class Calendar {
 	}
 
 	render (days_per_week, exercises_days) {
-		this.days_per_week = days_per_week;
-		this.daysWrapper = $('.days__selected');
-
-		if (!this.calendar) {
-			document.querySelector('#calendar').innerHTML = '';
-			this.calendar = new Datepickk({
-				container: document.querySelector('#calendar'),
-				inline:true,
-				today: true,
-				range: false,
-				maxSelections: days_per_week,
-				highlight: this.highlight
-			});
-			this.bindCalendarEvents();
-		}
-		else {
-			this.calendar.highlight = this.highlight;
-			this.calendar.maxSelections = days_per_week;
-			this.calendar.unselectAll();
-		}
-
-		this.exercises_days = exercises_days;
-		this.exercises_list = exercises_days;
-		this.exercises_select = [];
-	}
-
-	bindCalendarEvents () {
-		var that = this;
-
-		this.calendar.onSelect = function (checked) {
-			if (!checked) {
-				if (that.exercises_select.length > 0) {
-					let item = _.filter(that.exercises_select, (i) => { return moment(i.date, 'x').diff(this.toString()) === 0 })[0];
-					let list = _.filter(that.exercises_select, (i) => { return moment(i.date, 'x').diff(this.toString()) !== 0 });
-
-					that.exercises_list.push(item.exercise);
-					that.exercises_select = list;
-					that.renderDays();
-				}
-				$('.box-select-exercise').remove();
+		if (!days_per_week && !exercises_days) {
+			if (!this.calendar) {
+				document.querySelector('#calendar').innerHTML = '';
+				this.calendar = new Datepickk({
+					container: document.querySelector('#calendar'),
+					inline:true,
+					today: true,
+					range: false,
+					highlight: this.highlight,
+					locked: true
+				});
+				this.bindCalendarEvents(false);
 			}
 			else {
-				let t = moment(this.toString()).format('YYYY-MM-DD');
-				let el = $('input[data-date^="' + t + '"]');
-
-				let target = el,
-					label = target.next('label'),
-					date = t;
-
-				let position = label.offset();
-				let html = ['<div class="box-select-exercise">'];
-				let $tooltip, height;
-
-				that.exercises_list.map((exercise) => {
-					html.push(`<div class="box-select-exercise__item" data-date="${date}" data-id="${exercise.id}">${exercise.name}</div>`)
-				});
-				html.push('</div>');
-
-				$tooltip = $(html.join(''));
-				$('.box-select-exercise').remove();
-				$('body').append($tooltip);
-
-				height = $tooltip.height();
-				$tooltip.css({
-					top: position.top - height - 20,
-					left: position.left
-				});
+				this.calendar.highlight = this.highlight;
+				this.calendar.unselectAll();
 			}
-			that.isComplete = parseInt(that.exercises_select.length) === parseInt(that.days_per_week);
-		};
+		}
+		else {
+			this.days_per_week = days_per_week;
+			this.daysWrapper = $('.days__selected');
+
+			if (!this.calendar) {
+				document.querySelector('#calendar').innerHTML = '';
+				this.calendar = new Datepickk({
+					container: document.querySelector('#calendar'),
+					inline:true,
+					today: true,
+					range: false,
+					maxSelections: days_per_week,
+					highlight: this.highlight
+				});
+				this.bindCalendarEvents(true);
+			}
+			else {
+				this.calendar.highlight = this.highlight;
+				this.calendar.maxSelections = days_per_week;
+				this.calendar.unselectAll();
+			}
+
+			this.exercises_days = exercises_days;
+			this.exercises_list = exercises_days;
+			this.exercises_select = [];
+		}
+	}
+
+	bindCalendarEvents (hasEvent) {
+		var that = this;
+
+		if (hasEvent) {
+			this.calendar.onSelect = function (checked) {
+				if (!checked) {
+					if (that.exercises_select.length > 0) {
+						let item = _.filter(that.exercises_select, (i) => { return moment(i.date, 'x').diff(this.toString()) === 0 })[0];
+						let list = _.filter(that.exercises_select, (i) => { return moment(i.date, 'x').diff(this.toString()) !== 0 });
+
+						if (item) that.exercises_list.push(item.exercise);
+						that.exercises_select = list;
+						that.renderDays();
+					}
+					$('.box-select-exercise').remove();
+				}
+				else {
+					let t = moment(this.toString()).format('YYYY-MM-DD');
+					let el = $('input[data-date^="' + t + '"]');
+
+					let target = el,
+						label = target.next('label'),
+						date = t;
+
+					let position = label.offset();
+					let html = ['<div class="box-select-exercise">'];
+					let $tooltip, height;
+
+					that.exercises_list.map((exercise) => {
+						html.push(`<div class="box-select-exercise__item" data-date="${date}" data-id="${exercise.id}">${exercise.name}</div>`)
+					});
+					html.push('</div>');
+
+					$tooltip = $(html.join(''));
+					$('.box-select-exercise').remove();
+					$('body').append($tooltip);
+
+					height = $tooltip.height();
+					$tooltip.css({
+						top: position.top - height - 20,
+						left: position.left
+					});
+				}
+				that.isComplete = parseInt(that.exercises_select.length) === parseInt(that.days_per_week);
+			};
+		}
 	}
 
 	bindEvents () {
@@ -117,8 +139,6 @@ class Calendar {
 		let html = [];
 		let arr = this.exercises_select;
 
-		console.log('renderDays:',arr);
-
 		arr = _.sortBy(arr, ['date']);
 
 		arr.map((item) => {
@@ -144,7 +164,7 @@ class Calendar {
 	setHighlight (exercises) {
 		this.highlight = this.normalize(exercises);
 
-		if (this.calendar &&this.calendar.highlight) {
+		if (this.calendar && this.calendar.highlight) {
 			this.calendar.highlight = this.highlight;
 		}
 	}
@@ -161,6 +181,7 @@ class Calendar {
 
 			exercises[item].map(i => {
 				let date = moment(i.date, 'x').toDate();
+				obj.workout_id = i.workout_id,
 				obj.legend = i.plan_name,
 				obj.dates.push({
 					start: date,

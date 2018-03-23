@@ -108,51 +108,62 @@
 				font-weight: 500
 
 		&__exercises
+			margin-bottom: 20px
+
+			&__note
+				background: $color-page
+				color: $color-grey
+				padding: 5px 0
+				font-size: 12px
+				text-transform: uppercase
+
 			&__item
 				background: $white
-				box-shadow: 0 1px 1px $color-grey
-				transition: margin .3s
+				border-left: solid 3px transparent
+
+				.-normal &
+					border-left-color: $color-set-normal
+
+				.-biset &
+					border-left-color: $color-set-biset
+
+				.-triset &
+					border-left-color: $color-set-triset
+
+				.-superset &
+					border-left-color: $color-set-superset
 
 				$parent: &
 
 				&__title
 					display: flex
-					padding: 15px 20px
+					padding: 8px 13px
 					justify-content: space-between
 					align-items: center
 
-					&:after,
-					&:before
-						display: none
-
 					span
-						font-size: 12px
+						font-size: 13px
 						color: $black
 						font-weight: 500
 
 					em
 						font-size: 8px
-						color: $color-grey
+						color: $color-text
 						transition: all .3s
 
 				&__content
 					max-height: 0
 					overflow: hidden
 					transition: max-height .3s
-					border-bottom: solid 1px #eee
+					border-bottom: solid 1px $color-lightgrey
 
 					p
 						font-size: 12px
 						color: $color-text
-						padding: 0 20px 20px
+						padding: 7px 20px 20px
 						line-height: 1.5
 
 				&.-active
-					margin: 10px 0
-
-					&:first-child
-						margin: 0 0 10px 0
-
 					#{$parent}__content
 							max-height: 800px
 

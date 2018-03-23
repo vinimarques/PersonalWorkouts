@@ -110,7 +110,6 @@ module.exports = function (router) {
 		function (req) {
 			const validator = new Validator([
 				{ field: 'note', type: 'String' },
-				{ field: 'exercise_id', type: 'Integer', required: true },
 				{ field: 'day_id', type: 'Integer', required: true },
 				{ field: 'rep_1', type: 'Integer' },
 				{ field: 'rep_2', type: 'Integer' },
@@ -119,7 +118,7 @@ module.exports = function (router) {
 				{ field: 'rep_5', type: 'Integer' }
 			]);
 
-			const data = _.pick(req.body, ['note', 'exercise_id', 'day_id', 'rep_1', 'rep_2', 'rep_3', 'rep_4', 'rep_5']);
+			const data = _.pick(req.body, ['note', 'day_id', 'rep_1', 'rep_2', 'rep_3', 'rep_4', 'rep_5']);
 			const id = req.body.id;
 
 			validator.validate(data);

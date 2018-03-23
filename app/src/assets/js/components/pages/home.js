@@ -27,7 +27,7 @@ class Home extends Page {
 	bindEvents () {
 		var that = this;
 
-		$('.page-home__content__exercises__item__title').on('click', function () {
+		$('body').on('click', '.page-home__content__exercises__item__title', function () {
 			$(this).parent().toggleClass('-active');
 		})
 
@@ -135,14 +135,27 @@ class Home extends Page {
 							let day_name = '';
 							let plan_name = '';
 							let days_per_week = '';
+							let day_note = false;
 
-							let workouts = res.data.map((item) => {
-								days_per_week = item.days_per_week;
-								day_name = item.day_name;
-								plan_name = item.plan_name;
+							let groups = _.groupBy(res.data, 'exercise_group');
+							let workouts = [];
 
-								item.hasDescription = item.exercise_description !== '' && item.exercise_description !== null;
-								return item;
+							Object.keys(groups).map((item) => {
+								groups[item].map((exercise) => {
+									days_per_week = exercise.days_per_week;
+									day_name = exercise.day_name;
+									plan_name = exercise.plan_name;
+									day_note = exercise.day_note || false;
+
+									exercise.hasDescription = exercise.exercise_description !== '' && exercise.exercise_description !== null;
+									return exercise;
+								});
+
+								workouts.push({
+									type: this.groupType(groups[item].length),
+									day_note: day_note,
+									exercises: groups[item]
+								});
 							});
 
 							$titleWrapper.text(plan_name);
@@ -152,7 +165,8 @@ class Home extends Page {
 								workouts,
 								plan_name,
 								days_per_week,
-								day_name
+								day_name,
+								number_exercises: res.data.length > 1 ? res.data.length + ' exercícios' : res.data.length + ' exercício'
 							});
 
 							$contentWrapper.html(html);
@@ -169,6 +183,19 @@ class Home extends Page {
 					})
 				}
 			});
+	}
+
+	groupType (len) {
+		let type = 'normal';
+
+		switch(len) {
+			case 1: type = 'normal'; break;
+			case 2: type = 'biset'; break;
+			case 3: type = 'triset'; break;
+			default: type = 'superset'; break;
+		}
+
+		return type;
 	}
 
 	formatTime (timer) {

@@ -75,10 +75,11 @@
 			{{#if hasResult}}
 				<div class="page-home__content__titles">
 					<h2>{{day_name}}</h2>
-					<h2>{{days_per_week}} exercicios</h2>
+					<h2>{{number_exercises}}</h2>
 				</div>
-				<ul class="page-home__content__exercises">
-					{{#each workouts}}
+				{{#each workouts}}
+				<ul class="page-home__content__exercises -{{type}}">
+					{{#each exercises}}
 					<li class="page-home__content__exercises__item">
 						<div class="page-home__content__exercises__item__title">
 							<span>{{exercise_name}}</span>
@@ -87,11 +88,19 @@
 							{{/if}}
 						</div>
 						<div class="page-home__content__exercises__item__content">
+							{{#if hasDescription}}
 							<p>{{exercise_description}}</p>
+							{{/if}}
 						</div>
 					</li>
 					{{/each}}
+					{{#if day_note}}
+					<li class="page-home__content__exercises__note">
+						<p>OBS: {{day_note}}</p>
+					</li>
+					{{/if}}
 				</ul>
+				{{/each}}
 			{{else}}
 				<div class="no-result">
 					Não há treino neste dia.

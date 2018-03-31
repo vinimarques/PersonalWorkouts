@@ -20,6 +20,7 @@ USE `personalworkouts` ;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`company`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`company`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`company` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
@@ -31,6 +32,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`user_type`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`user_type`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`user_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
@@ -42,6 +44,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`users`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`users`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(256) NULL,
@@ -69,6 +72,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`muscle_group`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`muscle_group`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`muscle_group` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(250) NULL,
@@ -78,6 +82,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`exercise`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`exercise`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`exercise` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(256) NULL,
@@ -97,6 +102,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`difficulty`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`difficulty`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`difficulty` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
@@ -108,6 +114,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`plan`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`plan`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`plan` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(256) NULL,
@@ -127,6 +134,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`day`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`day`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`day` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(256) NULL,
@@ -143,6 +151,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`day_exercise_group`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`day_exercise_group`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`day_exercise_group` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `day_id` INT NOT NULL,
@@ -159,6 +168,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`day_exercise`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`day_exercise`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`day_exercise` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `day_id` INT NOT NULL,
@@ -188,6 +198,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`token`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`token`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`token` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `token` VARCHAR(250) NULL,
@@ -207,6 +218,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`exercise_company`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`exercise_company`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`exercise_company` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `company_id` INT NOT NULL,
@@ -229,6 +241,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`plan_company`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`plan_company`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`plan_company` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `plan_id` INT NOT NULL,
@@ -252,6 +265,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`workout`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`workout`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`workout` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `exercices` INT NULL,
@@ -263,6 +277,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`calendar`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`calendar`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`calendar` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `plan_id` INT NOT NULL,
@@ -300,6 +315,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`muscle_group_company`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`muscle_group_company`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`muscle_group_company` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `muscle_group_id` INT UNSIGNED NOT NULL,
@@ -322,6 +338,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`weigth`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`weigth`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`weigth` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `value` FLOAT NULL,
@@ -342,6 +359,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`tracking`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`tracking`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`tracking` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `users_id` INT NOT NULL,
@@ -359,6 +377,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `personalworkouts`.`exercise_group`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `personalworkouts`.`exercise_group`;
 CREATE TABLE IF NOT EXISTS `personalworkouts`.`exercise_group` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `exercise_id` INT NOT NULL,

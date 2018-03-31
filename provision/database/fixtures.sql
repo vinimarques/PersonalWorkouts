@@ -160,7 +160,8 @@ VALUES
 	(73,'Prancha',NULL,6),
 	(74,'Abdominal supra com anilha',NULL,6),
 	(75,'Abdominal rolinho',NULL,6),
-	(76,'Abdominal no puxador',NULL,6);
+	(76,'Abdominal no puxador',NULL,6),
+	(77,'Panturrilha',NULL,3);
 
 /*!40000 ALTER TABLE `exercise` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -249,7 +250,8 @@ VALUES
 	(73,1,73),
 	(74,1,74),
 	(75,1,75),
-	(76,1,76);
+	(76,1,76),
+	(77,1,77);
 
 /*!40000 ALTER TABLE `exercise_company` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -328,7 +330,7 @@ VALUES
 	(1,'master'),
 	(2,'admin'),
 	(3,'professor'),
-	(4,'estudante');
+	(4,'aluno');
 
 /*!40000 ALTER TABLE `user_type` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -343,9 +345,10 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `company_id`, `user_type_id`)
 VALUES
 	(1,'Vinicius Roloff Marques','vinicius@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,1),
-	(2,'Admin','admin@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,2),
-	(3,'Professor','professor@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,3),
-	(4,'Aluno','aluno@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,4);
+	(2,'Bethieli Lessa Marques','bethielihl@gmail.com','a1bcfdb1fcec728e3268bfd1ecee3ed15a320998',1,4),
+	(3,'Admin','admin@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,2),
+	(4,'Professor','professor@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,3),
+	(5,'Aluno','aluno@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,4);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

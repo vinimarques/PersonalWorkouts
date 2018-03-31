@@ -20,6 +20,7 @@ import consts from './consts';
 import State from 'libs/state';
 import Database from 'libs/database';
 import Api from 'libs/api';
+import Offline from 'libs/offline';
 import Routes from './routes';
 import config from './config';
 import Permissions from 'components/permissions';
@@ -31,7 +32,7 @@ document.addEventListener('deviceready', () => {
 	const options = {
 		version: config.version
 	};
-	const database = new Database('PersonalWorkouts', options);
+	const database = new Database(config.projectName, options);
 	const settings = {
 		init: false,
 		animatePages: false,
@@ -54,6 +55,7 @@ document.addEventListener('deviceready', () => {
 
 	window.$ = Dom7;
 	window.App = new Framework7(settings);
+	Offline.init();
 
 	App.consts = consts;
 	App.State = new State();

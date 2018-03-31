@@ -1,5 +1,7 @@
 var config = {};
 
+config.projectName = 'PersonalWorkouts';
+config.cacheTime = 24 * 60 * 60 * 1000;
 config.debug = true;
 config.version = "1.0.0";
 

@@ -3,12 +3,14 @@
 import _ from 'lodash';
 import config from '../config';
 import CryptoJS from 'crypto-js';
+import cache from './cache';
 
 class Api {
 
 	constructor () {
 		this.apiPath = config.api.url;
 		this.headers = {};
+		cache.initialize(config.cacheTime)
 	}
 
 	request(method, path, data, verify) {
@@ -27,6 +29,7 @@ class Api {
 				url: this.apiPath + path,
 				success: (response) => {
 					let json = JSON.parse(response);
+					cache.write(path,response);
 					success(json);
 				},
 				error: errorCallback,

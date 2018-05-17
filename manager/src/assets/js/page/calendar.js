@@ -19,6 +19,15 @@ class Calendar extends Page {
 		this.plans = {};
 		this.validator = new Validator();
 		this.calendar = new CalendarInline();
+
+		this.message = {
+			error: {
+				exercises: 'NENHUM DADO ENCONTRADO'
+			},
+			success: {
+				add: 'Treino adicionado com sucesso!'
+			}
+		};
 	}
 
 	init(page, ctx) {
@@ -126,7 +135,11 @@ class Calendar extends Page {
 				App.api.saveCalendar(calendarData)
 					.then((res) => {
 						if (res.success) {
-							this.loadUserCalendar();
+							App.message.show(this.message.success.add, App.config.timeCloseModal);
+							this.loadUsers();
+							this.loadPlans();
+							this.calendarWrapper.removeClass('-active');
+							this.calendar && this.calendar.reset && this.calendar.reset();
 						}
 					});
 			}

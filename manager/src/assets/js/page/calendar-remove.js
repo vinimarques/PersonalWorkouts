@@ -68,36 +68,16 @@ class CalendarRemove extends Page {
 	}
 
 	_bindEvents () {
-		$('.form-calendar').on('submit', (ev) => {
-			ev.preventDefault();
+		$('body').on('click', '[data-workout]', function () {
+			let 	modal = $('.modal-remove-calendar'),
+					workoutId = $(this).data('workout'),
+					legend = $(this).data('legend');
 
-			let data = this.validator.getData(ev.target);
-			let dataSend = this.validator.getDataSend(ev.target);
-			let isValide = this.validator.isValide(data);
+			modal.find('input[name="workout_id"]').val(workoutId);
+			modal.find('.workout-remove-name').text(legend);
 
-			if (this.calendar.isComplete) {
-				let calendarData = {
-					days_per_week: parseInt(this.calendar.days_per_week),
-					workouts: []
-				};
-
-				this.calendar.exercises_select.map((item) => {
-					calendarData.workouts.push({
-						user_id: parseInt(dataSend.user_id),
-						plan_id: parseInt(dataSend.plan_id),
-						date: item.date,
-						day_id: parseInt(item.exercise.id)
-					})
-				});
-
-				App.api.saveCalendar(calendarData)
-					.then((res) => {
-						if (res.success) {
-							this.loadUserCalendar();
-						}
-					});
-			}
-		})
+			App.openModal('remove-calendar');
+		});
 	}
 }
 

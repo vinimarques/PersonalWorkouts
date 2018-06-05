@@ -37,31 +37,6 @@ VALUES
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-# Dump of table day
-# ------------------------------------------------------------
-
-
-# Dump of table day_exercise
-# ------------------------------------------------------------
-
-
-# Dump of table difficulty
-# ------------------------------------------------------------
-
-LOCK TABLES `difficulty` WRITE;
-/*!40000 ALTER TABLE `difficulty` DISABLE KEYS */;
-
-INSERT INTO `difficulty` (`id`, `name`)
-VALUES
-	(1,'Iniciante'),
-	(2,'Intermediário'),
-	(3,'Avançado');
-
-/*!40000 ALTER TABLE `difficulty` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table exercise
 # ------------------------------------------------------------
 
@@ -285,39 +260,6 @@ VALUES
 	(5,1,5),
 	(6,1,6);
 
-
-# Dump of table plan
-# ------------------------------------------------------------
-
-LOCK TABLES `plan` WRITE;
-/*!40000 ALTER TABLE `plan` DISABLE KEYS */;
-
-INSERT INTO `plan` (`id`, `name`, `days_per_week`, `difficulty_id`)
-VALUES
-	(1,'Treino de força',4,2);
-
-/*!40000 ALTER TABLE `plan` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table plan_company
-# ------------------------------------------------------------
-
-LOCK TABLES `plan_company` WRITE;
-/*!40000 ALTER TABLE `plan_company` DISABLE KEYS */;
-
-INSERT INTO `plan_company` (`id`, `plan_id`, `company_id`)
-VALUES
-	(1,1,1);
-
-/*!40000 ALTER TABLE `plan_company` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table token
-# ------------------------------------------------------------
-
-
 # Dump of table user_type
 # ------------------------------------------------------------
 
@@ -353,9 +295,3 @@ VALUES
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -19,8 +19,8 @@ class ExercisesDay extends Page {
 
 	init(page, ctx) {
 		super.load(page);
-		this.plan_id = parseInt(ctx.params.plan);
-		this.day_id = parseInt(ctx.params.day);
+		this.user_id = parseInt(ctx.params.user);
+		this.date = parseInt(ctx.params.day);
 		this.index = 1;
 
 		this.message = {
@@ -28,9 +28,9 @@ class ExercisesDay extends Page {
 				exercises: 'NENHUM DADO ENCONTRADO'
 			},
 			success: {
-				add: 'Exercício do Dia adicionado com sucesso!',
-				update: 'Exercício do Dia atualizado com sucesso!',
-				remove: 'Exercício do Dia removido com sucesso!'
+				add: 'Exercício adicionado com sucesso!',
+				update: 'Exercício atualizado com sucesso!',
+				remove: 'Exercício removido com sucesso!'
 			}
 		};
 	}
@@ -38,9 +38,9 @@ class ExercisesDay extends Page {
 	onload () {
 		this.exercisesContent = $('#exercises-day-content');
 		$('.plan-link').attr('href', '/plans/' + this.plan_id);
-		this.loadExecises();
-		this.loadExercisesDay();
-		this.loadDay();
+		// this.loadExecises();
+		// this.loadExercisesDay();
+		// this.loadDay();
 	}
 
 	loadDay () {

@@ -13,6 +13,16 @@ class DayExercises extends Model {
 		`, [day_id]);
 	}
 
+// SELECT calendar.date, day.name as 'day_name', exercise_group.day_exercise_group_id, day_exercise.rep_1, day_exercise.rep_2, day_exercise.rep_3, day_exercise.rep_4, day_exercise.rep_5, day_exercise.note, exercise.name as 'exercise_name', exercise.description as 'exercise_description'
+// FROM calendar
+
+// LEFT JOIN day ON day.id = calendar.day_id
+// LEFT JOIN day_exercise ON day_exercise.day_id = calendar.day_id
+// LEFT JOIN exercise_group ON exercise_group.day_exercise_group_id = day_exercise.day_exercise_group_id
+// LEFT JOIN exercise ON exercise.id = exercise_group.exercise_id
+
+// WHERE date = '2018-05-07'
+
 	static first(day_exercise_id) {
 		return Model.first(`
 			SELECT e.name as 'exercise_name', q.id, q.day_exercise_group_id, q.rep_1, q.rep_2, q.rep_3, q.rep_4, q.rep_5, q.note

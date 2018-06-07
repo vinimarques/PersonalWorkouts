@@ -31,8 +31,6 @@
 			<li class="users"><a href="/users">Usuários</a></li>
 			<li class="exercises"><a href="/exercises" >Exercícios</a></li>
 			<li class="plans days exercises-day"><a href="/plans">Planos de Treinos</a></li>
-			<li class="calendar"><a href="/calendar">Adicionar Treino</a></li>
-			<li class="calendar-remove"><a href="/calendar-remove">Remover Treino</a></li>
 		</ul>
 	</nav>
 
@@ -84,6 +82,19 @@
 			{{/for}}
 		{{/if}}
 	</script>
+	<script type="text/x-jsrender" id="template-users-plans">
+		{{if error}}
+			<span class="ttable__body__col error">{{:error}}</span>
+		{{else}}
+			{{for users}}
+				<a href="/plans/{{:id}}" class="ttable__body__row">
+					<span class="ttable__body__col col-4 user-name">{{:name}}</span>
+					<span class="ttable__body__col col-5">{{:email}}</span>
+					<span class="ttable__body__col col-3">{{:user_type_name}}</span>
+				</a>
+			{{/for}}
+		{{/if}}
+	</script>
 	<script type="text/x-jsrender" id="template-exercises">
 		{{if error}}
 			<span class="ttable__body__col error">{{:error}}</span>
@@ -99,51 +110,6 @@
 							<ul>
 								<li><a href="javascript:;" class="exercise-edit" title="Editar exercício"><em class="icon icon-edit"></em></a></li>
 								<li><a href="javascript:;" class="exercise-delete" title="Deletar exercício"><em class="icon icon-delete"></em></a></li>
-							</ul>
-						</button>
-					</span>
-				</div>
-			{{/for}}
-		{{/if}}
-	</script>
-	<script type="text/x-jsrender" id="template-plans">
-		{{if error}}
-			<span class="ttable__body__col error">{{:error}}</span>
-		{{else}}
-			{{for plans}}
-				<div class="ttable__body__row" data-plan-id="{{:id}}">
-					<span class="ttable__body__col col-3 plan-name">{{:name}}</span>
-					<span class="ttable__body__col col-3">{{:difficulty_name}}</span>
-					<span class="ttable__body__col col-3">{{:days_per_week}}</span>
-					<span class="ttable__body__col col-2"><a href="/plans/{{:id}}" class="i-action" title="Ver detalhe do Plano de Treino"><span class="icon icon-list"></span><em>{{:days}}</em></a></span>
-					<span class="ttable__body__col col-1 actions">
-						<button class="btn btn--more right">
-							<span></span>
-							<ul>
-								<li><a href="javascript:;" class="plan-edit" title="Editar Plano de Treino"><em class="icon icon-edit"></em></a></li>
-								<li><a href="javascript:;" class="plan-delete" title="Deletar Plano de Treino"><em class="icon icon-delete"></em></a></li>
-							</ul>
-						</button>
-					</span>
-				</div>
-			{{/for}}
-		{{/if}}
-	</script>
-	<script type="text/x-jsrender" id="template-days">
-		{{if error}}
-			<span class="ttable__body__col error">{{:error}}</span>
-		{{else}}
-			{{for days}}
-				<div class="ttable__body__row" data-day-id="{{:id}}">
-					<span class="ttable__body__col col-2">{{:#index + 1}} of {{:days_per_week}}</span>
-					<span class="ttable__body__col col-4 day-name">{{:name}}</span>
-					<span class="ttable__body__col col-4"><a href="/plans/{{:plan_id}}/{{:id}}" class="i-action" title="Ver detalhe do dia"><span class="icon icon-list"></span><em>{{:exercises}}</em></a></span>
-					<span class="ttable__body__col col-2 actions">
-						<button class="btn btn--more right">
-							<span></span>
-							<ul>
-								<li><a href="javascript:;" class="day-edit" title="Editar dia"><em class="icon icon-edit"></em></a></li>
-								<li><a href="javascript:;" class="day-delete" title="Deletar dia"><em class="icon icon-delete"></em></a></li>
 							</ul>
 						</button>
 					</span>

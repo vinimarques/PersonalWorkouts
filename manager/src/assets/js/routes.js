@@ -13,12 +13,10 @@ import Home from './page/home';
 import Users from './page/users';
 
 import Plans from './page/plans';
-import Days from './page/days';
+import PlansUser from './page/plans-user';
 import ExercisesDay from './page/exercises-day';
-
 import Exercises from './page/exercises';
-import Calendar from './page/calendar';
-import CalendarRemove from './page/calendar-remove';
+
 
 /**
 *
@@ -32,11 +30,9 @@ export default {
 		router.add('home', 					Home, 				true);
 		router.add('users', 					Users, 				true);
 		router.add('plans', 					Plans, 				true);
-		router.add('days', 					Days, 				true, 'plans/:plan');
-		router.add('exercises-day', 		ExercisesDay, 		true, 'plans/:plan/:day');
+		router.add('plans-user',			PlansUser, 			true, 'plans/:user');
+		router.add('exercises-day', 		ExercisesDay, 		true, 'plans/:user/:day');
 		router.add('exercises', 			Exercises, 			true);
-		router.add('calendar', 				Calendar, 			true);
-		router.add('calendar-remove', 	CalendarRemove, 			true);
 
 		router.start();
 	}

@@ -1,12 +1,20 @@
 <section class="page" data-page="exercises-day">
-	<button class="btn btn--add open-modal" data-modal="add-exercises-day" id="btn-add-exercises-day"></button>
+	<button class="btn btn--add open-modal -disabled" data-modal="add-exercises-day" id="btn-add-exercises-day"></button>
 	<div class="page__container">
 		<div class="breadcrumb">
 			<a href="/plans">Planos de Treino</a>
 			<a class="plan-link" href="">Dias de Treino</a>
 			<a href="javascript:;">Exercícios do Dia</a>
 		</div>
-		<h2 class="page__title">&nbsp;</h2>
+		<h2 class="page__title"><strong>Usuário:</strong> <span class="user-name"></span></h2>
+		<div class="formm">
+			<label class="formm__item">
+				<span class="formm__text">
+					<input type="text" autocomplete="off" class="day-name" placeholder="Nome do treino" name="name">
+					<em></em>
+				</span>
+			</label>
+		</div>
 		<div class="ttable">
 			<div class="ttable__header">
 				<span class="ttable__header__col col-4">Nome do Exercício</span>

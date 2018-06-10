@@ -2,6 +2,15 @@ const Model = require('./model');
 
 class DayExercises extends Model {
 
+	static day (user_id, date) {
+		return Model.first(`
+		SELECT day.id as 'day_id', day.name
+		FROM calendar
+		LEFT JOIN day on day.id = calendar.day_id
+		WHERE calendar.user_id = ? AND calendar.date = ?
+		`, [user_id, date]);
+	}
+
 	static all(day_id) {
 		return Model.query(`
 			SELECT e.name as 'exercise_name', q.id, q.day_exercise_group_id, q.rep_1, q.rep_2, q.rep_3, q.rep_4, q.rep_5, q.note

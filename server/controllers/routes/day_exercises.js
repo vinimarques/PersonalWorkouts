@@ -8,6 +8,28 @@ const _ = require('lodash');
 const DayExercises = require('../../models/day_exercises');
 
 module.exports = function (router) {
+	router.get('/day', Auth.middleware(), Resolve.send(
+		function (req) {
+			const user_id = parseInt(req.query.user_id);
+			const date = req.query.date;
+
+			if (!user_id || !date) {
+				const error = ApiError.companyRequired();
+				return {
+					success: false,
+					error: error.data
+				};
+			}
+
+			return DayExercises.day(user_id, date)
+				.then(day => {
+					return {
+						success: true,
+						data: day
+					};
+				});
+		}
+	));
 
 	router.get('/day-exercises', Auth.middleware(), Resolve.send(
 		function (req) {

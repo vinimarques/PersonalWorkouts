@@ -116,32 +116,8 @@ class Api {
 		return this.request('DELETE', '/exercise', data);
 	}
 
-	getPlans (company_id) {
-		return this.request('GET', '/plans', { company_id });
-	}
-
-	getPlan (plan_id) {
-		return this.request('GET', '/plan', { plan_id });
-	}
-
-	savePlan (data) {
-		return this.request('POST', '/plan', data);
-	}
-
-	updatePlan (data) {
-		return this.request('PUT', '/plan', data);
-	}
-
-	removePlan (data) {
-		return this.request('DELETE', '/plan', data);
-	}
-
-	getDays (plan_id) {
-		return this.request('GET', '/days', { plan_id });
-	}
-
-	getDay (day_id) {
-		return this.request('GET', '/day', { day_id });
+	getDay (user_id, date) {
+		return this.request('GET', '/day', { user_id, date });
 	}
 
 	saveDay (data) {

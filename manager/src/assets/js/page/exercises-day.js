@@ -20,7 +20,7 @@ class ExercisesDay extends Page {
 	init(page, ctx) {
 		super.load(page);
 		this.user_id = parseInt(ctx.params.user);
-		this.date = parseInt(ctx.params.day);
+		this.date = ctx.params.date;
 		this.index = 1;
 
 		this.message = {
@@ -37,16 +37,27 @@ class ExercisesDay extends Page {
 
 	onload () {
 		this.exercisesContent = $('#exercises-day-content');
-		$('.plan-link').attr('href', '/plans/' + this.plan_id);
-		// this.loadExecises();
-		// this.loadExercisesDay();
-		// this.loadDay();
+		$('.plan-link').attr('href', '/plans/' + this.user_id);
+		this.loadUser();
+		this.loadDay(() => {
+			this.loadExercisesDay();
+		});
 	}
 
-	loadDay () {
-		App.api.getDay(this.day_id)
+	loadUser () {
+		App.api.getUser(this.user_id).then((res) => {
+			$('.user-name').text(res.data.name);
+		})
+	}
+
+	loadDay (callback) {
+		App.api.getDay(this.user_id, this.date)
 			.then((res) => {
-				$('.page__title').text(res.data.name);
+				this.day_id = res.data.day_id;
+				if (res.data.name)
+					$('.day-name').val(res.data.name);
+
+				callback && callback();
 			});
 	}
 

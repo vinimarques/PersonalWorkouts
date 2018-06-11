@@ -11,6 +11,18 @@ class DayExercises extends Model {
 		`, [user_id, date]);
 	}
 
+	static addDay (name, user_id, date) {
+		return Model.insert({name: name}, 'day').then((result) => {
+			var day_id = result.insertId;
+
+			return Model.insert({
+				day_id,
+				date,
+				user_id
+			}, 'calendar');
+		});
+	}
+
 	static all(day_id) {
 		return Model.query(`
 			SELECT e.name as 'exercise_name', q.id, q.day_exercise_group_id, q.rep_1, q.rep_2, q.rep_3, q.rep_4, q.rep_5, q.note

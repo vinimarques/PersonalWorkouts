@@ -32,6 +32,7 @@ class Api {
 				},
 				error: (err) => {
 					this.verifyError(err.responseJSON);
+					error(err);
 				},
 				headers: this.headers
 			};

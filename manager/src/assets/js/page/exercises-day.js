@@ -37,11 +37,18 @@ class ExercisesDay extends Page {
 
 	onload () {
 		this.exercisesContent = $('#exercises-day-content');
+		this.exercisesTable = $('#exercises-table');
+		this.btnSave = $('[data-page="exercises-day"] .btn-save');
+		this.btnDel = $('[data-page="exercises-day"] .btn-del');
+
 		$('.plan-link').attr('href', '/plans/' + this.user_id);
+
 		this.loadUser();
 		this.loadDay(() => {
 			this.loadExercisesDay();
 		});
+
+		this.__bindEvents();
 	}
 
 	loadUser () {
@@ -53,12 +60,21 @@ class ExercisesDay extends Page {
 	loadDay (callback) {
 		App.api.getDay(this.user_id, this.date)
 			.then((res) => {
-				this.day_id = res.data.day_id;
+				this.day_id = res.data.day_id || false;
 				if (res.data.name)
 					$('.day-name').val(res.data.name);
 
 				callback && callback();
+			}).catch(err => {
+				if (err.responseJSON.error.status === 431) {
+					this.newDay();
+				}
 			});
+	}
+
+	newDay () {
+		this.exercisesTable.addClass('-hidden');
+		this.btnDel.addClass('-hidden');
 	}
 
 	loadExercisesDay () {
@@ -69,6 +85,12 @@ class ExercisesDay extends Page {
 
 		this.template = $.templates($('#template-exercises-day').html());
 		let html = '';
+
+		if (!day_id) {
+			html = this.template.render({ error: this.message.error.exercises });
+			container.html(html);
+			return false;
+		}
 
 		App.api.getDayExercises(day_id).then((res) => {
 			if (res.success && res.data.length > 0) {
@@ -115,6 +137,19 @@ class ExercisesDay extends Page {
 					$('.select2-container--open .select2-search__field').focus();
 				}, 100);
 			 });
+		});
+	}
+
+	__bindEvents () {
+		this.btnSave.on('click', () => {
+			let val = $('.day-name').val();
+
+			if (val !== '') {
+				App.api.saveDay({name: val})
+					.then((res) => {
+						this.day_id = res.data.id;
+					});
+			}
 		});
 	}
 

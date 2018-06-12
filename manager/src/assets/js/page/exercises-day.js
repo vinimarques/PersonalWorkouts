@@ -40,10 +40,12 @@ class ExercisesDay extends Page {
 		this.exercisesTable = $('#exercises-table');
 		this.btnSave = $('[data-page="exercises-day"] .btn-save');
 		this.btnDel = $('[data-page="exercises-day"] .btn-del');
+		this.btnAdd = $('[data-page="exercises-day"] .open-modal.-disabled');
 
 		$('.plan-link').attr('href', '/plans/' + this.user_id);
 
 		this.loadUser();
+		this.loadExecises();
 		this.loadDay(() => {
 			this.loadExercisesDay();
 		});
@@ -63,6 +65,10 @@ class ExercisesDay extends Page {
 				this.day_id = res.data.day_id || false;
 				if (res.data.name)
 					$('.day-name').val(res.data.name);
+
+				this.btnAdd.removeClass('-disabled');
+				this.exercisesTable.removeClass('-hidden');
+				this.btnDel.removeClass('-hidden');
 
 				callback && callback();
 			}).catch(err => {
@@ -145,10 +151,16 @@ class ExercisesDay extends Page {
 			let val = $('.day-name').val();
 
 			if (val !== '') {
-				App.api.saveDay({name: val})
-					.then((res) => {
-						this.day_id = res.data.id;
+				App.api.saveDay({
+					name: val,
+					user_id: this.user_id,
+					date: this.date
+				}).then((res) => {
+					this.day_id = res.data.insertId;
+					this.loadDay(() => {
+						this.loadExercisesDay();
 					});
+				});
 			}
 		});
 	}

@@ -55,6 +55,52 @@ module.exports = function (router) {
 		}
 	));
 
+	router.delete('/day', Auth.middleware(), Resolve.send(
+		function (req) {
+			const id = req.body.day_id;
+
+			if (!id) {
+				const error = ApiError.userIdRequired();
+				return {
+					success: false,
+					error: error.data
+				};
+			}
+
+			return DayExercises.removeDay({ id })
+				.then(res => {
+					return {
+						success: true
+					};
+				});
+		}
+	));
+
+	router.put('/day', Auth.middleware(), Resolve.send(
+		function (req) {
+			const validator = new Validator([
+				{ field: 'name', type: 'String' }
+			]);
+
+			const data = _.pick(req.body, ['name']);
+			const id = req.body.day_id;
+
+			validator.validate(data);
+
+			if (validator.hasErrors()) throw validator.getErrors();
+
+			return DayExercises.updateDay(data, id)
+				.then(result => {
+					return {
+						success: true
+					};
+				})
+				.catch(error => {
+					throw ApiError.uniqueEmail(error);
+				});
+		}
+	));
+
 	router.get('/day-exercises', Auth.middleware(), Resolve.send(
 		function (req) {
 			const day_id = parseInt(req.query.day_id);

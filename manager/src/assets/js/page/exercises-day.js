@@ -151,17 +151,36 @@ class ExercisesDay extends Page {
 			let val = $('.day-name').val();
 
 			if (val !== '') {
-				App.api.saveDay({
-					name: val,
-					user_id: this.user_id,
-					date: this.date
-				}).then((res) => {
-					this.day_id = res.data.insertId;
-					this.loadDay(() => {
-						this.loadExercisesDay();
+				if (this.day_id) {
+					App.api.updateDay({
+						name: val,
+						day_id: this.day_id
+					}).then((res) => {
+						if (res.success) App.message.show('Nome do dia alterado com sucesso!', 2000);
 					});
-				});
+				}
+				else {
+					App.api.saveDay({
+						name: val,
+						user_id: this.user_id,
+						date: this.date
+					}).then((res) => {
+						this.day_id = res.data.insertId;
+						this.loadDay(() => {
+							this.loadExercisesDay();
+						});
+					});
+				}
 			}
+		});
+
+		this.btnDel.on('click', () => {
+			App.api.removeDay({
+				day_id: this.day_id
+			}).then((res) => {
+				window.Page($('.plan-link').attr('href'));
+				if (res.success) App.message.show('Dia excluido com sucesso!', 2000);
+			});
 		});
 	}
 

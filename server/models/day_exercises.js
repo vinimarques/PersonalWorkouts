@@ -80,8 +80,16 @@ class DayExercises extends Model {
 		return Model.remove(data, 'day_exercise');
 	}
 
+	static removeDay(data) {
+		return Model.remove(data, 'day');
+	}
+
 	static update(data, day_exercise_id) {
 		return Model.update(data, { id: day_exercise_id }, 'day_exercise');
+	}
+
+	static updateDay(data, id) {
+		return Model.update(data, { id }, 'day');
 	}
 }
 

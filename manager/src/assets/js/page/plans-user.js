@@ -22,9 +22,16 @@ class PlansUser extends Page {
 	}
 
 	onload() {
-		// this.calendar.setHighlight(exercises);
 		this.calendar.render();
 		this.loadUser();
+		this.loadCalendar();
+	}
+
+	loadCalendar () {
+		App.api.getCalendar({user_id: this.user_id}).then((res) => {
+			if (res.data.length > 0)
+				this.calendar.setHighlight(res.data);
+		});
 	}
 
 	loadUser () {

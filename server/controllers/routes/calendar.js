@@ -31,62 +31,6 @@ module.exports = function (router) {
 		}
 	));
 
-	router.delete('/calendar', Auth.middleware(), Resolve.send(
-		function (req) {
-			const id = req.body.workout_id;
-
-			if (!id) {
-				const error = ApiError.userIdRequired();
-				return {
-					success: false,
-					error: error.data
-				};
-			}
-
-			return Calendar.remove({ id })
-				.then(res => {
-					return {
-						success: true
-					};
-				});
-		}
-	));
-
-	router.post('/calendar', Auth.middleware(), Resolve.send(
-		function (req) {
-			const validator = new Validator([
-				{ field: 'day_id', type: 'Integer', required: true },
-				{ field: 'plan_id', type: 'Integer', required: true },
-				{ field: 'user_id', type: 'Integer', required: true }
-			]);
-
-			const days_per_week = req.body.days_per_week;
-			const workouts = req.body.workouts;
-
-			workouts.map(item => {
-				let data = _.pick(item, ['day_id', 'plan_id', 'user_id']);
-				validator.validate(data);
-				if (validator.hasErrors()) throw validator.getErrors();
-			});
-
-			const dataSend = {
-				days_per_week,
-				workouts
-			};
-
-			return Calendar.insert(dataSend)
-				.then(result => {
-					return {
-						success: true,
-						new_calendar: result.insertId
-					};
-				})
-				.catch(error => {
-					throw error;
-				});
-		}
-	));
-
 	router.get('/calendar-user', Auth.middleware(), Resolve.send(
 		function (req) {
 			const user_id = parseInt(req.query.user_id);

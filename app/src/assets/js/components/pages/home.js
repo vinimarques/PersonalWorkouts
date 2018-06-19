@@ -20,16 +20,12 @@ class Home extends Page {
 	}
 
 	onPageAfterAnimation () {
-		this.bindEvents();
 		this.load();
+		this.bindEvents();
 	}
 
 	bindEvents () {
 		var that = this;
-
-		$('body').on('click', '.page-home__content__exercises__item__title', function () {
-			$(this).parent().toggleClass('-active');
-		})
 
 		$('.btn-timer').on('click', function () {
 			$(this).toggleClass('-playing');
@@ -45,8 +41,7 @@ class Home extends Page {
 	}
 
 	load () {
-		let date = Date.now();
-
+		let date = moment().format('YYYY-MM-DD');
 		if (!App.dateSelected) App.dateSelected = date;
 
 		this.loadDayInfo(App.dateSelected);
@@ -56,7 +51,7 @@ class Home extends Page {
 				if (res.success) {
 					let dates = [];
 					res.data.map((item) => {
-						dates.push(moment(item.date, 'x').toDate())
+						dates.push(moment(item.date, 'YYYY-MM-DD').toDate())
 					});
 
 					let monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -91,8 +86,14 @@ class Home extends Page {
 						onDayClick: (p, dayContainer, year, month, day) => {
 							this.calendar.close();
 							this.container.addClass('-loading-content');
+							let m = parseInt(month) + 1;
+							let d = parseInt(day);
+
+							m = m > 9 ? m : '0' + m;
+							d = d > 9 ? d : '0' + d;
+
 							setTimeout(() => {
-								this.loadDayInfo(new Date(year, month, day).getTime());
+								this.loadDayInfo(`${year}-${m}-${d}`);
 							}, 500);
 						}
 					});
@@ -105,14 +106,13 @@ class Home extends Page {
 		let $dayWrapper = $('.selected-date__day');
 		let $monthWrapper = $('.selected-date__month');
 
-		let $titleWrapper = $('.date-content__title');
 		let $timeWrapper = $('.date-content__time span');
 		let $contentWrapper = $('.page-home__content');
 
 		App.api.getCalendarDate(date)
 			.then((res) => {
 				if (res.success) {
-					let day = moment(date, 'x').format('DD-MM-YYYY-MMMM-ddd').split('-');
+					let day = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY-MMMM-ddd').split('-');
 					let month = day[1];
 					let year = day[2];
 					let monthName = day[3];
@@ -158,8 +158,6 @@ class Home extends Page {
 								});
 							});
 
-							$titleWrapper.text(plan_name);
-
 							html = template({
 								hasResult: true,
 								workouts,
@@ -180,6 +178,10 @@ class Home extends Page {
 							this.container.addClass('-noresult');
 						}
 						this.container.removeClass('-loading -loading-content');
+
+						$('.page-home__content__exercises__item__title').on('click', function () {
+							$(this).parent().toggleClass('-active');
+						})
 					})
 				}
 			});

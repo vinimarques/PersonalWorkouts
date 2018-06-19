@@ -57,30 +57,19 @@ class Calendar {
 		this.highlight = this.normalize(exercises);
 
 		if (this.calendar && this.calendar.highlight) {
-			this.calendar.highlight = this.highlight;
+			this.calendar.tooltips = this.highlight;
 		}
 	}
 
 	normalize (exercises) {
 		var highlight = [];
 
-		Object.keys(exercises).map(item => {
+		exercises.map(item => {
+			let date = moment(item.date, 'YYYY-MM-DD').toDate();
 			let obj = {
-				backgroundColor: this.getColor(),
-				color: '#ffffff',
-				dates: []
+				date: date,
+				text: item.day_name
 			};
-
-			exercises[item].map(i => {
-				let date = moment(i.date, 'x').toDate();
-				obj.workout_id = i.workout_id,
-				obj.legend = i.plan_name,
-				obj.dates.push({
-					start: date,
-					end: date
-				});
-			});
-
 			highlight.push(obj);
 		});
 

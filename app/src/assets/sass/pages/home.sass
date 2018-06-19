@@ -1,7 +1,7 @@
 .page-home
 	&__header
 		transition: all .3s
-		height: 165px
+		height: 115px
 
 		.selected-date
 			position: relative
@@ -53,7 +53,7 @@
 		.date-content
 			z-index: 1
 			position: relative
-			height: 100px
+			height: 50px
 			background: $color-secondary
 			color: $white
 			border-top: solid 1px $white
@@ -249,3 +249,13 @@
 
 		.page-home__header .date-content
 			transform: translateY(-100%)
+
+
+.picker-calendar-day.picker-calendar-day-has-events
+	span:after
+		width: 15px
+		height: 2px
+		background: $color-primary
+		border-radius: 0
+		margin-left: -7px
+		bottom: 4px

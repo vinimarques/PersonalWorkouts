@@ -302,6 +302,7 @@ USE `personalworkouts`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `personalworkouts`.`day_BEFORE_DELETE` BEFORE DELETE ON `day` FOR EACH ROW
 BEGIN
 DELETE FROM calendar WHERE calendar.day_id = old.id;
+DELETE FROM day_exercise WHERE day_exercise.day_id = old.id;
 END
 $$
 

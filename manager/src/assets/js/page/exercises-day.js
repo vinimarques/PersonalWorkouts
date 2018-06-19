@@ -151,7 +151,7 @@ class ExercisesDay extends Page {
 			let val = $('.day-name').val();
 
 			if (val !== '') {
-				if (this.day_id) {
+				if (this.day_id !== undefined) {
 					App.api.updateDay({
 						name: val,
 						day_id: this.day_id

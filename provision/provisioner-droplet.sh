@@ -13,7 +13,7 @@ apt-get -y install ntp 1>/dev/null 2>&1
 
 echo "+ configure vhost"
 rm -f /etc/nginx/sites-enabled/*
-cp -f /root/PersonalWorkouts/provision/httpd/default /etc/nginx/sites-enabled/shared
+cp -f /root/PersonalWorkouts/provision/httpd/droplet /etc/nginx/sites-enabled/shared
 service nginx restart 1>/dev/null 2>&1
 
 echo "+ Installing Imagemagick"
@@ -31,7 +31,7 @@ echo "mysql-server mysql-server/root_password password root" | debconf-set-selec
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 apt-get -q -y install mysql-server mysql-client 1>/dev/null 2>&1
 service mysql restart 1>/dev/null 2>&1
-echo -e "[mysqld]\nuser=root\npassword=root" | tee ~/.my.cnf 1>/dev/null 2>&1
+echo "[mysqld]\nuser=root\npassword=root" | tee ~/.my.cnf 1>/dev/null 2>&1
 
 echo "+ provisioning database"
 bash /root/PersonalWorkouts/provision/database-droplet.sh
@@ -43,7 +43,7 @@ echo "+ install node.js and npm"
 git clone https://github.com/visionmedia/n.git /opt/n  1>/dev/null 2>&1
 cd /opt/n
 make install  1>/dev/null 2>&1
-n 8.11.3 1>/dev/null 2>&1
+n 6.10.0 1>/dev/null 2>&1
 
 echo "+ install yarn"
 npm install -g yarn 1>/dev/null 2>&1

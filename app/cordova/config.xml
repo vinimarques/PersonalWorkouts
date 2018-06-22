@@ -67,7 +67,7 @@
         <splash height="2436" src="res/ios/splash/Default-2436h.png" width="1125" />
         <splash height="1125" src="res/ios/splash/Default-Landscape-2436h.png" width="2436" />
     </platform>
-	 <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreen" value="screen" />
     <preference name="FadeSplashScreenDuration" value="400" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="SplashShowOnlyFirstTime" value="false" />

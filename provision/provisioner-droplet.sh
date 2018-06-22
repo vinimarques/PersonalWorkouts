@@ -19,14 +19,14 @@ service nginx restart 1>/dev/null 2>&1
 # echo "+ Installing Imagemagick"
 # apt-get -q -y install imagemagick 1>/dev/null 2>&1
 
-echo "+ install mta: postfix"
-debconf-set-selections <<< "postfix postfix/mailname string localhost"
-debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
-apt-get install -q -y postfix 1>/dev/null 2>&1
-postconf -e 'inet_interfaces = localhost' 1>/dev/null 2>&1
-postconf -e 'mydestination = ' 1>/dev/null 2>&1
-postconf -e 'inet_protocols = ipv4' 1>/dev/null 2>&1
-service postfix restart 1>/dev/null 2>&1
+# echo "+ install mta: postfix"
+# debconf-set-selections <<< "postfix postfix/mailname string localhost"
+# debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+# apt-get install -q -y postfix 1>/dev/null 2>&1
+# postconf -e 'inet_interfaces = localhost' 1>/dev/null 2>&1
+# postconf -e 'mydestination = ' 1>/dev/null 2>&1
+# postconf -e 'inet_protocols = ipv4' 1>/dev/null 2>&1
+# service postfix restart 1>/dev/null 2>&1
 
 echo "+ install git, make, curl"
 apt-get -q -y install git make curl 1>/dev/null 2>&1

@@ -29,8 +29,8 @@ rm -f /etc/nginx/sites-enabled/*
 cp -f /srv/shared/provision/httpd/default /etc/nginx/sites-enabled/shared
 service nginx restart 1>/dev/null 2>&1
 
-# echo "+ Installing Imagemagick"
-# apt-get -q -y install imagemagick 1>/dev/null 2>&1
+echo "+ Installing Imagemagick"
+apt-get -q -y install imagemagick 1>/dev/null 2>&1
 
 # echo "+ install mta: postfix"
 # debconf-set-selections <<< "postfix postfix/mailname string localhost"

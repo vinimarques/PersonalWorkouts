@@ -3,10 +3,7 @@ const crypto = require('crypto');
 
 class Consts extends Model {
 	static all () {
-		const user_type = Model.query(`SELECT * FROM user_type`);
-		const difficulty = Model.query(`SELECT * FROM difficulty`);
-
-		return Promise.all([user_type,difficulty]);
+		return  Model.query(`SELECT * FROM user_type`);
 	}
 }
 

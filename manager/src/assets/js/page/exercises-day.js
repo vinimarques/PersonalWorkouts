@@ -30,6 +30,7 @@ class ExercisesDay extends Page {
 			success: {
 				add: 'Exercício adicionado com sucesso!',
 				update: 'Exercício atualizado com sucesso!',
+				updateDate: 'Data atualizada com sucesso!',
 				remove: 'Exercício removido com sucesso!'
 			}
 		};
@@ -40,8 +41,13 @@ class ExercisesDay extends Page {
 		this.exercisesTable = $('#exercises-table');
 		this.btnSave = $('[data-page="exercises-day"] .btn-save');
 		this.btnDel = $('[data-page="exercises-day"] .btn-del');
+		this.btnDate = $('[data-page="exercises-day"] .btn-date');
 		this.btnAdd = $('[data-page="exercises-day"] .open-modal.-disabled');
 
+		let date = this.date.split('-');
+
+		$('.modal .date-exercise').val(this.date);
+		$('.date-day').text(`${date[2]}/${date[1]}/${date[0]}`);
 		$('.plan-link').attr('href', '/plans/' + this.user_id);
 
 		this.loadUser();
@@ -69,6 +75,7 @@ class ExercisesDay extends Page {
 				this.btnAdd.removeClass('-disabled');
 				this.exercisesTable.removeClass('-hidden');
 				this.btnDel.removeClass('-hidden');
+				this.btnDate.removeClass('-hidden');
 
 				callback && callback();
 			}).catch(err => {
@@ -81,6 +88,7 @@ class ExercisesDay extends Page {
 	newDay () {
 		this.exercisesTable.addClass('-hidden');
 		this.btnDel.addClass('-hidden');
+		this.btnDate.addClass('-hidden');
 	}
 
 	loadExercisesDay () {
@@ -272,6 +280,25 @@ class ExercisesDay extends Page {
 					if (res.success) {
 						App.message.show(this.message.success.remove, App.config.timeCloseModal);
 						this.loadExercisesDay();
+					}
+				});
+		});
+
+
+		$('.modal-edit-exercises-day-date form').on('submit', (ev) => {
+			ev.preventDefault();
+
+			let dataSend = this.validator.getDataSend(ev.target);
+
+			if (!dataSend.day_id) return false;
+
+			dataSend.user_id = this.user_id;
+
+			App.api.updateCalendar(dataSend)
+				.then((res) => {
+					if (res.success) {
+						App.message.show(this.message.success.updateDate, App.config.timeCloseModal);
+						window.Page($('.plan-link').attr('href'));
 					}
 				});
 		});

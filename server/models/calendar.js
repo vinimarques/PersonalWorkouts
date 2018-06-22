@@ -47,6 +47,10 @@ class Calendar extends Model {
 	static remove(data) {
 		return Model.remove(data, 'calendar');
 	}
+
+	static update(user_id, day_id, date) {
+		return Model.update({date}, { day_id, user_id }, 'calendar');
+	}
 }
 
 module.exports = Calendar;

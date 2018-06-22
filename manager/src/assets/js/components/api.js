@@ -157,6 +157,10 @@ class Api {
 		return this.request('GET', '/calendar', data);
 	}
 
+	updateCalendar (data) {
+		return this.request('PUT', '/calendar', data);
+	}
+
 	saveCalendar (data) {
 		return this.request('POST', '/calendar', data);
 	}

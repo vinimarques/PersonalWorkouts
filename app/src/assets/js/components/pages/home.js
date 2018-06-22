@@ -144,10 +144,10 @@ class Home extends Page {
 								groups[item].map((exercise) => {
 									days_per_week = exercise.days_per_week;
 									day_name = exercise.day_name;
-									plan_name = exercise.plan_name;
 									day_note = exercise.day_note || false;
 
 									exercise.hasDescription = exercise.exercise_description !== '' && exercise.exercise_description !== null;
+
 									return exercise;
 								});
 

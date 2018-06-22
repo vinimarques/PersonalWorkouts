@@ -83,6 +83,23 @@
 					<li class="page-home__content__exercises__item">
 						<div class="page-home__content__exercises__item__title">
 							<span>{{exercise_name}}</span>
+							<div class="repts">
+							{{#js_if "this.rep_1 > 0"}}
+							<span class="rep">{{rep_1}}</span>
+							{{/js_if}}
+							{{#js_if "this.rep_2 > 0"}}
+							<span class="rep">{{rep_2}}</span>
+							{{/js_if}}
+							{{#js_if "this.rep_3 > 0"}}
+							<span class="rep">{{rep_3}}</span>
+							{{/js_if}}
+							{{#js_if "this.rep_4 > 0"}}
+							<span class="rep">{{rep_4}}</span>
+							{{/js_if}}
+							{{#js_if "this.rep_5 > 0"}}
+							<span class="rep">{{rep_5}}</span>
+							{{/js_if}}
+							</div>
 							{{#if hasDescription}}
 							<em class="icon icon-arrow-down"></em>
 							{{/if}}

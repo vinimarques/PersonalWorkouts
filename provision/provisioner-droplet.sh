@@ -19,15 +19,6 @@ service nginx restart 1>/dev/null 2>&1
 echo "+ Installing Imagemagick"
 apt-get -q -y install imagemagick 1>/dev/null 2>&1
 
-# echo "+ install mta: postfix"
-# debconf-set-selections <<< "postfix postfix/mailname string localhost"
-# debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
-# apt-get install -q -y postfix 1>/dev/null 2>&1
-# postconf -e 'inet_interfaces = localhost' 1>/dev/null 2>&1
-# postconf -e 'mydestination = ' 1>/dev/null 2>&1
-# postconf -e 'inet_protocols = ipv4' 1>/dev/null 2>&1
-# service postfix restart 1>/dev/null 2>&1
-
 echo "+ install git, make, curl"
 apt-get -q -y install git make curl 1>/dev/null 2>&1
 
@@ -40,10 +31,10 @@ echo "mysql-server mysql-server/root_password password root" | debconf-set-selec
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 apt-get -q -y install mysql-server mysql-client 1>/dev/null 2>&1
 service mysql restart 1>/dev/null 2>&1
-echo -e "[client]\nuser=root\npassword=root" | tee ~/.my.cnf 1>/dev/null 2>&1
+echo -e "[mysqld]\nuser=root\npassword=root" | tee ~/.my.cnf 1>/dev/null 2>&1
 
 echo "+ provisioning database"
-bash /root/PersonalWorkouts/provision/database.sh
+bash /root/PersonalWorkouts/provision/database-droplet.sh
 if [ $? -ne 0 ]; then
   echo "ERROR: failed on database provisioning"
 fi
@@ -52,7 +43,7 @@ echo "+ install node.js and npm"
 git clone https://github.com/visionmedia/n.git /opt/n  1>/dev/null 2>&1
 cd /opt/n
 make install  1>/dev/null 2>&1
-n 6.10.0 1>/dev/null 2>&1
+n 8.11.3 1>/dev/null 2>&1
 
 echo "+ install yarn"
 npm install -g yarn 1>/dev/null 2>&1

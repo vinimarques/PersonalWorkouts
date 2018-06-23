@@ -107,6 +107,10 @@ class Api {
 		});
 	}
 
+	logout () {
+		return this.request('POST', `/logout`);
+	}
+
 	getCalendar (date) {
 		return this.request('GET', `/calendar?user_id=${Template7.global.user.id}`);
 	}

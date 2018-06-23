@@ -43,3 +43,4 @@ app/release/*
 
 node_modules
 package-lock.json
+yarn.lock

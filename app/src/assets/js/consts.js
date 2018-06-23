@@ -11,7 +11,6 @@ export default {
 			.getConsts()
 			.then((res) => {
 				window.consts.TYPES = res.data.types;
-				window.consts.DIFFICULTIES = res.data.difficulties;
 				callback && callback();
 			});
 	}

@@ -61,4 +61,9 @@ pm2 startOrRestart ecosystem.json 1>/dev/null 2>&1
 echo "+ install ssh protection"
 apt install -y fail2ban
 
+echo "+ permissions"
+chmod +x /root/
+chmod +x /root/PersonalWorkouts/
+chmod +x /root/PersonalWorkouts/manager/
+
 exit 0

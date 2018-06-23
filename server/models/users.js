@@ -38,6 +38,13 @@ class Users extends Model {
 		`, [token], { limit: 1 });
 	}
 
+	static removeToken(token) {
+		return Model.query(`
+			DELETE FROM token
+			WHERE token.token = ?
+		`, [token]);
+	}
+
 	static all (company_id, type) {
 		return Model.query(`
 			SELECT u.id, u.name, u.email, u.company_id, u.user_type_id, c.name as 'company_name', t.name as 'user_type_name'

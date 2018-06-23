@@ -1,0 +1,94 @@
+.page-settings
+	.content-block
+		padding: 0
+		margin: 0
+
+	.settings-top
+		position: relative
+		display: flex
+		margin-top: 50px
+		flex-direction: column
+		align-items: center
+		width: 100%
+		margin-bottom: 50px
+
+		&__thumb
+			width: 100%
+			// background-image: url('../img/background-settings.png')
+			background-size: 627px 99px
+			background-position: center
+			background-repeat: no-repeat
+
+			.-thumb
+				position: relative
+				width: 100px
+				height: 100px
+				overflow: visible
+				margin: 0 auto 20px auto
+				line-height: 100px
+				text-align: center
+				font-size: 40px
+				color: $color-primary
+
+				&:after
+					position: absolute
+					top: 50%
+					left: 50%
+					transform: translate(-50%, -50%)
+					content: ''
+					background-color: $white
+					height: 120px
+					width: 120px
+					border-radius: 50%
+					z-index: -1
+
+		&__name
+			font-size: 23px
+			letter-spacing: -.73px
+			line-height: 27px
+			font-weight: 200
+			color: #000
+
+		&__role
+			font-size: 13px
+			letter-spacing: 0
+			line-height: 18px
+			font-weight: 300
+			color: transparentize(#000, .5)
+
+	.settings-table
+		box-shadow: 0 1px 0 0 #ccc
+		background-color: $white
+		padding: 0 20px
+
+		&-row
+			display: flex
+			align-items: center
+
+			&:last-child
+				.settings-table-row__wrapper
+					border-bottom: 0
+
+			&__icon
+				position: relative
+				margin-right: 10px
+				width: 26px
+				height: 26px
+				border-radius: 4px
+				line-height: 26px
+				text-align: center
+				color: $color-primary
+				font-size: 22px
+
+			&__wrapper
+				position: relative
+				display: flex
+				justify-content: space-between
+				width: 100%
+				border-bottom: 1px solid #ccc
+				padding: 15px 0
+
+				&-text
+					font-size: 15px
+					letter-spacing: -.2px
+					color: $color-text

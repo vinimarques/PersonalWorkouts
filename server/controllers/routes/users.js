@@ -83,6 +83,27 @@ module.exports = function (router) {
 		}
 	));
 
+	router.post('/logout', Resolve.send(
+		function (req) {
+			const token = req.headers['authorization'].replace('Bearer ', '');
+			return Users.removeToken(token)
+				.then(user => {
+					return {
+						success: true,
+						user
+					};
+				})
+				.catch((err) => {
+					console.log(err);
+					const error = ApiError.userNotFound();
+					return {
+						success: false,
+						error: error.data
+					};
+				});
+		}
+	));
+
 	router.get('/user', Auth.middleware(), Resolve.send(
 		function (req) {
 			const user_id = req.query.user_id;

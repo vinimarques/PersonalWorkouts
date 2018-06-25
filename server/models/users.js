@@ -16,7 +16,6 @@ class Users extends Model {
 
 	static createToken(user) {
 		const token = crypto.createHmac('sha256', app.config.security.secret).update('' + Date.now()).digest('hex');
-		const date = new Date();
 		const data = {
 			token,
 			date: Moment().format('YYYY-MM-DD HH:mm:ss'),
@@ -43,6 +42,13 @@ class Users extends Model {
 			DELETE FROM token
 			WHERE token.token = ?
 		`, [token]);
+	}
+
+	static removeTokenExpired() {
+		return Model.query(`
+			DELETE FROM token
+			WHERE TIMESTAMPDIFF(MONTH, token.date, NOW()) > 0
+		`);
 	}
 
 	static all (company_id, type) {

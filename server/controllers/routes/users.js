@@ -49,6 +49,8 @@ module.exports = function (router) {
 			const password = req.body.password;
 			const email = req.body.email;
 
+			Users.removeTokenExpired();
+
 			if (password && email) {
 				return Users.getUserByAuthentication(email, password)
 					.then(user => {

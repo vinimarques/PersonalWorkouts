@@ -1,0 +1,82 @@
+.dashboard
+	&__header
+		height: 120px
+		background: $color-dark
+		display: flex
+		flex-direction: column
+		justify-content: center
+		align-items: center
+		color: $white
+
+		span
+			font-size: 16px
+
+		h2
+			font-size: 26px
+
+		small
+			font-size: 13px
+
+	&__body
+		background: $color-page
+		padding: 20px 0
+
+	&__box
+		padding: 0 20px 20px
+
+		> h3
+			font-size: 14px
+			font-weight: normal
+			margin-bottom: 5px
+
+		&__content
+			background: $white
+			border-radius: 5px
+			box-sizing: border-box
+			padding: 15px
+
+		.-charts
+			display: flex
+			align-items: center
+
+			li
+				padding: 0 20px
+
+				strong
+					display: block
+					font-size: 22px
+
+				span
+					display: block
+					font-size: 14px
+
+		.-chart
+			width: 120px
+			height: 120px
+
+			&-month li strong
+				color: $color-primary
+
+			&-total li strong
+				color: $color-secondary
+
+	&__list
+		margin: -10px 0
+
+		li
+			display: flex
+			border-top: solid 1px $color-lightgrey
+			font-size: 12px
+			padding: 10px 0
+			align-items: center
+			justify-content: space-between
+
+			&:first-child
+				border-top: none
+
+			.num
+				text-align: right
+				font-weight: bold
+				color: $color-primary
+				display: block
+				padding-left: 10px

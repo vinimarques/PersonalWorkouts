@@ -6,6 +6,7 @@
 import Page from 'libs/page';
 import _ from 'lodash';
 import moment from 'moment';
+import config from '../../config';
 
 moment.locale('pt-BR');
 
@@ -16,7 +17,7 @@ class Home extends Page {
 
 	constructor (page) {
 		super(page);
-		this.burnPerSecond = 0.08333;
+		this.burnPerSecond = config.burnPerSecond;
 	}
 
 	onPageAfterAnimation () {

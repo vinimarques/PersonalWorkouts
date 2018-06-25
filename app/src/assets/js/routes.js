@@ -9,7 +9,7 @@ import Router from './libs/router';
 *
 */
 import Home from 'components/pages/home';
-import Weigth from 'components/pages/weigth';
+import Dashboard from 'components/pages/dashboard';
 import Settings from 'components/pages/settings';
 
 /**
@@ -20,7 +20,7 @@ export default {
 		let router = new Router();
 
 		router.add('home', Home);
-		router.add('weigth', Weigth);
+		router.add('dashboard', Dashboard);
 		router.add('settings', Settings);
 
 		App.State.Router = router.State;

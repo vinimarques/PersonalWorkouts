@@ -10,10 +10,11 @@ class Global {
 
 		$('.header .quit a').on('click', (ev) => {
 			ev.preventDefault();
-
-			App.database.rm('token');
-			App.database.rm('user');
-			window.Page('/login');
+			App.api.logout().then(() => {
+				App.database.rm('token');
+				App.database.rm('user');
+				window.Page('/login');
+			});
 		});
 
 		$body.on('click', '.open-modal', function () {

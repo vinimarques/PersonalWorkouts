@@ -55,6 +55,10 @@ class Api {
 		return this.request('POST', '/login', { email, password });
 	}
 
+	logout () {
+		return this.request('POST', `/logout`);
+	}
+
 	getUsers (company_id, type) {
 		return this.request('GET', '/users', { company_id, type });
 	}

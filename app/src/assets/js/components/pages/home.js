@@ -41,6 +41,7 @@ class Home extends Page {
 		});
 
 		$('.more-options').on('click', () => {
+			let that = this;
 			var buttons = [
 				{
 					text: 'Inserir tempo manualmente',
@@ -51,7 +52,7 @@ class Home extends Page {
 								<div class="form-modal">
 									<span class="form-modal__label">Minutos:</span>
 									<div class="form-modal__input">
-										<input type="number" min="1" max="120" name="modal-time">
+										<input type="tel" maxlength="3" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="modal-time">
 									</div>
 								</div>
 							`,
@@ -63,7 +64,20 @@ class Home extends Page {
 									text: 'Salvar',
 									close: false,
 									onClick: function () {
+										let time = $('[name="modal-time"]').val();
+										let date = App.dateSelected;
 
+										if (time == '' || !date) return false;
+
+										time = parseInt(time) * 60;
+
+										App.api.saveTime(time, date)
+											.then((res) => {
+												if (res.success) {
+													that.loadDayInfo(date);
+													App.closeModal();
+												}
+											});
 									}
 								}
 							]
@@ -91,7 +105,18 @@ class Home extends Page {
 									text: 'Salvar',
 									close: false,
 									onClick: function () {
+										let new_date = $('[name="modal-date"]').val();
+										let date = App.dateSelected;
 
+										if (new_date == '' || !date) return false;
+
+										App.api.updateCalendar(new_date, date)
+											.then((res) => {
+												if (res.success) {
+													App.closeModal();
+													that.load();
+												}
+											});
 									}
 								}
 							]
@@ -180,7 +205,6 @@ class Home extends Page {
 			.then((res) => {
 				if (res.success) {
 					let day = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY-MMMM-ddd').split('-');
-					let month = day[1];
 					let year = day[2];
 					let monthName = day[3];
 					let dayName = day[4];
@@ -200,7 +224,6 @@ class Home extends Page {
 
 						if (res.data.length > 0) {
 							let day_name = '';
-							let plan_name = '';
 							let days_per_week = '';
 							let day_note = false;
 
@@ -209,9 +232,9 @@ class Home extends Page {
 
 							Object.keys(groups).map((item) => {
 								groups[item].map((exercise) => {
-									days_per_week = exercise.days_per_week;
 									day_name = exercise.day_name;
 									day_note = exercise.day_note || false;
+									this.day_id = exercise.day_id || false;
 
 									exercise.hasDescription = exercise.exercise_description !== '' && exercise.exercise_description !== null;
 
@@ -228,7 +251,6 @@ class Home extends Page {
 							html = template({
 								hasResult: true,
 								workouts,
-								plan_name,
 								days_per_week,
 								day_name,
 								number_exercises: res.data.length > 1 ? res.data.length + ' exercícios' : res.data.length + ' exercício'
@@ -268,11 +290,8 @@ class Home extends Page {
 	}
 
 	formatTime (timer) {
-		let minutes = parseInt(timer / 60, 10);
-		let seconds = parseInt(timer % 60, 10);
-		minutes = minutes < 10 ? "0" + minutes : minutes;
-		seconds = seconds < 10 ? "0" + seconds : seconds;
-		return minutes + ":" + seconds;
+		let time = moment.utc(timer*1000).format('HH:mm:ss');
+		return time;
 	}
 
 	setBurn () {
@@ -283,16 +302,21 @@ class Home extends Page {
 
 	play () {
 		this.playing = true;
+		this.playStart = moment();
+		this.count = 0;
 
 		this.interval = setInterval(() => {
-			this.timer++;
-			$('.date-content__time span').text(this.formatTime(this.timer));
+			this.playEnd = moment();
+			this.count = this.playEnd.diff(this.playStart, 'seconds');
+			$('.date-content__time span').text(this.formatTime(this.timer + this.count));
 			this.setBurn();
 		}, 1000);
 	}
 
 	pause () {
 		this.playing = false;
+		this.timer = this.timer + this.count;
+		this.count = 0;
 		clearInterval(this.interval);
 
 		App.api.saveTime(this.timer, App.dateSelected)

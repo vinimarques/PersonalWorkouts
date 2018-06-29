@@ -30,7 +30,7 @@
     "file-loader": "^0.9.0",
     "framework7": "^1.6.4",
     "html-webpack-plugin": "^2.24.1",
-    "moment": "^2.20.1",
+    "moment": "^2.2.1",
     "node-sass": "^3.13.0",
     "numeral": "^2.0.6",
     "postcss-loader": "^1.1.1",

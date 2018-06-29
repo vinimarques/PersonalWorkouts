@@ -55,6 +55,30 @@ module.exports = function (router) {
 		}
 	));
 
+	router.put('/calendar/date', Auth.middleware(), Resolve.send(
+		function (req) {
+			const user_id = parseInt(req.body.user_id);
+			const newDate = req.body.new_date;
+			const date = req.body.date;
+
+			if (!user_id || !newDate || !date) {
+				const error = ApiError.companyRequired();
+				return {
+					success: false,
+					error: error.data
+				};
+			}
+
+			return Calendar.updateByCalendarDate(user_id, newDate, date)
+				.then(calendar => {
+					return {
+						success: true,
+						data: calendar
+					};
+				});
+		}
+	));
+
 	router.get('/calendar-user', Auth.middleware(), Resolve.send(
 		function (req) {
 			const user_id = parseInt(req.query.user_id);

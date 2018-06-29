@@ -16,7 +16,9 @@ class Calendar extends Model {
 			SELECT
 				day.name as 'day_name',
 				calendar.date,
+				calendar.id,
 				calendar.user_id,
+				calendar.day_id,
 				exercise.name as 'exercise_name',
 				exercise.description as 'exercise_description',
 				day_exercise.note as 'day_note',
@@ -50,6 +52,12 @@ class Calendar extends Model {
 
 	static update(user_id, day_id, date) {
 		return Model.update({date}, { day_id, user_id }, 'calendar');
+	}
+
+	static updateByCalendarDate(user_id, newDate, date) {
+		return Model.query(`
+			UPDATE calendar SET date = ? WHERE date = ? AND user_id = ?
+		`, [newDate, date, user_id]);
 	}
 }
 

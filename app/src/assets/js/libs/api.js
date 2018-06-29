@@ -111,8 +111,12 @@ class Api {
 		return this.request('POST', `/logout`);
 	}
 
-	getCalendar (date) {
+	getCalendar () {
 		return this.request('GET', `/calendar?user_id=${Template7.global.user.id}`);
+	}
+
+	updateCalendar (new_date, date) {
+		return this.request('PUT', `/calendar/date`, {new_date, user_id: Template7.global.user.id, date});
 	}
 
 	getCalendarDate (date) {

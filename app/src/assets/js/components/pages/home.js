@@ -39,6 +39,72 @@ class Home extends Page {
 			e.stopImmediatePropagation();
 			this.calendar.open();
 		});
+
+		$('.more-options').on('click', () => {
+			var buttons = [
+				{
+					text: 'Inserir tempo manualmente',
+					onClick: () => {
+						App.modal({
+							title:  'Inserir tempo manualmente:',
+							text: `
+								<div class="form-modal">
+									<span class="form-modal__label">Minutos:</span>
+									<div class="form-modal__input">
+										<input type="number" min="1" max="120" name="modal-time">
+									</div>
+								</div>
+							`,
+							buttons: [
+								{
+									text: 'Cancelar'
+								},
+								{
+									text: 'Salvar',
+									close: false,
+									onClick: function () {
+
+									}
+								}
+							]
+						});
+					}
+				},
+				{
+					text: 'Trocar treino de dia',
+					onClick: () => {
+						App.modal({
+							title:  'Trocar treino de dia:',
+							text: `
+								<div class="form-modal">
+									<span class="form-modal__label">Dia:</span>
+									<div class="form-modal__input">
+										<input type="date" name="modal-date">
+									</div>
+								</div>
+							`,
+							buttons: [
+								{
+									text: 'Cancelar'
+								},
+								{
+									text: 'Salvar',
+									close: false,
+									onClick: function () {
+
+									}
+								}
+							]
+						});
+					}
+				},
+				{
+					text: 'Cancel',
+					color: 'red'
+				}
+			];
+			App.actions(buttons);
+		});
 	}
 
 	load () {

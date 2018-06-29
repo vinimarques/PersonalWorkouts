@@ -79,6 +79,7 @@ class ExercisesDay extends Page {
 
 				callback && callback();
 			}).catch(err => {
+				this.day_id = false;
 				if (err.responseJSON.error.status === 431) {
 					this.newDay();
 				}
@@ -159,7 +160,7 @@ class ExercisesDay extends Page {
 			let val = $('.day-name').val();
 
 			if (val !== '') {
-				if (this.day_id !== undefined) {
+				if (this.day_id && this.day_id !== undefined) {
 					App.api.updateDay({
 						name: val,
 						day_id: this.day_id

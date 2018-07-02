@@ -1,5 +1,4 @@
 const Model = require('./model');
-const crypto = require('crypto');
 
 class Consts extends Model {
 	static all () {

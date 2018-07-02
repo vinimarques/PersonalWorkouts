@@ -59,6 +59,32 @@ class Calendar extends Model {
 			UPDATE calendar SET date = ? WHERE date = ? AND user_id = ?
 		`, [newDate, date, user_id]);
 	}
+
+	static dashboardCalendar(date) {
+		let _date = date + '%';
+		const trackings = Model.query(`
+			SELECT id, date, time
+			FROM tracking
+			WHERE id IN (
+				SELECT MAX(id)
+				FROM tracking
+				GROUP BY date
+			) AND date like ?
+		`, [_date]);
+
+		const calendar = Model.query(`
+			SELECT * FROM calendar
+			WHERE date like ?
+			GROUP BY date
+		`, [_date]);
+
+		return Promise.all([trackings,calendar]).then((res) => {
+			return {
+				tracking: res[0],
+				calendar: res[1]
+			};
+		});
+	}
 }
 
 module.exports = Calendar;

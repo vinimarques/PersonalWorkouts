@@ -5,6 +5,10 @@
  */
 import Page from 'libs/page';
 import EasyPieChart from 'libs/easypiechart';
+import moment from 'moment';
+import config from '../../config';
+
+moment.locale('pt-BR');
 
 /**
  *
@@ -25,6 +29,11 @@ class Dashboard extends Page {
 	}
 
 	load () {
+		let date = moment().format('YYYY-MM');
+		App.api.getDashboard(date).then((res) => {
+			console.log(res);
+		});
+
 		let month = new EasyPieChart($('.-chart-month')[0], {
 			barColor: '#EF476F',
 			trackColor: '#f5f5f5',

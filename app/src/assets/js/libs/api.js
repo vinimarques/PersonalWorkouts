@@ -127,6 +127,10 @@ class Api {
 		return this.request('GET', `/tracking?user_id=${Template7.global.user.id}&date=${date}`);
 	}
 
+	getDashboard (date) {
+		return this.request('GET', `/calendar/dashboard?date=${date}`);
+	}
+
 	saveTime (time, date) {
 		return this.request('POST', `/tracking`, {
 			users_id: Template7.global.user.id,

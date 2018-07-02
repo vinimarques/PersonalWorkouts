@@ -101,4 +101,26 @@ module.exports = function (router) {
 				});
 		}
 	));
+
+	router.get('/calendar/dashboard', Auth.middleware(), Resolve.send(
+		function (req) {
+			const date = req.query.date;
+
+			if (!date) {
+				const error = ApiError.companyRequired();
+				return {
+					success: false,
+					error: error.data
+				};
+			}
+
+			return Calendar.dashboardCalendar(date)
+				.then(calendar => {
+					return {
+						success: true,
+						data: calendar
+					};
+				});
+		}
+	));
 };

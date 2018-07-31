@@ -78,10 +78,29 @@ class Calendar extends Model {
 			GROUP BY date
 		`, [_date]);
 
-		return Promise.all([trackings,calendar]).then((res) => {
+		const total_calendar = Model.query(`
+			SELECT * FROM calendar
+			GROUP BY date
+		`);
+
+		const total_trackings = Model.query(`
+			SELECT id, date, time
+			FROM tracking
+			WHERE id IN (
+				SELECT MAX(id)
+				FROM tracking
+				GROUP BY date
+			)
+		`);
+
+		return Promise.all([trackings,calendar,total_calendar,total_trackings]).then((res) => {
 			return {
 				tracking: res[0],
-				calendar: res[1]
+				calendar: res[1],
+				total: {
+					tracking: res[3],
+					calendar: res[2]
+				}
 			};
 		});
 	}

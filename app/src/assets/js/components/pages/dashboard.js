@@ -103,6 +103,8 @@ class Dashboard extends Page {
 				duration: 1000
 			}
 		});
+
+		this.container.removeClass('-loading');
 	}
 }
 

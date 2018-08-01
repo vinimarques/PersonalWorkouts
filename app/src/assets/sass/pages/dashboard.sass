@@ -7,6 +7,8 @@
 		justify-content: center
 		align-items: center
 		color: $white
+		transform: translateY(0px)
+		transition: all .3s
 
 		span
 			font-size: 16px
@@ -17,9 +19,17 @@
 		small
 			font-size: 13px
 
+		.-loading &
+			transform: translateY(-120px)
+
 	&__body
 		background: $color-page
 		padding: 20px 0
+		opacity: 1
+		transition: all .3s
+
+		.-loading &
+			opacity: 0
 
 	&__box
 		padding: 0 20px 20px

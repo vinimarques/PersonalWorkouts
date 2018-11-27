@@ -1,0 +1,11 @@
+{
+	"name": "personal-v2rm",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server/index.js",
+	"scripts": {
+		"start": "cd manager; npm i && npm run build && cd .. && cd server && npm i && node index.js"
+	},
+	"author": "",
+	"license": "ISC"
+}

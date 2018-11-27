@@ -18,8 +18,7 @@ router.get('/consts', Resolve.send(
 				return {
 					success: true,
 					data: {
-						types: result[0],
-						difficulties: result[1]
+						types: result
 					}
 				};
 			})

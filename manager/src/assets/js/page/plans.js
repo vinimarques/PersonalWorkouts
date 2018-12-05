@@ -26,9 +26,9 @@ class Plans extends Page {
 				plans: 'NENHUM DADO ENCONTRADO'
 			},
 			success: {
-				add: 'Plan adicionado com sucesso!',
-				update: 'Plan atualizado com sucesso!',
-				remove: 'Plan removido com sucesso!'
+				add: 'Plano adicionado com sucesso!',
+				update: 'Plano atualizado com sucesso!',
+				remove: 'Plano removido com sucesso!'
 			}
 		}
 	}
@@ -44,7 +44,7 @@ class Plans extends Page {
 		this.template = $.templates($('#template-users-plans').html());
 		let html = '';
 
-		App.api.getUsers(company_id, App.data.user.user_type_id).then((res) => {
+		App.api.getUsers(company_id, App.data.user.user_type_id, App.data.user.id).then((res) => {
 			if (res.success && res.data.length > 0) {
 				this.users = res.data;
 				html = this.template.render({users: res.data});

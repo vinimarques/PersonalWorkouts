@@ -13,6 +13,7 @@ module.exports = function (router) {
 		function (req) {
 			const company_id = req.query.company_id;
 			const type = req.query.type;
+			const user_id = req.query.user_id;
 			let where = '';
 
 			if (!company_id) {
@@ -25,14 +26,14 @@ module.exports = function (router) {
 
 
 			if (!type) {
-				where = ' AND u.user_type_id > 3';
+				where = ` AND u.id = ${user_id}`;
 			}
 			else {
 				if (type === '1') where = '';
 				if (type === '2') where = ' AND u.user_type_id > 2';
+				if (type === '3') where = ` AND u.id = ${user_id} OR u.coach = ${user_id}`;
+				if (type === '4') where = ` AND u.id = ${user_id}`;
 			}
-
-			console.log(type, where);
 
 			return Users.all(company_id, where)
 				.then(users => {

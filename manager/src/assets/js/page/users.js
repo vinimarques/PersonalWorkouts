@@ -45,7 +45,7 @@ class Users extends Page {
 		this.template = $.templates($('#template-users').html());
 		let html = '';
 
-		App.api.getUsers(company_id, App.data.user.user_type_id).then((res) => {
+		App.api.getUsers(company_id, App.data.user.user_type_id, App.data.user.id).then((res) => {
 			if (res.success && res.data.length > 0) {
 				this.users = res.data;
 				html = this.template.render({users: res.data});

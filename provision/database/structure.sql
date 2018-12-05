@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `personalworkouts`.`users` (
   `password` VARCHAR(256) NULL,
   `company_id` INT NOT NULL,
   `user_type_id` INT NOT NULL,
+  `coach` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_users_company_idx` (`company_id` ASC),

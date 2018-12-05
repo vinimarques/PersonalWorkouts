@@ -59,8 +59,8 @@ class Api {
 		return this.request('POST', `/logout`);
 	}
 
-	getUsers (company_id, type) {
-		return this.request('GET', '/users', { company_id, type });
+	getUsers (company_id, type, user_id) {
+		return this.request('GET', '/users', { company_id, type, user_id });
 	}
 
 	getUser (user_id) {

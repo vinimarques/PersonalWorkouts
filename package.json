@@ -2,10 +2,18 @@
 	"name": "personal-v2rm",
 	"version": "1.0.0",
 	"description": "",
-	"main": "server/index.js",
+	"main": "index.js",
 	"scripts": {
-		"start": "cd manager; npm i && npm run build && cd .. && cd server && npm i && node index.js"
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"bluebird": "^3.5.0",
+		"body-parser": "^1.17.2",
+		"express": "^4.15.3",
+		"lodash": "^4.17.4",
+		"moment": "^2.18.1",
+		"mysql": "^2.13.0"
+	}
 }

@@ -33,7 +33,7 @@ class App {
     server.use(bodyParser.urlencoded({ extended: true }));
 
     server.use('/api', Api);
-    server.use('/', express.static(path.join(__dirname, '../manager/dist')));
+    server.use('/', express.static(path.join(__dirname, 'manager/dist')));
 
     server.listen(this.config.port || 3000, () => {
       console.log(`server listening on port ${this.config.port || 3000}`);

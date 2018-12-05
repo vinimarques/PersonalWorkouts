@@ -11,7 +11,7 @@ var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 var precss = require('precss');
 var SpritesmithPlugin = require('webpack-spritesmith');
 
-var __f7Path = path.join(__dirname, 'node_modules/framework7/dist');
+var __f7Path = path.join(__dirname, 'node_modules/framework7');
 var __cordova = path.join(__dirname, 'cordova');
 var __src = path.join(__dirname, 'src');
 
@@ -45,8 +45,8 @@ module.exports = {
 	},
 	resolve: {
 		alias: {
+			'framework7.min.css': path.join(__f7Path, 'css/framework7.min.css'),
 			'framework7.ios.min.css': path.join(__f7Path, 'css/framework7.ios.min.css'),
-			'framework7.ios.colors.min.css': path.join(__f7Path, 'css/framework7.ios.colors.min.css'),
 			'framework7.material.min.css': path.join(__f7Path, 'css/framework7.material.min.css'),
 			'framework7.material.colors.min.css': path.join(__f7Path, 'css/framework7.material.colors.min.css'),
 			'main.sass': path.join(__src, 'assets/sass/main.sass'),

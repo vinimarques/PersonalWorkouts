@@ -28,7 +28,7 @@ import Message from 'components/message';
 /**
 *
 */
-document.addEventListener('deviceready', () => {
+const Init = () => {
 	const options = {
 		version: config.version
 	};
@@ -68,4 +68,6 @@ document.addEventListener('deviceready', () => {
 
 	Routes.init();
 	App.init();
-});
+};
+
+Init();

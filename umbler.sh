@@ -12,3 +12,10 @@ npm run build
 cd ..
 rm -R ../personal-v2rm-com-br/manager/dist
 cp -R ./manager/dist ../personal-v2rm-com-br/manager
+
+### build and copy app dist
+cd app
+npm run build
+cd ..
+rm -R ../personal-v2rm-com-br/app/dist
+cp -R ./app/dist ../personal-v2rm-com-br/app

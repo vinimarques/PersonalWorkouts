@@ -4,9 +4,8 @@
 	"version": "1.0.0",
 	"description": "",
 	"scripts": {
-		"dev": "cp cordova/platforms/browser/config.xml cordova/www; cp -R cordova/platforms/browser/platform_www/ cordova/www; webpack -w --progress --colors",
-		"build": "rm -Rf cordova/www; mkdir cordova/www; node_modules/.bin/webpack -p --progress --colors",
-		"production": "npm run build; cd cordova; cordova build android; cordova build ios; cd .."
+		"dev": "webpack -w --progress --colors",
+		"build": "node_modules/.bin/webpack -p --progress --colors"
 	},
 	"author": "nodo.cc",
 	"license": "ISC",
@@ -28,7 +27,7 @@
 		"css-loader": "^0.26.0",
 		"extract-text-webpack-plugin": "^1.0.1",
 		"file-loader": "^0.9.0",
-		"framework7": "^3.5.2",
+		"framework7": "^1.6.4",
 		"html-webpack-plugin": "^2.24.1",
 		"moment": "^2.2.1",
 		"node-sass": "^3.13.0",

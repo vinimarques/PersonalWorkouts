@@ -12,7 +12,6 @@ var precss = require('precss');
 var SpritesmithPlugin = require('webpack-spritesmith');
 
 var __f7Path = path.join(__dirname, 'node_modules/framework7');
-var __cordova = path.join(__dirname, 'cordova');
 var __src = path.join(__dirname, 'src');
 
 var templateFunction = function (data) {
@@ -41,14 +40,12 @@ module.exports = {
 	},
 	output: {
 		filename: 'bundle.js',
-		path: path.join(__cordova, 'www/js')
+		path: 'dist/js'
 	},
 	resolve: {
 		alias: {
-			'framework7.min.css': path.join(__f7Path, 'css/framework7.min.css'),
-			'framework7.ios.min.css': path.join(__f7Path, 'css/framework7.ios.min.css'),
-			'framework7.material.min.css': path.join(__f7Path, 'css/framework7.material.min.css'),
-			'framework7.material.colors.min.css': path.join(__f7Path, 'css/framework7.material.colors.min.css'),
+			'framework7.ios.colors.min.css': path.join(__f7Path, 'dist/css/framework7.ios.colors.min.css'),
+			'framework7.ios.min.css': path.join(__f7Path, 'dist/css/framework7.ios.min.css'),
 			'main.sass': path.join(__src, 'assets/sass/main.sass'),
 			'bootstrap': path.join(__src, 'assets/js/bootstrap.js'),
 			'libs': path.join(__src, 'assets/js/libs'),
@@ -94,8 +91,9 @@ module.exports = {
 			host: 'localhost',
 			port: 3000,
 			cors: true,
+			open: false,
 			server: {
-				baseDir: ['cordova/www'],
+				baseDir: ['dist'],
 				middleware: function (req, res, next) {
 					res.setHeader('Access-Control-Allow-Origin', '*');
 					res.setHeader('Access-Control-Allow-Credentials', true);
@@ -103,28 +101,5 @@ module.exports = {
 				}
 			}
 		})
-		// new SpritesmithPlugin({
-		// 	src: {
-		// 		cwd: path.join(__src, 'assets/sprite'),
-		// 		glob: '*.png'
-		// 	},
-		// 	target: {
-		// 		image: path.join(__cordova, 'www/css/sprite.png'),
-		// 		css: [
-		// 			[path.resolve(__cordova, 'www/css/sprite.css'), {
-		// 				format: 'function_based_template'
-		// 			}]
-		// 		]
-		// 	},
-		// 	apiOptions: {
-		// 		cssImageRef: "sprite.png"
-		// 	},
-		// 	spritesmithOptions: {
-		// 		padding: 10
-		// 	},
-		// 	customTemplates: {
-		// 		'function_based_template': templateFunction
-		// 	}
-		// })
 	]
 };

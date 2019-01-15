@@ -1,47 +1,30 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 4541
-#
-# http://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
-#
-# Host: 127.0.0.1 (MySQL 5.5.58-0ubuntu0.14.04.1)
-# Database: personalworkouts
-# Generation Time: 2017-12-08 14:26:45 +0000
-# ************************************************************
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-# Dump of table calendar
-# ------------------------------------------------------------
-
-
-# Dump of table company
-# ------------------------------------------------------------
-
-LOCK TABLES `company` WRITE;
-/*!40000 ALTER TABLE `company` DISABLE KEYS */;
-
 INSERT INTO `company` (`id`, `name`)
 VALUES
 	(1,'V2RM');
 
-/*!40000 ALTER TABLE `company` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `user_type` (`id`, `name`)
+VALUES
+	(1,'master'),
+	(2,'admin'),
+	(3,'professor'),
+	(4,'aluno');
 
-# Dump of table exercise
-# ------------------------------------------------------------
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `company_id`, `user_type_id`,`coach`)
+VALUES
+	(1,'Vinicius Roloff Marques','vinicius@v2rm.com.br','8db35bb9540dcaf262d0ea8bfe9755cb944e21fd',1,1,NULL),
+	(2,'Bethieli Lessa Marques','bethielihl@gmail.com','a1bcfdb1fcec728e3268bfd1ecee3ed15a320998',1,4,1),
+	(3,'Admin','admin@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,2,NULL),
+	(4,'Professor','professor@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,3,NULL),
+	(5,'Aluno','aluno@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,4,4);
 
-LOCK TABLES `exercise` WRITE;
-/*!40000 ALTER TABLE `exercise` DISABLE KEYS */;
+INSERT INTO `muscle_group` (`id`, `name`)
+VALUES
+	(1,'Peito'),
+	(2,'Costas'),
+	(3,'Pernas'),
+	(4,'Braços'),
+	(5,'Ombros'),
+	(6,'Abdominais');
 
 INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
 VALUES
@@ -62,10 +45,7 @@ VALUES
 	(15,'Peck-Deck',NULL,1),
 	(16,'Crucifixo declinado com halter',NULL,1),
 	(17,'Barras paralelas',NULL,1),
-	(18,'Flexões',NULL,1);
-
-INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
-VALUES
+	(18,'Flexões',NULL,1),
 	(19,'Barra fixa pegada aberta',NULL,2),
 	(20,'Remada unilateral com haltere',NULL,2),
 	(21,'Barra fixa pegada fechada',NULL,2),
@@ -78,10 +58,7 @@ VALUES
 	(28,'Levantamento terra com barra',NULL,2),
 	(29,'Levantamento terra com halter',NULL,2),
 	(30,'Pulley com pegada aberta',NULL,2),
-	(31,'Pulley com pegada fechada',NULL,2);
-
-INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
-VALUES
+	(31,'Pulley com pegada fechada',NULL,2),
 	(32,'Agachamento livre',NULL,3),
 	(33,'Passadas afundo',NULL,3),
 	(34,'Levantamento terra',NULL,3),
@@ -96,10 +73,7 @@ VALUES
 	(43,'Agachamento sumô',NULL,3),
 	(44,'Stiff',NULL,3),
 	(45,'Flexão de joelhos sentado',NULL,3),
-	(46,'Mesa flexora',NULL,3);
-
-INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
-VALUES
+	(46,'Mesa flexora',NULL,3),
 	(47,'Desenvolvimento com halteres',NULL,5),
 	(48,'Desenvolvimento na frente com barra',NULL,5),
 	(49,'Levantamento lateral com halteres',NULL,5),
@@ -109,10 +83,7 @@ VALUES
 	(53,'Remada alta no cabo',NULL,5),
 	(54,'Crucifixo invertido no aparelho',NULL,5),
 	(55,'Crucifixo invertido no banco com halteres',NULL,5),
-	(56,'Desenvolvimento Arnold',NULL,5);
-
-INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
-VALUES
+	(56,'Desenvolvimento Arnold',NULL,5),
 	(57,'Tríceps testa',NULL,4),
 	(58,'Rosca no puxador',NULL,4),
 	(59,'Rosca com barra reta',NULL,4),
@@ -128,25 +99,30 @@ VALUES
 	(69,'Tríceps puxador W',NULL,4),
 	(70,'Tríceps puxador corda',NULL,4),
 	(71,'Tríceps francês',NULL,4),
-	(72,'Tríceps coice',NULL,4);
-
-INSERT INTO `exercise` (`id`, `name`, `description`, `muscle_group_id`)
-VALUES
+	(72,'Tríceps coice',NULL,4),
 	(73,'Prancha',NULL,6),
 	(74,'Abdominal supra com anilha',NULL,6),
 	(75,'Abdominal rolinho',NULL,6),
 	(76,'Abdominal no puxador',NULL,6),
-	(77,'Panturrilha',NULL,3);
+	(77,'Panturrilha',NULL,3),
+	(78,'Pulldown com corda','',2),
+	(79,'Rosca alternada','',4),
+	(80,'Agachamento no Hack Machine','',3),
+	(81,'Remada alta com pegada fechada','',5),
+	(82,'Triceps francês com corda','',4),
+	(83,'Levantamento frontal no cabo','',5),
+	(84,'Crossover invertido','',5);
 
-/*!40000 ALTER TABLE `exercise` ENABLE KEYS */;
-UNLOCK TABLES;
 
+INSERT INTO `muscle_group_company` (`id`, `muscle_group_id`, `company_id`)
+VALUES
+	(1,1,1),
+	(2,2,1),
+	(3,3,1),
+	(4,4,1),
+	(5,5,1),
+	(6,6,1);
 
-# Dump of table exercise_company
-# ------------------------------------------------------------
-
-LOCK TABLES `exercise_company` WRITE;
-/*!40000 ALTER TABLE `exercise_company` DISABLE KEYS */;
 
 INSERT INTO `exercise_company` (`id`, `company_id`, `exercise_id`)
 VALUES
@@ -226,72 +202,276 @@ VALUES
 	(74,1,74),
 	(75,1,75),
 	(76,1,76),
-	(77,1,77);
+	(77,1,77),
+	(78,1,78),
+	(79,1,79),
+	(80,1,80),
+	(81,1,81),
+	(82,1,82),
+	(83,1,83),
+	(84,1,84);
 
-/*!40000 ALTER TABLE `exercise_company` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table muscle_group
-# ------------------------------------------------------------
-
-LOCK TABLES `muscle_group` WRITE;
-/*!40000 ALTER TABLE `muscle_group` DISABLE KEYS */;
-
-INSERT INTO `muscle_group` (`id`, `name`)
+INSERT INTO `day` (`id`, `name`)
 VALUES
-	(1,'Peito'),
-	(2,'Costas'),
-	(3,'Pernas'),
-	(4,'Braços'),
-	(5,'Ombros'),
-	(6,'Abdominais');
+	(2,'Treino de ombro e triceps'),
+	(3,'Treino de costas'),
+	(4,'Treino de perna'),
+	(5,'Treino de peito'),
+	(6,'Treino de costas, biceps e abs'),
+	(7,'Treino de perna'),
+	(8,'Treino de ombro e triceps'),
+	(13,'Treino de costas, biceps e abs'),
+	(14,'Treino de peito e abs'),
+	(15,'Treino de Peito, Ombro e Triceps'),
+	(16,'Treino de Costa, Biceps e Abs'),
+	(17,'Treino de perna'),
+	(18,'Treino de peito e abs'),
+	(19,'Treino de costas'),
+	(20,'Treino de ombro, triceps e abs'),
+	(21,'Treino de costas e abs'),
+	(22,'Treino de peito e biceps'),
+	(23,'Treino de perna'),
+	(24,'Treino de ombro e triceps');
 
-/*!40000 ALTER TABLE `muscle_group` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-INSERT INTO `muscle_group_company` (`id`, `company_id`, `muscle_group_id`)
+INSERT INTO `day_exercise_group` (`id`, `day_id`)
 VALUES
-	(1,1,1),
-	(2,1,2),
-	(3,1,3),
-	(4,1,4),
-	(5,1,5),
-	(6,1,6);
+	(4,2),
+	(5,3),
+	(6,3),
+	(7,3),
+	(8,3),
+	(9,3),
+	(10,5),
+	(11,5),
+	(12,5),
+	(13,2),
+	(14,2),
+	(15,2),
+	(16,2),
+	(17,2),
+	(18,2),
+	(19,4),
+	(20,4),
+	(21,4),
+	(22,4),
+	(23,4),
+	(24,6),
+	(25,6),
+	(26,6),
+	(27,6),
+	(28,6),
+	(29,6),
+	(30,6),
+	(31,8),
+	(32,8),
+	(33,8),
+	(34,8),
+	(35,8),
+	(36,7),
+	(37,7),
+	(38,7),
+	(39,7),
+	(40,13),
+	(41,13),
+	(42,13),
+	(43,13),
+	(44,17),
+	(46,17),
+	(47,17),
+	(48,19),
+	(49,19),
+	(50,19),
+	(51,19),
+	(52,18),
+	(53,18),
+	(54,18),
+	(55,18),
+	(56,18),
+	(57,19),
+	(58,19),
+	(59,20),
+	(60,20),
+	(61,20),
+	(62,20),
+	(63,20),
+	(64,22),
+	(66,22),
+	(67,22),
+	(68,22),
+	(69,22),
+	(70,24),
+	(71,24),
+	(72,24),
+	(73,21),
+	(74,21),
+	(75,21),
+	(76,21);
 
-# Dump of table user_type
-# ------------------------------------------------------------
-
-
-LOCK TABLES `user_type` WRITE;
-/*!40000 ALTER TABLE `user_type` DISABLE KEYS */;
-
-INSERT INTO `user_type` (`id`, `name`)
+INSERT INTO `exercise_group` (`id`, `exercise_id`, `day_exercise_group_id`)
 VALUES
-	(1,'master'),
-	(2,'admin'),
-	(3,'professor'),
-	(4,'aluno');
+	(6,47,4),
+	(7,28,5),
+	(8,25,5),
+	(9,24,6),
+	(10,78,6),
+	(11,19,7),
+	(12,31,7),
+	(13,64,8),
+	(14,59,8),
+	(15,66,9),
+	(16,3,10),
+	(17,9,10),
+	(18,4,11),
+	(19,2,11),
+	(20,15,12),
+	(21,18,12),
+	(22,49,13),
+	(23,51,14),
+	(24,48,14),
+	(25,69,15),
+	(26,71,15),
+	(27,70,16),
+	(28,74,17),
+	(29,75,17),
+	(30,76,18),
+	(31,33,19),
+	(32,38,20),
+	(33,46,20),
+	(34,32,21),
+	(35,41,21),
+	(36,77,22),
+	(37,73,23),
+	(38,19,24),
+	(39,28,25),
+	(40,22,26),
+	(41,30,26),
+	(42,60,27),
+	(43,79,28),
+	(44,58,28),
+	(45,73,29),
+	(46,76,30),
+	(47,75,30),
+	(48,48,31),
+	(49,49,32),
+	(50,51,33),
+	(51,57,34),
+	(52,69,34),
+	(53,68,35),
+	(54,71,35),
+	(55,40,36),
+	(56,45,36),
+	(57,41,37),
+	(58,32,37),
+	(59,36,38),
+	(60,77,39),
+	(61,24,40),
+	(62,19,40),
+	(63,31,41),
+	(64,22,41),
+	(65,58,42),
+	(66,60,42),
+	(67,74,43),
+	(68,76,43),
+	(69,40,44),
+	(71,41,46),
+	(72,80,46),
+	(73,45,47),
+	(74,77,47),
+	(75,26,48),
+	(76,28,48),
+	(77,31,49),
+	(78,22,49),
+	(79,30,50),
+	(80,78,50),
+	(81,19,51),
+	(82,54,51),
+	(83,9,52),
+	(84,1,52),
+	(85,3,53),
+	(86,8,53),
+	(87,4,54),
+	(88,76,55),
+	(89,74,56),
+	(90,79,57),
+	(91,58,58),
+	(92,48,59),
+	(93,50,59),
+	(94,51,60),
+	(95,81,60),
+	(96,82,61),
+	(97,69,61),
+	(98,57,61),
+	(99,76,62),
+	(100,74,63),
+	(101,2,64),
+	(102,14,64),
+	(105,5,66),
+	(106,6,66),
+	(107,15,67),
+	(108,64,68),
+	(109,59,68),
+	(110,79,69),
+	(111,48,70),
+	(112,49,70),
+	(113,84,71),
+	(114,50,71),
+	(115,83,71),
+	(116,60,72),
+	(117,57,72),
+	(118,82,72),
+	(119,19,73),
+	(120,24,73),
+	(121,28,74),
+	(122,31,74),
+	(123,78,75),
+	(124,54,75),
+	(125,74,76),
+	(126,73,76);
 
-/*!40000 ALTER TABLE `user_type` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table users
-# ------------------------------------------------------------
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `company_id`, `user_type_id`)
+INSERT INTO `tracking` (`id`, `users_id`, `date`, `time`)
 VALUES
-	(1,'Vinicius Roloff Marques','vinicius@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,1),
-	(2,'Bethieli Lessa Marques','bethielihl@gmail.com','a1bcfdb1fcec728e3268bfd1ecee3ed15a320998',1,4),
-	(3,'Admin','admin@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,2),
-	(4,'Professor','professor@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,3),
-	(5,'Aluno','aluno@v2rm.com.br','055b5d00885ec3f0c84957c292d2eb51c423abc9',1,4);
+	(2,1,'2018-06-26',3180),
+	(3,1,'2018-06-27',42),
+	(4,1,'2018-06-27',76),
+	(5,1,'2018-06-28',51),
+	(6,1,'2018-06-28',102),
+	(7,1,'2018-06-28',2580),
+	(8,1,'2018-06-27',2580),
+	(9,1,'2018-07-03',3480),
+	(10,1,'2018-07-04',2700),
+	(11,1,'2018-07-11',3300),
+	(12,1,'2018-07-10',2520),
+	(13,1,'2018-07-09',3900),
+	(14,1,'2018-07-18',3900),
+	(15,1,'2018-07-19',2700),
+	(16,1,'2018-07-24',2400),
+	(17,1,'2018-07-25',3300),
+	(18,1,'2018-07-26',3720),
+	(19,1,'2018-07-26',3720),
+	(20,1,'2018-07-27',2700),
+	(21,1,'2018-07-31',2820),
+	(22,1,'2018-08-01',2808),
+	(23,1,'2018-08-02',2400);
 
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 
+INSERT INTO `calendar` (`id`, `user_id`, `date`, `day_id`)
+VALUES
+	(2,1,'2018-06-26',2),
+	(3,1,'2018-06-27',3),
+	(4,1,'2018-06-28',4),
+	(5,1,'2018-07-04',5),
+	(6,1,'2018-07-03',6),
+	(7,1,'2018-07-10',7),
+	(8,1,'2018-07-09',8),
+	(13,1,'2018-07-11',13),
+	(14,1,'2018-07-12',14),
+	(15,1,'2018-07-18',15),
+	(16,1,'2018-07-19',16),
+	(17,1,'2018-07-24',17),
+	(18,1,'2018-07-25',18),
+	(19,1,'2018-07-26',19),
+	(20,1,'2018-07-27',20),
+	(21,1,'2018-07-31',21),
+	(22,1,'2018-08-01',22),
+	(23,1,'2018-08-02',23),
+	(24,1,'2018-08-03',24);

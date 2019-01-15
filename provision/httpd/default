@@ -1,6 +1,6 @@
 server {
 	listen 80;
-	server_name personal.v2rm.com.br;
+	server_name personal.v2rm.vm;
 
 	more_set_headers 'Access-Control-Allow-Origin: *';
 	more_set_headers 'Access-Control-Allow-Headers: Content-Type,Content-Length,X-Requested-With,Authorization,X-Agent';

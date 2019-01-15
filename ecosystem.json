@@ -2,7 +2,7 @@
   "apps" : [
     {
       "name"      : "personalworkouts",
-      "script"    : "server/index.js",
+      "script"    : "server/index_vm.js",
       "merge_logs": true,
       "log_date_format": "YYYY-MM-DD HH:mm Z",
       "max_memory_restart": "512M",

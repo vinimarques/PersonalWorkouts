@@ -1,0 +1,14 @@
+{
+	"name": "Personal Workouts",
+	"short_name": "Workouts",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#26547C",
+	"description": "App for workouts",
+	"theme_color": "#26547C",
+	"icons": [{
+		"src": "./img/apple-touch-icon-180×180.png",
+		"sizes": "512x512",
+		"type": "image/png"
+	}]
+}

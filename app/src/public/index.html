@@ -10,6 +10,12 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="#A0BA4A">
 		<link rel="stylesheet" href="css/bundle.css">
 
+		<link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-180×180.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-180×180.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-180×180.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-180×180.png" />
+		<link rel=”apple-touch-icon” sizes=”180×180" href="img/apple-touch-icon-180×180.png">
+
 		<title>Workouts</title>
 	</head>
 	<body>
@@ -121,5 +127,13 @@
 		</script>
 		<!-- // TEMPLATES -->
 		<script src="js/bundle.js" charset="utf-8"></script>
+		<script>
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('sw.js')
+					.then(function () {
+						console.log('Service Worker Registered');
+					});
+			}
+		</script>
 	</body>
 </html>

@@ -8,7 +8,9 @@ var filesToCache = [
 	'/pages/home.html',
 	'/pages/settings.html',
 	'/img/bgr-login.png',
-	'/fonts/icomoon.woff'
+	'/fonts/icomoon.ttf',
+	'/fonts/roboto-medium-webfont.woff2',
+	'/fonts/roboto-regular-webfont.woff2'
 ];
 self.addEventListener('install', function (e) {
 	console.log('[ServiceWorker] Install');

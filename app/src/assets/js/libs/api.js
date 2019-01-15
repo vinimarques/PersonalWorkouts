@@ -10,7 +10,14 @@ class Api {
 	constructor () {
 		this.apiPath = config.api.url;
 		this.headers = {};
-		cache.initialize(config.cacheTime)
+		cache.initialize(config.cacheTime);
+
+		window.addEventListener('online',  this.updateOnlineStatus);
+  		window.addEventListener('offline', this.updateOnlineStatus);
+	}
+
+	updateOnlineStatus() {
+		this.isOnline = navigator.onLine ? true : false;
 	}
 
 	request(method, path, data, verify) {
@@ -35,7 +42,11 @@ class Api {
 				error: errorCallback,
 				headers: this.headers
 			};
-			$.ajax(ajaxOptions);
+
+			if (this.isOnline)
+				$.ajax(ajaxOptions);
+			else
+				cache.read(path, success, errorCallback);
 		})
 	}
 

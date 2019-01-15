@@ -3,7 +3,12 @@ var filesToCache = [
 	'/',
 	'/index.html',
 	'/css/bundle.css',
-	'/js/bundle.js'
+	'/js/bundle.js',
+	'/pages/dashboard.html',
+	'/pages/home.html',
+	'/pages/settings.html',
+	'/img/bgr-login.png',
+	'/fonts/icomoon.woff'
 ];
 self.addEventListener('install', function (e) {
 	console.log('[ServiceWorker] Install');

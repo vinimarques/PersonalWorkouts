@@ -1,4 +1,4 @@
-var cacheName = 'personal-workouts';
+var cacheName = 'personal-workouts-v2';
 var filesToCache = [
 	'/',
 	'/index.html',
@@ -12,24 +12,26 @@ var filesToCache = [
 	'/fonts/roboto-medium-webfont.woff2',
 	'/fonts/roboto-regular-webfont.woff2'
 ];
+
 self.addEventListener('install', function (e) {
-	console.log('[ServiceWorker] Install');
+	console.log('[Service Worker] Install');
 	e.waitUntil(
 		caches.open(cacheName).then(function (cache) {
-			console.log('[ServiceWorker] Caching app shell');
+			console.log('[Service Worker] Caching all: app shell and content');
 			return cache.addAll(filesToCache);
 		})
 	);
 });
-self.addEventListener('activate', event => {
-	event.waitUntil(self.clients.claim());
-});
-self.addEventListener('fetch', event => {
+
+self.addEventListener('fetch', function (event) {
 	event.respondWith(
-		caches.match(event.request, {
-			ignoreSearch: true
-		}).then(response => {
-			return response || fetch(event.request);
+		caches.open(cacheName).then(function (cache) {
+			return cache.match(event.request).then(function (response) {
+				return response || fetch(event.request).then(function (response) {
+					cache.put(event.request, response.clone());
+					return response;
+				});
+			});
 		})
 	);
 });

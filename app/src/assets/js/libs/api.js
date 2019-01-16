@@ -12,6 +12,8 @@ class Api {
 		this.headers = {};
 		cache.initialize(config.cacheTime);
 
+		this.updateOnlineStatus();
+
 		window.addEventListener('online',  this.updateOnlineStatus);
   		window.addEventListener('offline', this.updateOnlineStatus);
 	}
@@ -43,10 +45,12 @@ class Api {
 				headers: this.headers
 			};
 
-			if (this.isOnline)
+			if (this.isOnline) {
 				$.ajax(ajaxOptions);
-			else
+			}
+			else {
 				cache.read(path, success, errorCallback);
+			}
 		})
 	}
 

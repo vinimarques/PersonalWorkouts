@@ -7,7 +7,7 @@ config.version = "1.0.0";
 
 config.api = {};
 
-config.api.url = location.protocol + '//' + location.host + '/api';
+config.api.url = location.host.indexOf('localhost') >= 0 ? 'http://personal.v2rm.vm/api' : location.protocol + '//' + location.host + '/api';
 config.key = 'p3R$0n@L';
 
 config.pages = 'pages';

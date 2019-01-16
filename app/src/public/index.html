@@ -1,80 +1,84 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="msapplication-tap-highlight" content="no">
-		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-		<meta name="theme-color" content="#A0BA4A">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="#A0BA4A">
-		<link rel="stylesheet" href="css/bundle.css">
-		<link rel="manifest" href="manifest.json">
 
-		<link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-180×180.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-180×180.png" />
-		<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-180×180.png" />
-		<link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-180×180.png" />
-		<link rel=”apple-touch-icon” sizes=”180×180" href="img/apple-touch-icon-180×180.png">
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<meta name="theme-color" content="#A0BA4A">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#A0BA4A">
+	<link rel="stylesheet" href="css/bundle.css">
+	<link rel="manifest" href="manifest.json">
 
-		<title>Workouts</title>
-	</head>
-	<body>
-		<!-- Status bar overlay for full screen mode (PhoneGap) -->
-		<div class="statusbar-overlay"></div>
-		<div class="panel-overlay"></div>
+	<link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-180×180.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-180×180.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-180×180.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-180×180.png" />
+	<link rel=”apple-touch-icon” sizes=”180×180" href="img/apple-touch-icon-180×180.png">
 
-		<!-- Views -->
-		<div class="views">
-			<div class="view view-main">
-				<div class="navbar"></div>
-				<div class="pages navbar-through toolbar-through"><div class="page"></div></div>
+	<title>Workouts</title>
+</head>
 
-				<!-- Bottom Toolbar-->
-				<div class="toolbar tabbar">
-					<div class="toolbar-inner">
-						<a href="pages/home.html" class="toolbar-inner-item -active">
-							<span class="icon icon-workouts"></span>
-						</a>
-						<a href="pages/dashboard.html" class="toolbar-inner-item">
-							<span class="icon icon-dashboard"></span>
-						</a>
-						<a href="pages/settings.html" class="toolbar-inner-item">
-							<span class="icon icon-settings"></span>
-						</a>
+<body>
+	<!-- Status bar overlay for full screen mode (PhoneGap) -->
+	<div class="statusbar-overlay"></div>
+	<div class="panel-overlay"></div>
+
+	<!-- Views -->
+	<div class="views">
+		<div class="view view-main">
+			<div class="navbar"></div>
+			<div class="pages navbar-through toolbar-through">
+				<div class="page"></div>
+			</div>
+
+			<!-- Bottom Toolbar-->
+			<div class="toolbar tabbar">
+				<div class="toolbar-inner">
+					<a href="pages/home.html" class="toolbar-inner-item -active">
+						<span class="icon icon-workouts"></span>
+					</a>
+					<a href="pages/dashboard.html" class="toolbar-inner-item">
+						<span class="icon icon-dashboard"></span>
+					</a>
+					<a href="pages/settings.html" class="toolbar-inner-item">
+						<span class="icon icon-settings"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Login -->
+	<div class="login-screen modal-in">
+		<div class="view">
+			<div data-page="login" class="page page-login no-navbar no-toolbar">
+				<div class="page-content">
+					<h1 class="logo">
+						Workouts
+						<em class="icon icon-logo"></em>
+					</h1>
+					<div class="page-login__wrapper">
+						<span class="preloader login-preloader preloader-white"></span>
+						<form class="page-login__form -vhidden" id="form-login">
+							<input type="email" name="email" class="form__text" placeholder="E-mail">
+							<input type="password" name="password" class="form__text" placeholder="Senha">
+							<button type="submit" class="btn btn-submit">
+								<span>Entrar</span>
+							</button>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- Login -->
-		<div class="login-screen modal-in">
-			<div class="view">
-				<div data-page="login" class="page page-login no-navbar no-toolbar">
-					<div class="page-content">
-						<h1 class="logo">
-							Workouts
-							<em class="icon icon-logo"></em>
-						</h1>
-						<div class="page-login__wrapper">
-							<span class="preloader login-preloader preloader-white"></span>
-							<form class="page-login__form -vhidden" id="form-login">
-								<input type="email" name="email" class="form__text" placeholder="E-mail">
-								<input type="password" name="password" class="form__text" placeholder="Senha">
-								<button type="submit" class="btn btn-submit">
-									<span>Entrar</span>
-								</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	<!-- TEMPLATES -->
 
-		<!-- TEMPLATES -->
-
-		<script id="template-workout-day" type="text/template7">
-			{{#if hasResult}}
+	<script id="template-workout-day" type="text/template7">
+		{{#if hasResult}}
 				<div class="page-home__content__titles">
 					<h2>{{day_name}}</h2>
 					<h2>{{number_exercises}}</h2>
@@ -126,15 +130,15 @@
 				</div>
 			{{/if}}
 		</script>
-		<!-- // TEMPLATES -->
-		<script src="js/bundle.js" charset="utf-8"></script>
-		<script>
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('sw.js')
-					.then(function () {
-						console.log('Service Worker Registered');
-					});
-			}
-		</script>
-	</body>
+	<!-- // TEMPLATES -->
+	<script src="js/bundle.js" charset="utf-8"></script>
+	<script>
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('sw.js')
+				.then(reg => console.info('[Service Worker] Registered', reg))
+				.catch(err => console.error('[Service Worker] error registering', err));
+		}
+	</script>
+</body>
+
 </html>

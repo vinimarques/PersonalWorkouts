@@ -23,14 +23,24 @@ Cache.write = function (name, value, success, error) {
 }
 
 Cache.read = function (name, success, error) {
+	console.log(`[CACHE SELECT] ${name}`);
 	return query("SELECT * FROM data WHERE name = ?", [name], function(tx, result) {
-		console.log(result);
-		if (result.rows.length === 0)	return error('no rows');
-		if (parseInt(result.rows[0].timestamp + Cache.expireTime) < Date.now()) {
-			query('DELETE FROM data WHERE name = ?', [name]);
-			return error ('expired at ' + parseInt(result.rows[0].timestamp + Cache.expireTime));
+		console.log(`[CACHE RESULT]`,result);
+		if (result.rows.length === 0)	{
+			return success({
+				success: true,
+				data: []
+			});
 		}
-		return success(JSON.parse(result.rows[0].value));
+		if (parseInt(result.rows.item(0).timestamp + Cache.expireTime) < Date.now()) {
+			query('DELETE FROM data WHERE name = ?', [name]);
+			return success({
+				success: true,
+				data: []
+			});
+		}
+		let json = JSON.parse(result.rows.item(0).value);
+		return success(JSON.parse(json));
 	}, error);
 }
 

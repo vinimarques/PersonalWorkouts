@@ -11,11 +11,7 @@ class Api {
 		this.apiPath = config.api.url;
 		this.headers = {};
 		cache.initialize(config.cacheTime);
-
-		this.updateOnlineStatus();
-
-		window.addEventListener('online',  this.updateOnlineStatus);
-  		window.addEventListener('offline', this.updateOnlineStatus);
+		setInterval(this.updateOnlineStatus, 2000);
 	}
 
 	updateOnlineStatus() {

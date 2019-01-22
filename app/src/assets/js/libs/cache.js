@@ -27,16 +27,16 @@ Cache.read = function (name, success, error) {
 	return query("SELECT * FROM data WHERE name = ?", [name], function(tx, result) {
 		console.log(`[CACHE RESULT]`,result);
 		if (result.rows.length === 0)	{
-			return success({
-				success: true,
-				data: []
+			return error({
+				response: '{"error":"Você precisa estar online para visualizar esses dados."}',
+				status: 404
 			});
 		}
 		if (parseInt(result.rows.item(0).timestamp + Cache.expireTime) < Date.now()) {
 			query('DELETE FROM data WHERE name = ?', [name]);
-			return success({
-				success: true,
-				data: []
+			return error({
+				response: '{"error":"Você precisa estar online para visualizar esses dados."}',
+				status: 404
 			});
 		}
 		let json = JSON.parse(result.rows.item(0).value);

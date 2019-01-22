@@ -11,11 +11,14 @@ class Api {
 		this.apiPath = config.api.url;
 		this.headers = {};
 		cache.initialize(config.cacheTime);
-		setInterval(this.updateOnlineStatus, 2000);
+		window.isOnline = true;
+
+		setInterval(this.updateOnlineStatus, 5000);
 	}
 
 	updateOnlineStatus() {
-		this.isOnline = navigator.onLine ? true : false;
+		window.isOnline = navigator.onLine;
+		console.log('CONNECTION STATUS:', window.isOnline);
 	}
 
 	request(method, path, data, verify) {
@@ -41,7 +44,7 @@ class Api {
 				headers: this.headers
 			};
 
-			if (this.isOnline) {
+			if (window.isOnline) {
 				$.ajax(ajaxOptions);
 			}
 			else {
@@ -68,6 +71,14 @@ class Api {
 				clearTimeout(window.timeErrorMsg);
 				window.timeErrorMsg = setTimeout(() => {
 					App.message.error('Você precisa estar logado.', this.goToLogin);
+				}, 250);
+				break;
+
+			case 404:
+				clearTimeout(window.timeErrorMsg);
+				window.timeErrorMsg = setTimeout(() => {
+					App.message.error('Você precisa estar online para visualizar esses dados.');
+					$('.-loading-content, .-loading').removeClass('.-loading-content, .-loading');
 				}, 250);
 				break;
 		}

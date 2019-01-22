@@ -24,14 +24,18 @@ self.addEventListener('install', function (e) {
 });
 
 self.addEventListener('fetch', function (event) {
-	event.respondWith(
-		caches.open(cacheName).then(function (cache) {
-			return cache.match(event.request).then(function (response) {
-				return response || fetch(event.request).then(function (response) {
-					cache.put(event.request, response.clone());
-					return response;
+	const request = event.request.url.replace('https://personal.v2rm.com','');
+
+	if (filesToCache.indexOf(request) !== -1) {
+		event.respondWith(
+			caches.open(cacheName).then(function (cache) {
+				return cache.match(event.request).then(function (response) {
+					return response || fetch(event.request).then(function (response) {
+						cache.put(event.request, response.clone());
+						return response;
+					});
 				});
-			});
-		})
-	);
+			})
+		);
+	}
 });

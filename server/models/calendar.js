@@ -60,7 +60,7 @@ class Calendar extends Model {
 		`, [newDate, date, user_id]);
 	}
 
-	static dashboardCalendar(date) {
+	static dashboardCalendar(date, user_id) {
 		let _date = date + '%';
 		const trackings = Model.query(`
 			SELECT id, date, time
@@ -69,19 +69,20 @@ class Calendar extends Model {
 				SELECT MAX(id)
 				FROM tracking
 				GROUP BY date
-			) AND date like ?
-		`, [_date]);
+			) AND date like ? AND user_id = ?
+		`, [_date, user_id]);
 
 		const calendar = Model.query(`
 			SELECT * FROM calendar
-			WHERE date like ?
+			WHERE date like ? AND user_id = ?
 			GROUP BY date
-		`, [_date]);
+		`, [_date, user_id]);
 
 		const total_calendar = Model.query(`
 			SELECT * FROM calendar
+			WHERE user_id = ?
 			GROUP BY date
-		`);
+		`, [user_id]);
 
 		const total_trackings = Model.query(`
 			SELECT id, date, time
@@ -90,8 +91,8 @@ class Calendar extends Model {
 				SELECT MAX(id)
 				FROM tracking
 				GROUP BY date
-			)
-		`);
+			) AND user_id = ?
+		`, [user_id]);
 
 		return Promise.all([trackings,calendar,total_calendar,total_trackings]).then((res) => {
 			return {

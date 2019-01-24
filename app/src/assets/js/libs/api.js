@@ -150,7 +150,7 @@ class Api {
 	}
 
 	getDashboard (date) {
-		return this.request('GET', `/calendar/dashboard?date=${date}`);
+		return this.request('GET', `/calendar/dashboard?date=${date}&user_id=${Template7.global.user.id}`);
 	}
 
 	saveTime (time, date) {

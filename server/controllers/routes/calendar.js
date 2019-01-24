@@ -105,6 +105,7 @@ module.exports = function (router) {
 	router.get('/calendar/dashboard', Auth.middleware(), Resolve.send(
 		function (req) {
 			const date = req.query.date;
+			const user_id = req.query.user_id;
 
 			if (!date) {
 				const error = ApiError.companyRequired();
@@ -114,7 +115,15 @@ module.exports = function (router) {
 				};
 			}
 
-			return Calendar.dashboardCalendar(date)
+			if (!user_id) {
+				const error = ApiError.companyRequired();
+				return {
+					success: false,
+					error: error.data
+				};
+			}
+
+			return Calendar.dashboardCalendar(date, user_id)
 				.then(calendar => {
 					return {
 						success: true,

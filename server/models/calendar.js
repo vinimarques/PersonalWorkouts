@@ -63,7 +63,7 @@ class Calendar extends Model {
 	static dashboardCalendar(date, user_id) {
 		let _date = date + '%';
 		const trackings = Model.query(`
-			SELECT id, date, time
+			SELECT id, date, time, user_id
 			FROM tracking
 			WHERE id IN (
 				SELECT MAX(id)
@@ -85,7 +85,7 @@ class Calendar extends Model {
 		`, [user_id]);
 
 		const total_trackings = Model.query(`
-			SELECT id, date, time
+			SELECT id, date, time, user_id
 			FROM tracking
 			WHERE id IN (
 				SELECT MAX(id)
